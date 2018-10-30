@@ -27,23 +27,41 @@
       </div>
 
       <ul class="navbar-nav">
-        <li class="nav-item"><a href="#" class="signup">Sign Up</a></li>
+        <li class="nav-item"><a href="#" class="side-nav-item dashboard">Dashboard</a></li>
+        <li class="nav-item"><a href="signup.html" class="signup">Sign Up</a></li>
         <li class="nav-item"><a href="#" class="login">Login</a></li>
-        <li class="nav-item"><a href="#">Services</a></li>
-        <li class="nav-item"><a href="#">Contacts</a></li>
+        <li class="nav-item"> <a href="#" class="side-nav-item logout">Logout</a></li>
       </ul>
     </nav>
 
     <!-- Side Bar  -->
     <div id="side-menu" class="side-nav default">
       <a href="#" class="btn-close">&times;</a>
-      <a href="#" class="side-nav-item signup">Sign Up</a>
+      <a href="#" class="side-nav-item dashboard">Dashboard</a>
+      <a href="signup.html" class="side-nav-item signup">Sign Up</a>
       <a href="#" class="side-nav-item login">Login</a>
-      <a href="#" class="side-nav-item">Services</a>
-      <a href="#" class="side-nav-item">Contacts</a>
+      <a href="#" class="side-nav-item logout">Logout</a>
     </div>
   </header>
+  <!-- Login Modal -->
+  <div class="modal login-form">
+    <div class="modal-body card animate">
+      <span class="close">&times;</span>
+      <h3 class="card-header signup-header">Login</h3>
+      <div class="card-body dark-blue">
+        <form class="card-form">
+          <input type="email" placeholder="Email" required="" autofocus>
+          <input type="password" placeholder="Password" required="">
+          <input type="submit" value="Login">
+        </form>
+      </div>
+      <div class="card-footer login-footer">
+        <span class="psw">Forgot <a href="#">password?</a></span>
+      </div>
+    </div>
+  </div>
 
+  <!-- Sign Up -->
   <main class="signup-main">
     <div class="card signup">
       <h3 class="card-header signup-header">Sign Up</h3>
@@ -63,6 +81,7 @@
 
 
   <script src="js/nav.js"></script>
+  <script src="js/index.js"></script>
 </body>
 
 </html>

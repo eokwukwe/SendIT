@@ -37,7 +37,6 @@ sideNavItem.forEach(item =>
 
 signUp.forEach(item =>
   item.addEventListener("click", () => {
-    console.log("Sign Up clicked");
     closeSlideMenu();
   })
 );
