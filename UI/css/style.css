@@ -6,11 +6,11 @@
   --green: #588a00;
   --blue: #256188;
   --grey: #676e7a;
-  --darkgrey: #666;
-  --lightgrey: #999;
+  --darkgrey: rgba(102, 102, 102, 0.5);
+  --lightgrey: rgba(153, 153, 153, 0.5);
   --darkblue: #244062;
   --lightpurple: #c9bcf0;
-  --red: #b82c2c;
+  --red: rgba(224, 30, 30, 0.9);
   --white: #fff;
   --black: #000;
   --shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -144,7 +144,7 @@ input {
   height: auto;
   margin: auto;
   background: var(--white);
-  position: relative;
+  /* position: relative; */
   box-shadow: var(--shadow);
 }
 
@@ -166,6 +166,58 @@ input {
   text-align: center;
   padding: 1.1rem;
   margin: 0;
+}
+
+button {
+  display: block;
+  height: 40px;
+  border: none;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.accordion {
+  background-color: var(--darkgrey);
+  color: var(--primary-color);
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: all 0.5s ease-in;
+}
+
+.active,
+.accordion:hover {
+  background-color: var(--lightgrey);
+}
+
+.accordion-content {
+  padding: 0 1.1rem;
+  background-color: var(--white);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+.accordion::after {
+  content: "\02795";
+  font-size: 0.8rem;
+  color: var(--black);
+  float: right;
+  margin-left: 0.4rem;
+}
+
+.active::after {
+  content: "\2796";
+}
+
+main {
+  min-height: calc(100vh - 50px);
+  padding: 2rem;
 }
 
 /***********  Header Styles  **********/
@@ -210,6 +262,7 @@ input {
   border: 1px solid var(--white);
   border-radius: 3px;
   text-decoration: none;
+  background: var(--grey);
 }
 
 .nav-logo a {
@@ -249,8 +302,9 @@ input {
 }
 
 .side-nav a:hover {
-  color: var(--lightgrey);
   text-decoration: none;
+  background: var(--grey);
+  border-bottom: 1px dotted var(--white);
 }
 
 .side-nav a.btn-close {
@@ -259,6 +313,11 @@ input {
   right: 20px;
   font-size: 40px;
   margin-left: 40px;
+}
+
+.side-nav a.btn-close:hover {
+  background: none;
+  border-bottom: none;
 }
 
 @media (max-width: 568px) {
@@ -366,12 +425,14 @@ input {
 }
 
 /***********  Sign Up Page  **********/
-.signup-body {
+.signup-body,
+.order-body,
+.user-body {
   background: rgba(167, 163, 163, 0.4);
 }
 
 .signup-main {
-  margin-top: 150px;
+  padding-top: 150px;
 }
 
 .signup-header {
@@ -390,6 +451,7 @@ input {
   border-radius: 0.1rem;
   outline: none;
   transition: all 0.5s ease;
+  border: none;
 }
 
 .card-form input[type="submit"] {
@@ -409,4 +471,263 @@ input {
 
 .card-form form div {
   position: relative;
+}
+
+/********  User Page *********/
+
+.order-btn-nav {
+  border: 1px solid var(--white);
+  border-radius: 0.2rem;
+  background: var(--green);
+}
+
+.order-btn-nav:hover {
+  background: var(--lightpurple);
+  color: var(--black);
+}
+
+.user-page {
+  padding-top: 100px;
+}
+
+.user-dashboard {
+  display: grid;
+  grid-gap: 2rem;
+}
+
+.order-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+}
+
+.order-box {
+  background: var(--white);
+  padding: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow);
+}
+
+.order-box h3 {
+  margin: 0;
+}
+
+.total-order h3 {
+  color: var(--darkblue);
+}
+
+.in-transit h3 {
+  color: var(--lightpurple);
+}
+
+.delivered h3 {
+  color: var(--green);
+}
+
+.order-box h3 {
+  font-size: 2rem;
+}
+
+.order-list-table {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 2fr 1fr;
+}
+
+.order-list {
+  box-shadow: var(--shadow);
+  padding: 1rem 0.3rem;
+}
+
+.order-id {
+  color: var(--black);
+}
+
+.acc-container {
+  border-bottom: 1px solid var(--blue);
+}
+
+.map {
+  box-shadow: var(--shadow);
+  border: 3px solid var(--white);
+  border-radius: 0.2rem;
+  max-height: 255px;
+}
+
+@media (max-width: 578px) {
+  .order-header {
+    font-size: 1.5rem;
+  }
+  .order-box {
+    padding: 1rem;
+  }
+  .box-title {
+    font-size: 0.8rem;
+  }
+}
+
+/********   Order Form Modal *********/
+.order-page {
+  padding-top: 80px;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+}
+
+.order-hr {
+  border: 1px solid var(--darkblue);
+}
+
+.order-form {
+  padding: 1rem;
+  width: 100%;
+  box-shadow: var(--shadow);
+}
+
+.order-form .card-form input {
+  height: 30px;
+}
+
+.order-form .card-form input[type="submit"]:hover {
+  background: var(--darkblue);
+  font-weight: normal;
+  border: 1px solid var(--white);
+}
+
+.order-header {
+  padding: 0.2rem;
+  color: var(--darkblue);
+}
+
+.order-info,
+.order-destination label {
+  font-size: 0.9rem;
+  color: var(--darkblue);
+}
+
+.order-info input,
+.order-destination input {
+  margin-top: 0;
+  height: 40px;
+  font-size: 0.9rem;
+}
+
+.order-list .accordion {
+  background: #ccc;
+  color: var(--darkblue);
+  font-weight: var(--font-weight-bold);
+  text-transform: capitalize;
+}
+
+.order-list-content {
+  background: var(--white);
+}
+
+.order-list-title {
+  text-align: center;
+  color: var(--darkblue);
+  margin-bottom: 0;
+}
+
+.order-detail {
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.order-detail h4,
+p {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+}
+
+.order-detail p {
+  font-size: 0.8rem;
+  color: var(--darkblue);
+}
+
+span.price {
+  color: var(--darkgrey);
+}
+
+span.status {
+  display: flex;
+  align-items: center;
+  height: 1rem;
+  padding: 0 0.1rem;
+  border-radius: 0.3rem;
+  color: var(--white);
+  font-size: 0.6rem;
+  font-weight: var(--font-weight-bold);
+}
+
+.status-delivered {
+  background: var(--green);
+}
+
+.status-in-transit {
+  background: var(--lightpurple);
+}
+
+.order-detail-edit {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-cancel,
+.btn-change {
+  height: 1.2rem;
+  font-size: 0.4rem;
+  font-weight: var(--font-weight-bold);
+}
+
+.btn-cancel {
+  background: var(--red);
+}
+
+.btn-change {
+  background: var(--darkblue);
+}
+
+.btn-cancel:hover,
+.btn-change:hover {
+  opacity: 0.9;
+  border: 1px dotted var(--white);
+}
+
+@media (max-width: 568px) {
+  .order-detail h4 {
+    font-size: 0.8rem;
+  }
+  .order-detail p {
+    font-size: 0.7rem;
+  }
+
+  .btn-cancel,
+  .btn-change {
+    height: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .order-page {
+    grid-template-columns: 1fr;
+  }
+
+  .order-list-table {
+    grid-template-columns: 1fr;
+    grid-gap: 2rem;
+  }
+}
+
+.main-footer {
+  text-align: center;
+  padding: 1rem;
+  background: var(--primary-color);
+  color: var(--white);
+  height: 50px;
 }
