@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.4.2/js/all.js" integrity="sha384-wp96dIgDl5BLlOXb4VMinXPNiB32VYBSoXOoiARzSTXY+tsK8yDTYfvdTyqzdGGN"
+    crossorigin="anonymous"></script>
+  <title>SendIT | Admin</title>
+</head>
+
+<body class="admin-body">
+  <header class="header default">
+    <nav class="container navbar">
+      <span class="open-slide">
+        <a href="#" class="sidebar-icon">
+          <svg width="30" height="30">
+            <path d="M0,5 30,5" stroke="#fff" stroke-width="5" />
+            <path d="M0,14 30,14" stroke="#fff" stroke-width="5" />
+            <path d="M0,23 30,23" stroke="#fff" stroke-width="5" />
+          </svg>
+        </a>
+      </span>
+
+      <div class="nav-logo">
+        <a href="index.html">SendIT</a>
+      </div>
+
+      <ul class="navbar-nav">
+        <li class="nav-item"><a href="#" class="side-nav-item dashboard">Dashboard</a></li>
+        <li class="nav-item"><a href="signup.html" class="signup">Sign Up</a></li>
+        <li class="nav-item"><a href="#" class="login">Login</a></li>
+        <li class="nav-item"> <a href="#" class="side-nav-item logout">Logout</a></li>
+        <li class="nav-item"> <a href="#" class="side-nav-item order-btn  order-btn-nav">Create Order</a></li>
+      </ul>
+    </nav>
+
+    <!-- Side Bar  -->
+    <div id="side-menu" class="side-nav default">
+      <a href="#" class="btn-close">&times;</a>
+      <a href="#" class="side-nav-item dashboard">Dashboard</a>
+      <a href="signup.html" class="side-nav-item signup">Sign Up</a>
+      <a href="#" class="side-nav-item login">Login</a>
+      <a href="#" class="side-nav-item logout">Logout</a>
+      <a href="#" class="side-nav-item order-btn">Create Order</a>
+    </div>
+  </header>
+
+  <main class="container admin-page">
+    <h2 class="user-info">Welcome Admin</h2>
+    <section class="admin-dashboard">
+      <section class="order-summary">
+        <div class="order-box total-order">
+
+          <span class="box-title">Total Orders</span>
+          <h3>8</h3>
+        </div>
+        <div class="order-box in-transit">
+          <span class="box-title">In Transit</span>
+          <h3>2</h3>
+        </div>
+        <div class="order-box delivered">
+          <span class="box-title">Deliverd</span>
+          <h3>6</h3>
+        </div>
+      </section>
+
+      <section class="order-data-detail">
+        <h4>Total Orders</h4>
+        <table>
+          <tr class="t-header">
+            <th>Customer</th>
+            <th>Order ID</th>
+            <th>Weight (KG)</th>
+            <th>Price (&#x20A6)</th>
+          </tr>
+          <tr>
+            <td>Tayo</td>
+            <td>125142</td>
+            <td>12</td>
+            <td>2500</td>
+          </tr>
+          <tr>
+            <td>Tayo</td>
+            <td>125142</td>
+            <td>12</td>
+            <td>2500</td>
+          </tr>
+          <tr>
+            <td>Tayo</td>
+            <td>125142</td>
+            <td>12</td>
+            <td>2500</td>
+          </tr>
+        </table>
+      </section>
+
+      <div class="order-status-table">
+        <section>
+          <h4>Delivered Orders</h4>
+          <table>
+            <tr class="t-header">
+              <th>Order ID</th>
+              <th>Status</th>
+              <th>Details</th>
+            </tr>
+            <tr>
+              <td>125142</td>
+              <td>
+                <button class="status status-delivered admin-status">
+                  Deliverd
+                </button>
+              </td>
+              <td>
+                <i class="fas fa-info-circle fa-2x btn-detail"></i>
+              </td>
+            </tr>
+            <tr>
+              <td>125142</td>
+              <td>
+                <button class="status status-delivered admin-status">
+                  Deliverd
+                </button>
+              </td>
+              <td>
+                <i class="fas fa-info-circle fa-2x btn-detail"></i>
+              </td>
+            </tr>
+            <tr>
+              <td>125142</td>
+              <td>
+                <button class="status status-delivered admin-status">
+                  Deliverd
+                </button>
+              </td>
+              <td>
+                <i class="fas fa-info-circle fa-2x btn-detail"></i>
+              </td>
+            </tr>
+          </table>
+        </section>
+
+        <section>
+          <h4>Orders In Transit</h4>
+          <table>
+            <tr class="t-header">
+              <th>Order ID</th>
+              <th>Status</th>
+              <th>Details</th>
+            </tr>
+            <tr>
+              <td>125142</td>
+              <td>
+                <button class="status status-in-transit admin-status">
+                  In Transit
+                </button>
+              </td>
+              <td>
+                <i class="fas fa-info-circle fa-2x btn-detail"></i>
+              </td>
+            </tr>
+            <tr>
+              <td>125142</td>
+              <td>
+                <button class="status status-in-transit admin-status">
+                  In Transit
+                </button>
+              </td>
+              <td>
+                <i class="fas fa-info-circle fa-2x btn-detail"></i>
+              </td>
+            </tr>
+            <tr>
+              <td>125142</td>
+              <td>
+                <button class="status status-in-transit admin-status">
+                  In Transit
+                </button>
+              </td>
+              <td>
+                <i class="fas fa-info-circle fa-2x btn-detail"></i>
+              </td>
+            </tr>
+          </table>
+        </section>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="main-footer">
+    Copyright &copy; 2018
+  </footer>
+
+
+  <script src="js/nav.js"></script>
+  <!-- <script src="js/user.js"></script> -->
+</body>
+
+</html>

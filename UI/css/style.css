@@ -427,7 +427,8 @@ main {
 /***********  Sign Up Page  **********/
 .signup-body,
 .order-body,
-.user-body {
+.user-body,
+.admin-body {
   background: rgba(167, 163, 163, 0.4);
 }
 
@@ -654,12 +655,11 @@ span.price {
   color: var(--darkgrey);
 }
 
-span.status {
+.status {
   display: flex;
   align-items: center;
   height: 1rem;
-  padding: 0 0.1rem;
-  border-radius: 0.3rem;
+  padding: 0.2rem;
   color: var(--white);
   font-size: 0.6rem;
   font-weight: var(--font-weight-bold);
@@ -719,6 +719,64 @@ span.status {
   }
 
   .order-list-table {
+    grid-template-columns: 1fr;
+    grid-gap: 2rem;
+  }
+}
+
+/********  Admin Page **********/
+.admin-page {
+  padding-top: 100px;
+}
+
+.admin-dashboard {
+  display: grid;
+  grid-gap: 2rem;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  box-shadow: var(--shadow);
+}
+
+.t-header {
+  background: var(--blue);
+  color: var(--white);
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.4rem 0.8rem;
+}
+
+tr:nth-child(even) {
+  background-color: var(--white);
+}
+
+.btn-detail {
+  cursor: pointer;
+  color: var(--darkgrey);
+}
+
+.btn-detail:hover {
+  color: var(--darkblue);
+}
+
+.order-status-table {
+  display: grid;
+  grid-gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.order-status {
+  box-shadow: var(--shadow);
+}
+
+@media (max-width: 768px) {
+  .order-status-table {
     grid-template-columns: 1fr;
     grid-gap: 2rem;
   }
