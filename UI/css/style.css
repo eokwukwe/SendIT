@@ -401,7 +401,7 @@ main {
 
 /************  Home Page **************/
 .home-body {
-  height: 104vh;
+  height: 100vh;
   background: var(--darkblue);
   overflow: hidden;
 }
@@ -435,6 +435,12 @@ main {
   font-size: 20px;
   z-index: 2;
   color: var(--white);
+}
+
+@media (max-width: 1300px) {
+  .container.main-home {
+    max-width: 100%;
+  }
 }
 
 /***********  Login Modal  **********/
