@@ -220,6 +220,14 @@ main {
   padding: 2rem;
 }
 
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
 /***********  Header Styles  **********/
 
 .header {
@@ -276,6 +284,29 @@ main {
   text-decoration: none;
 }
 
+.nav-item .signup,
+.nav-item .logout {
+  border: 1px solid var(--white);
+  border-radius: 0.2rem;
+}
+
+.nav-item .signup:hover,
+.nav-item .logout:hover {
+  background: var(--lightpurple);
+  color: var(--black);
+}
+
+.nav-item .login {
+  border: 1px solid var(--white);
+  border-radius: 0.2rem;
+  background: var(--lightpurple);
+  color: var(--black);
+}
+
+.nav-item .login:hover {
+  color: var(--white);
+}
+
 .side-nav {
   height: 100%;
   width: 0;
@@ -307,7 +338,7 @@ main {
   border-bottom: 1px dotted var(--white);
 }
 
-.side-nav a.btn-close {
+.side-nav a.btn-close-sidenav {
   position: absolute;
   top: 0;
   right: 20px;
@@ -315,7 +346,7 @@ main {
   margin-left: 40px;
 }
 
-.side-nav a.btn-close:hover {
+.side-nav a.btn-close-sidenav:hover {
   background: none;
   border-bottom: none;
 }
@@ -366,22 +397,21 @@ main {
 /***********  Login Modal  **********/
 .modal {
   display: none;
-  position: absolute;
+  position: fixed;
   z-index: 1;
+  padding-top: 100px;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
   background-color: var(--lightgrey);
-  padding-top: 60px;
 }
 
 .modal-body {
   position: relative;
-  top: 80px;
-  /* margin: 5px auto; */
-  width: auto;
+  /* top: 80px; */
+  max-width: 500px;
 }
 
 .close {
@@ -419,6 +449,10 @@ main {
 }
 
 @media (max-width: 768px) {
+  .modal {
+    /* height: calc(100%); */
+  }
+
   .modal-body {
     width: 90%;
   }
@@ -438,6 +472,20 @@ main {
 
 .signup-header {
   padding: 0.5rem 0;
+}
+.signup-message {
+  display: none;
+  width: 50%;
+  margin: -50px auto 15px auto;
+  text-align: center;
+  color: var(--white);
+  z-index: 10;
+  padding: 0 1.2rem;
+  font-size: 1rem;
+}
+.checkPasswords {
+  color: var(--red);
+  display: none;
 }
 
 .card-form input {
@@ -474,6 +522,12 @@ main {
   position: relative;
 }
 
+@media (max-width: 578px) {
+  .card.signup {
+    width: 100%;
+  }
+}
+
 /********  User Page *********/
 
 .order-btn-nav {
@@ -484,7 +538,6 @@ main {
 
 .order-btn-nav:hover {
   background: var(--lightpurple);
-  color: var(--black);
 }
 
 .user-page {
@@ -584,7 +637,6 @@ main {
 }
 
 .order-form {
-  padding: 1rem;
   width: 100%;
   box-shadow: var(--shadow);
 }
@@ -671,6 +723,7 @@ span.price {
 
 .status-in-transit {
   background: var(--lightpurple);
+  color: var(--black);
 }
 
 .order-detail-edit {
@@ -754,6 +807,10 @@ td {
 
 tr:nth-child(even) {
   background-color: var(--white);
+}
+
+td:nth-child(1) {
+  font-weight: var(--font-weight-bold);
 }
 
 .btn-detail {
