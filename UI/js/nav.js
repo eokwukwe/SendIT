@@ -1,7 +1,12 @@
-const sideBarIcon = document.querySelector(".sidebar-icon");
-const closeBtn = document.querySelector(".btn-close");
-const signUp = document.querySelectorAll(".signup");
-const sideNavItem = document.querySelectorAll(".side-nav-item");
+const sideBarIcon = document.querySelector(".sidebar-icon"),
+  closeBtn = document.querySelector(".btn-close-sidenav"),
+  signUp = document.querySelectorAll(".signup"),
+  logout = document.querySelectorAll(".logout"),
+  login = document.querySelectorAll(".login"),
+  orderBtnModal = document.querySelectorAll(".order-btn"),
+  closeModal = document.querySelector(".close"),
+  modal = document.querySelector(".modal"),
+  sideNavItem = document.querySelectorAll(".side-nav-item");
 
 sideBarIcon.addEventListener("click", openSlideMenu);
 closeBtn.addEventListener("click", closeSlideMenu);
@@ -22,9 +27,16 @@ function closeSlideMenu() {
 
 // outsideClick function
 function outsideClick(e) {
-  const mainBody = document.querySelector("html");
+  const main = document.querySelector("main");
+  const html = document.querySelector("html");
   const navBar = document.querySelector(".navbar");
-  if (e.target == mainBody || e.target == navBar) {
+  const body = document.querySelector("body");
+  const sideNav = document.querySelector(".side-nav");
+  if (e.target == modal) {
+    modal.style.display = "none";
+  }
+
+  if (e.target === main || e.target === navBar || e.target === html) {
     closeSlideMenu();
   }
 }
@@ -40,3 +52,14 @@ signUp.forEach(item =>
     closeSlideMenu();
   })
 );
+
+login.forEach(item =>
+  item.addEventListener("click", () => {
+    modal.style.display = "block";
+    closeSlideMenu();
+  })
+);
+
+closeModal.addEventListener("click", () => {
+  modal.style.display = "none";
+});
