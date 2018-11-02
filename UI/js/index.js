@@ -1,23 +1,21 @@
-const login = document.querySelectorAll(".login");
-const loginModal = document.querySelector(".login");
-const modal = document.querySelector(".modal");
-const closeModal = document.querySelector(".close");
+const username = document.querySelector("#loginemail"),
+  password = document.querySelector("#loginpwd"),
+  loginData = document.forms["login-form"];
 
-window.addEventListener("click", outsideClick);
+const loginSubmit = e => {
+  e.preventDefault();
 
-login.forEach(item =>
-  item.addEventListener("click", () => {
-    modal.style.display = "block";
-    closeSlideMenu();
-  })
-);
+  const uname = username.value,
+    psswd = password.value;
 
-closeModal.addEventListener("click", () => {
-  modal.style.display = "none";
-});
+  console.log(uname, psswd);
+  loginData.reset();
+  window.location.href = "user.html";
+};
 
-function outsideClick(e) {
-  if (e.target == modal) {
-    modal.style.display = "none";
-  }
+if (document.readyState === "loading" || document.readyState === "complete") {
+  logout.forEach(das => (das.style.display = "none"));
+  orderBtnModal.forEach(das => (das.style.display = "none"));
+
+  loginData.addEventListener("submit", loginSubmit);
 }

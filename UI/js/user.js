@@ -1,7 +1,4 @@
 const accordion = document.querySelectorAll(".accordion");
-const orderBtnModal = document.querySelectorAll(".order-btn");
-const modal = document.querySelector(".modal");
-const closeModal = document.querySelector(".close");
 
 for (let i = 0; i < accordion.length; i++) {
   accordion[i].addEventListener("click", function() {
@@ -33,3 +30,10 @@ function outsideClick(e) {
 }
 
 window.addEventListener("click", outsideClick);
+
+userInit = () => {
+  signUp.forEach(item => (item.style.display = "none"));
+  login.forEach(item => (item.style.display = "none"));
+};
+
+userInit();
