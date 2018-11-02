@@ -29,6 +29,11 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-size: 1rem;
@@ -394,6 +399,44 @@ main {
   }
 }
 
+/************  Home Page **************/
+.home-body {
+  height: 104vh;
+  background: var(--darkblue);
+  overflow: hidden;
+}
+
+.main-home {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../img/parceld.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+  font-family: var(--font-secondary);
+}
+
+.main-home h1 {
+  font-size: 50px;
+  line-height: 1.2;
+  z-index: 2;
+  color: var(--blue);
+}
+
+.main-home p {
+  font-size: 20px;
+  z-index: 2;
+  color: var(--white);
+}
+
 /***********  Login Modal  **********/
 .modal {
   display: none;
@@ -410,7 +453,6 @@ main {
 
 .modal-body {
   position: relative;
-  /* top: 80px; */
   max-width: 500px;
 }
 
@@ -449,10 +491,6 @@ main {
 }
 
 @media (max-width: 768px) {
-  .modal {
-    /* height: calc(100%); */
-  }
-
   .modal-body {
     width: 90%;
   }
