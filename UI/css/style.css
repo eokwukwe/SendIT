@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
 :root {
-  --bg-primary: rgba(56, 99, 145, 0.2);
+  --bg-primary: rgba(167, 163, 163, 0.4);
   --primary-color: #256188;
   --green: #588a00;
   --blue: #256188;
@@ -503,15 +503,22 @@ main {
 }
 
 /***********  Sign Up Page  **********/
-.signup-body,
-.order-body,
-.user-body,
-.admin-body {
-  background: rgba(167, 163, 163, 0.4);
+
+/* .order-body,
+ {
+  background: ;
+} */
+
+.signup-body {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../img/parcel.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .signup-main {
-  padding-top: 150px;
+  padding-top: 100px;
 }
 
 .signup-header {
@@ -574,6 +581,10 @@ main {
 
 /********  User Page *********/
 
+.user-body {
+  background: var(--darkblue);
+}
+
 .order-btn-nav {
   border: 1px solid var(--white);
   border-radius: 0.2rem;
@@ -586,6 +597,8 @@ main {
 
 .user-page {
   padding-top: 100px;
+  background: var(--white);
+  box-shadow: var(--shadow);
 }
 
 .user-dashboard {
@@ -822,8 +835,13 @@ span.price {
 }
 
 /********  Admin Page **********/
+.admin-body {
+  background: var(--darkblue);
+}
+
 .admin-page {
   padding-top: 100px;
+  background: var(--white);
 }
 
 .admin-dashboard {
@@ -880,6 +898,13 @@ td:nth-child(1) {
   .order-status-table {
     grid-template-columns: 1fr;
     grid-gap: 2rem;
+  }
+}
+
+@media (max-width: 1300px) {
+  .container.user-page,
+  .container.admin-page {
+    max-width: 100%;
   }
 }
 
