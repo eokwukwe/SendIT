@@ -504,20 +504,16 @@ main {
 
 /***********  Sign Up Page  **********/
 
-/* .order-body,
- {
-  background: ;
-} */
-
 .signup-body {
+  background: var(--darkblue);
+}
+
+.signup-main {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("../img/parcel.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-.signup-main {
   padding-top: 100px;
 }
 
@@ -903,7 +899,8 @@ td:nth-child(1) {
 
 @media (max-width: 1300px) {
   .container.user-page,
-  .container.admin-page {
+  .container.admin-page,
+  .container.signup-main {
     max-width: 100%;
   }
 }
