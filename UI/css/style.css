@@ -880,6 +880,17 @@ td:nth-child(1) {
   .order-status-table {
     grid-template-columns: 1fr;
     grid-gap: 2rem;
+    grid-template-areas:
+      "intransit"
+      "delivered";
+  }
+
+  .delivered-orders {
+    grid-area: delivered;
+  }
+
+  .in-transit-orders {
+    grid-area: intransit;
   }
 }
 
