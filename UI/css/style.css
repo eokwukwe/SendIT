@@ -184,10 +184,12 @@ button {
 }
 
 .accordion {
-  background-color: var(--darkgrey);
+  background-color: var(--white);
   color: var(--primary-color);
+  padding: 1.5rem 0.8rem;
+  line-height: 9px;
+  font-weight: var(--font-weight-bold);
   cursor: pointer;
-  padding: 18px;
   width: 100%;
   text-align: left;
   border: none;
@@ -673,7 +675,8 @@ main {
 }
 
 .acc-container {
-  border-bottom: 1px solid var(--blue);
+  margin-top: 1rem;
+  box-shadow: var(--shadow);
 }
 
 .map {
