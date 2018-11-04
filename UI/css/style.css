@@ -437,6 +437,25 @@ main {
   color: var(--white);
 }
 
+.signup-index {
+  border: 1px solid var(--darkblue);
+  border-radius: 0.2rem;
+  padding: 0 0.2rem;
+  margin: 0 0.5rem;
+  background: var(--lightpurple);
+  color: var(--darkblue);
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-index:hover {
+  text-decoration: none;
+  color: var(--white);
+  background: var(--blue);
+}
+
 @media (max-width: 1300px) {
   .container.main-home {
     max-width: 100%;
@@ -894,6 +913,17 @@ td:nth-child(1) {
   .order-status-table {
     grid-template-columns: 1fr;
     grid-gap: 2rem;
+    grid-template-areas:
+      "intransit"
+      "delivered";
+  }
+
+  .delivered-orders {
+    grid-area: delivered;
+  }
+
+  .in-transit-orders {
+    grid-area: intransit;
   }
 }
 
