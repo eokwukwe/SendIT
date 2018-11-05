@@ -444,12 +444,13 @@ main {
   border-radius: 0.2rem;
   padding: 0 0.2rem;
   margin: 0 0.5rem;
-  background: var(--lightpurple);
+  background: var(--green);
   color: var(--darkblue);
-  font-size: 1rem;
+  font-size: 0.8rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: var(--font-weight-bold);
 }
 
 .signup-index:hover {
@@ -526,16 +527,11 @@ main {
 /***********  Sign Up Page  **********/
 
 .signup-body {
-  background: var(--darkblue);
+  background: #ccc;
 }
 
 .signup-main {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../img/parcel.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding-top: 100px;
+  padding-top: 150px;
 }
 
 .signup-header {
@@ -597,9 +593,8 @@ main {
 }
 
 /********  User Page *********/
-
 .user-body {
-  background: var(--darkblue);
+  background: var(--darkgrey);
 }
 
 .order-btn-nav {
@@ -610,12 +605,6 @@ main {
 
 .order-btn-nav:hover {
   background: var(--lightpurple);
-}
-
-.user-page {
-  padding-top: 100px;
-  background: var(--white);
-  box-shadow: var(--shadow);
 }
 
 .user-dashboard {
@@ -666,7 +655,6 @@ main {
 }
 
 .order-list {
-  box-shadow: var(--shadow);
   padding: 1rem 0.3rem;
 }
 
@@ -745,7 +733,6 @@ main {
 }
 
 .order-list .accordion {
-  background: #ccc;
   color: var(--darkblue);
   font-weight: var(--font-weight-bold);
   text-transform: capitalize;
@@ -757,8 +744,10 @@ main {
 
 .order-list-title {
   text-align: center;
-  color: var(--darkblue);
+  color: var(--white);
   margin-bottom: 0;
+  background: var(--darkblue);
+  padding: 0.3rem 0;
 }
 
 .order-detail {
@@ -854,12 +843,11 @@ span.price {
 
 /********  Admin Page **********/
 .admin-body {
-  background: var(--darkblue);
+  background: var(--darkgrey);
 }
 
 .admin-page {
   padding-top: 100px;
-  background: var(--white);
 }
 
 .admin-dashboard {
