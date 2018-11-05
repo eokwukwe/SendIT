@@ -505,16 +505,11 @@ main {
 /***********  Sign Up Page  **********/
 
 .signup-body {
-  background: var(--darkblue);
+  background: #ccc;
 }
 
 .signup-main {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../img/parcel.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding-top: 100px;
+  padding-top: 150px;
 }
 
 .signup-header {
@@ -577,9 +572,9 @@ main {
 
 /********  User Page *********/
 
-.user-body {
+/* .user-body {
   background: var(--darkblue);
-}
+} */
 
 .order-btn-nav {
   border: 1px solid var(--white);
