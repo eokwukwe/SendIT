@@ -2,8 +2,8 @@ import { orders } from '../model/orders';
 
 export default class ParcelOrders {
 	/**
-	 * @desc A method for Get all parcel delivery orders
-	 * @route  GET api/v1/orders
+	 * @desc A method to Get all parcel delivery orders
+	 * @route  GET api/v1/parcels
 	 * @params {object} req
 	 * @params {object} res
 	 */
@@ -22,8 +22,8 @@ export default class ParcelOrders {
 	}
 
 	/**
-	 * @desc A method for Get specific parcel delivery order
-	 * @route  GET api/v1/orders/:parcelId
+	 * @desc A method to Get specific parcel delivery order
+	 * @route  GET api/v1/parcels/:parcelId
 	 * @params {object} req
 	 * @params {object} res
 	 */
@@ -45,7 +45,7 @@ export default class ParcelOrders {
 	}
 
 	/**
-	 * @desc A method for Get parcel delivery order by a specific user
+	 * @desc A method to Get parcel delivery order by a specific user
 	 * @route  GET api/v1/users/:userId/parcels
 	 * @params {object} req
 	 * @params {object} res
@@ -53,8 +53,6 @@ export default class ParcelOrders {
 	getOrdersbyUser(req, res) {
 		const userId = parseInt(req.params.userId, 0);
 		const userOrders = orders.filter(order => userId === order.userId);
-		console.log(userId);
-		console.log(userOrders);
 
 		if (userOrders.length < 1) {
 			return res.status(404).json({
@@ -70,8 +68,8 @@ export default class ParcelOrders {
 	}
 
 	/**
-	 * @desc A method for Post parcel delivery order
-	 * @route  POST api/v1/orders
+	 * @desc A method to Post parcel delivery order
+	 * @route  POST api/v1/parcels
 	 * @params {object} req
 	 * @params {object} res
 	 */
@@ -99,6 +97,40 @@ export default class ParcelOrders {
 			Message: 'Parcel delivery order created successully',
 			data: createdOrder,
 			orders: orders
+		});
+	}
+
+	/**
+	 * @desc A method to Cancel parcel delivery order
+	 * @route  POST api/v1/parcels/:parcelId/cancel
+	 * @params {object} req
+	 * @params {object} res
+	 */
+	cancelOrder(req, res) {
+		const { cancelled } = req.body;
+		const parcelId = parseInt(req.params.parcelId, 0);
+		const orderToCancel = orders.filter(
+			order => parcelId === order.parcelId
+		)[0];
+
+		if (!orderToCancel) {
+			return res.status(404).json({
+				Message: 'order not found'
+			});
+		}
+
+		if (orderToCancel.cancelled === true) {
+			return res.status(400).json({
+				Message: `parcel order #${parcelId} is already cancelled`
+			});
+		}
+
+		orderToCancel.cancelled = cancelled;
+
+		res.status(201).json({
+			Success: true,
+			Message: `Parcel delivery order #${parcelId} cancelled successully`,
+			order: orderToCancel
 		});
 	}
 }

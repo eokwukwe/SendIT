@@ -9,5 +9,6 @@ router.get('/parcels', orders.getAllOrders);
 router.get('/parcels/:parcelId', orders.getOneOrder);
 router.get('/users/:userId/parcels', orders.getOrdersbyUser);
 router.post('/parcels', validateOrder, orders.createOrder);
+router.put('/parcels/:parcelId/cancel', orders.cancelOrder);
 
 export default router;
