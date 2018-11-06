@@ -33,5 +33,23 @@ export let orders = [
 		delivered: true,
 		inTransit: false,
 		cancelled: false
+	},
+
+	{
+		userId: 2,
+		receiverName: 'susan rice',
+		receiverEmail: 'susan.rice@gmail.com',
+		receiverPhone: '08085651245',
+		parcelId: 4,
+		parcelName: 'Travel documents',
+		parcelWeight: 0.1,
+		orderPrice: 111,
+		address: '12 ololo street omomo',
+		city: 'lagos',
+		country: 'nigeria',
+		orderDate: 1541500967206,
+		delivered: false,
+		inTransit: false,
+		cancelled: true
 	}
 ];
