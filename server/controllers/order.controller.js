@@ -22,6 +22,29 @@ export default class ParcelOrders {
 	}
 
 	/**
+	 * @desc A method for Get specific parcel delivery order
+	 * @route  GET api/v1/orders/:parcelId
+	 * @params {object} req
+	 * @params {object} res
+	 */
+	getOneOrder(req, res) {
+		const parcelId = parseInt(req.params.parcelId, 0);
+		const parcelOrder = orders.filter(order => parcelId === order.parcelId)[0];
+
+		if (!parcelOrder) {
+			return res.status(404).json({
+				Message: 'order not found'
+			});
+		}
+
+		res.status(201).json({
+			Success: true,
+			Message: 'Your order',
+			order: parcelOrder
+		});
+	}
+
+	/**
 	 * @desc A method for Post parcel delivery order
 	 * @route  POST api/v1/orders
 	 * @params {object} req

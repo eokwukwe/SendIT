@@ -6,6 +6,7 @@ const router = Router();
 const orders = new ParcelOrders();
 
 router.get('/orders', orders.getAllOrders);
+router.get('/orders/:parcelId', orders.getOneOrder);
 router.post('/orders', validateOrder, orders.createOrder);
 
 export default router;
