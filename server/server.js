@@ -8,44 +8,35 @@ import config from './config/config';
 const app = express();
 
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
+import indexRoute from './routes/index';
+import orderRoutes from './routes/orders/order.route';
+app.use('/api/v1', indexRoute);
+app.use('/api/v1', orderRoutes);
+
 // Handle 404 error
 app.use((req, res, next) => {
-	const error = new Error(
-		'Not Found',
-	);
+	const error = new Error('Not Found');
 
 	error.status = 404;
-	next(
-		error,
-	);
+	next(error);
 });
 
 // Error handler for all other types of errors
-app.use((error, req, res, next) => {
-	res.status(
-		error.status ||
-			500,
-	);
-	res.json(
-		{
-			error: {
-				message:
-					error.message,
-			},
-		},
-	);
+app.use((error, req, res) => {
+	res.status(error.status || 500);
+	res.json({
+		error: {
+			message: error.message
+		}
+	});
 });
 
 app.listen(config.port, () => {
-	console.log(
-		`SendIT Server is listening on port ${
-			config.port
-		}`,
-	);
+	console.log(`SendIT Server is listening on port ${config.port}`);
 });
 
 export default app;
