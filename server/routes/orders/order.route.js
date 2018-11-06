@@ -5,8 +5,9 @@ import { validateOrder } from '../../middleware/ordersValidation';
 const router = Router();
 const orders = new ParcelOrders();
 
-router.get('/orders', orders.getAllOrders);
-router.get('/orders/:parcelId', orders.getOneOrder);
-router.post('/orders', validateOrder, orders.createOrder);
+router.get('/parcels', orders.getAllOrders);
+router.get('/parcels/:parcelId', orders.getOneOrder);
+router.get('/users/:userId/parcels', orders.getOrdersbyUser);
+router.post('/parcels', validateOrder, orders.createOrder);
 
 export default router;

@@ -45,6 +45,31 @@ export default class ParcelOrders {
 	}
 
 	/**
+	 * @desc A method for Get parcel delivery order by a specific user
+	 * @route  GET api/v1/users/:userId/parcels
+	 * @params {object} req
+	 * @params {object} res
+	 */
+	getOrdersbyUser(req, res) {
+		const userId = parseInt(req.params.userId, 0);
+		const userOrders = orders.filter(order => userId === order.userId);
+		console.log(userId);
+		console.log(userOrders);
+
+		if (userOrders.length < 1) {
+			return res.status(404).json({
+				Message: 'User do not exist'
+			});
+		}
+
+		res.status(201).json({
+			Success: true,
+			Message: `orders by ${userId}`,
+			userOrders
+		});
+	}
+
+	/**
 	 * @desc A method for Post parcel delivery order
 	 * @route  POST api/v1/orders
 	 * @params {object} req

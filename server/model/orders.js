@@ -1,6 +1,6 @@
 export let orders = [
 	{
-		senderId: 1,
+		userId: 1,
 		receiverName: 'jane doe',
 		receiverEmail: 'jane.doe@gmail.com',
 		receiverPhone: '07062541254',
@@ -18,7 +18,7 @@ export let orders = [
 	},
 
 	{
-		senderId: 1,
+		userId: 1,
 		receiverName: 'susan doe',
 		receiverEmail: 'susan.doe@gmail.com',
 		receiverPhone: '08083651245',
