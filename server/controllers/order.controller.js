@@ -1,6 +1,32 @@
 import { orders } from '../model/orders';
 
 export default class ParcelOrders {
+	/**
+	 * @desc A method for Get all parcel delivery orders
+	 * @route  GET api/v1/orders
+	 * @params {object} req
+	 * @params {object} res
+	 */
+	getAllOrders(req, res) {
+		if (!orders) {
+			return res.status(404).json({
+				Failure: true,
+				Message: 'No orders found'
+			});
+		}
+		res.json({
+			Success: true,
+			Message: 'Your orders',
+			orders: orders
+		});
+	}
+
+	/**
+	 * @desc A method for Post parcel delivery order
+	 * @route  POST api/v1/orders
+	 * @params {object} req
+	 * @params {object} res
+	 */
 	createOrder(req, res) {
 		const createdOrder = {
 			receiverName: req.body.receiverName,
