@@ -34,6 +34,12 @@ export const validateOrder = (req, res, next) => {
 		country
 	} = req.body;
 
+	if (Object.keys(req.body).length === 0) {
+		return res.status(400).json({
+			error: 'order detail cannot be empty'
+		});
+	}
+
 	if (!validateString(receiverName)) {
 		return res.status(400).json({
 			error: 'name cannot be empty'
