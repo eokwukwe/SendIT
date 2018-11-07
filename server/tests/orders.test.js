@@ -18,3 +18,29 @@ describe('GET all parcel delivery order', () => {
 			.end(done);
 	});
 });
+
+describe('GET a specific parcel delivery order', () => {
+	const parcelId = 2;
+	it('should return a specific parcel order with the given ID', done => {
+		request(app)
+			.get(`/api/v1/parcels/${parcelId}`)
+			.expect(201)
+			.expect(res => {
+				expect(res.body.status).toEqual('success');
+				expect(res.body.message).toEqual('Your order');
+				expect(typeof res.body).toBe('object');
+			})
+			.end(done);
+	});
+
+	it('should return 404 if the ID does match any parcel ID', done => {
+		request(app)
+			.get(`/api/v1/parcels/${6}`)
+			.expect(404)
+			.expect(res => {
+				expect(res.body.status).toEqual('error');
+				expect(res.body.error).toEqual('order not found');
+			})
+			.end(done);
+	});
+});
