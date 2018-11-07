@@ -227,3 +227,74 @@ describe('POST a parcel delivery order', () => {
 			.end(done);
 	});
 });
+
+describe('PUT a parcel delivery order', () => {
+	it('should return 400 if the request is empty', done => {
+		const parcelId = 2;
+		request(app)
+			.put(`/api/v1/parcels/${parcelId}/cancel`)
+			.send({})
+			.expect(400)
+			.expect(res => {
+				expect(res.body.status).toEqual('error');
+				expect(res.body.error).toEqual('no cancell request sent');
+			})
+			.end(done);
+	});
+
+	it('should return 404 if the order does not exist', done => {
+		const parcelId = 5;
+		request(app)
+			.put(`/api/v1/parcels/${parcelId}/cancel`)
+			.send({ cancelled: 'true' })
+			.expect(404)
+			.expect(res => {
+				expect(res.body.status).toEqual('error');
+				expect(res.body.error).toEqual('order not found');
+			})
+			.end(done);
+	});
+
+	it('should return 400 if the order is already cancelled', done => {
+		const parcelId = 4;
+		request(app)
+			.put(`/api/v1/parcels/${parcelId}/cancel`)
+			.send({ cancelled: 'true' })
+			.expect(400)
+			.expect(res => {
+				expect(res.body.status).toEqual('error');
+				expect(res.body.error).toEqual(
+					`parcel order #${parcelId} is already cancelled`
+				);
+			})
+			.end(done);
+	});
+
+	it('should return 201 when the order is cancelled successfully', done => {
+		const parcelId = 2;
+		request(app)
+			.put(`/api/v1/parcels/${parcelId}/cancel`)
+			.send({ cancelled: 'true' })
+			.expect(201)
+			.expect(res => {
+				expect(res.body.status).toEqual('success');
+				expect(res.body.message).toEqual(
+					`Parcel delivery order #${parcelId} cancelled successully`
+				);
+			})
+			.end(done);
+	});
+
+	it('should change cancelled to true', done => {
+		const parcelId = 2;
+		request(app)
+			.put(`/api/v1/parcels/${parcelId}/cancel`)
+			.send({ cancelled: 'true' })
+			.expect(201)
+			.expect(res => {
+				expect(res.body.status).toEqual('success');
+				expect(res.body.order.cancelled).toBe('true');
+			})
+			.end(done);
+	});
+});
