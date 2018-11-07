@@ -44,3 +44,28 @@ describe('GET a specific parcel delivery order', () => {
 			.end(done);
 	});
 });
+
+describe('GET parcel delivery orders by a specific user', () => {
+	const userId = 2;
+	it('should return parcel delivery orders by a specific user', done => {
+		request(app)
+			.get(`/api/v1/users/${userId}/parcels`)
+			.expect(201)
+			.expect(res => {
+				expect(res.body.status).toEqual('success');
+				expect(res.body.message).toEqual(`orders by ${userId}`);
+			})
+			.end(done);
+	});
+
+	it('should return 404 if the ID does match any user ID', done => {
+		request(app)
+			.get(`/api/v1/users/${8}/parcels`)
+			.expect(404)
+			.expect(res => {
+				expect(res.body.status).toEqual('error');
+				expect(res.body.error).toEqual('user does not have any orders yet');
+			})
+			.end(done);
+	});
+});
