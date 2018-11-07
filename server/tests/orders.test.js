@@ -69,3 +69,161 @@ describe('GET parcel delivery orders by a specific user', () => {
 			.end(done);
 	});
 });
+
+describe('POST a parcel delivery order', () => {
+	const order = {
+		receiverName: 'susan rice',
+		receiverEmail: 'susan.rice@gmail.com',
+		receiverPhone: '08085651245',
+		parcelName: 'Travel documents',
+		parcelWeight: 0.1,
+		orderPrice: 111,
+		address: '12 ololo street omomo',
+		city: 'lagos',
+		country: 'nigeria'
+	};
+
+	it('should return 201 when an order is created successfully', done => {
+		request(app)
+			.post('/api/v1/parcels')
+			.send(order)
+			.expect(201)
+			.expect(res => {
+				expect(res.body.status).toEqual('success');
+				expect(res.body.message).toEqual(
+					'Parcel delivery order created successully'
+				);
+			})
+			.end(done);
+	});
+
+	it('should return 400 when the order detail is empty', done => {
+		request(app)
+			.post('/api/v1/parcels')
+			.send({})
+			.expect(400)
+			.expect(res => {
+				expect(res.body.error).toEqual('order detail cannot be empty');
+			})
+			.end(done);
+	});
+
+	it('should return 400 if the receiver name is empty or invalid', done => {
+		order.receiverName = '';
+		request(app)
+			.post('/api/v1/parcels')
+			.send(order)
+			.expect(400)
+			.expect(res => {
+				expect(res.body.error).toEqual('name cannot be empty');
+			})
+			.end(done);
+	});
+
+	it('should return 400 if the receiver email is invalid', done => {
+		order.receiverName = 'susan rice';
+		order.receiverEmail = 'okwuke.com';
+		request(app)
+			.post('/api/v1/parcels')
+			.send(order)
+			.expect(400)
+			.expect(res => {
+				expect(res.body.error).toEqual('email is invalid');
+			})
+			.end(done);
+	});
+
+	it('should return 400 if the receiver phone number is invalid', done => {
+		order.receiverEmail = 'susan.rice@gmail.com';
+		order.receiverPhone = '0002255888';
+		request(app)
+			.post('/api/v1/parcels')
+			.send(order)
+			.expect(400)
+			.expect(res => {
+				expect(res.body.error).toEqual('invalid phone number');
+			})
+			.end(done);
+	});
+
+	it('should return 400 if the parcel name is empty', done => {
+		order.receiverPhone = '08072351454';
+		order.parcelName = '';
+		request(app)
+			.post('/api/v1/parcels')
+			.send(order)
+			.expect(400)
+			.expect(res => {
+				expect(res.body.error).toEqual('parcel name cannot be empty');
+			})
+			.end(done);
+	});
+
+	it('should return 400 if the parcel weight is invalid or less than zero', done => {
+		order.parcelName = 'shoes';
+		order.parcelWeight = 0;
+		request(app)
+			.post('/api/v1/parcels')
+			.send(order)
+			.expect(400)
+			.expect(res => {
+				expect(res.body.error).toEqual(
+					'invalid input. The weight cannot be empty and must be greater than zero'
+				);
+			})
+			.end(done);
+	});
+
+	it('should return 400 if the parcel weight is invalid or less than zero', done => {
+		order.parcelWeight = 2;
+		order.orderPrice = '';
+		request(app)
+			.post('/api/v1/parcels')
+			.send(order)
+			.expect(400)
+			.expect(res => {
+				expect(res.body.error).toEqual(
+					'invalid input. The price cannot be empty and must be greater than one'
+				);
+			})
+			.end(done);
+	});
+
+	it('should return 400 if the address is empty', done => {
+		order.orderPrice = 125;
+		order.address = '';
+		request(app)
+			.post('/api/v1/parcels')
+			.send(order)
+			.expect(400)
+			.expect(res => {
+				expect(res.body.error).toEqual('address cannot be empty');
+			})
+			.end(done);
+	});
+	it('should return 400 if the city is empty', done => {
+		order.address = 'ojata';
+		order.city = '';
+		request(app)
+			.post('/api/v1/parcels')
+			.send(order)
+			.expect(400)
+			.expect(res => {
+				expect(res.body.error).toEqual('city cannot be empty');
+			})
+			.end(done);
+	});
+
+	it('should return 400 if the country is empty', done => {
+		order.city = 'lagos';
+		order.country = '';
+		request(app)
+			.post('/api/v1/parcels')
+			.send(order)
+			.expect(400)
+			.expect(res => {
+				expect(res.body.error).toEqual('country cannot be empty');
+			})
+			.end(done);
+	});
+});
