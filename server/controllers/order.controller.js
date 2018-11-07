@@ -8,16 +8,17 @@ export default class ParcelOrders {
 	 * @params {object} res
 	 */
 	getAllOrders(req, res) {
-		if (!orders) {
+		if (orders.length === 0) {
 			return res.status(404).json({
-				Failure: true,
-				Message: 'No orders found'
+				status: 'error',
+				error: 'No orders found',
+				orders
 			});
 		}
-		res.json({
-			Success: true,
-			Message: 'Your orders',
-			orders: orders
+		res.status(201).json({
+			status: 'success',
+			message: 'Available orders',
+			orders
 		});
 	}
 
@@ -33,19 +34,20 @@ export default class ParcelOrders {
 
 		if (!parcelOrder) {
 			return res.status(404).json({
-				Message: 'order not found'
+				status: 'error',
+				error: 'order not found'
 			});
 		}
 
 		res.status(201).json({
-			Success: true,
-			Message: 'Your order',
+			status: 'success',
+			message: 'Your order',
 			order: parcelOrder
 		});
 	}
 
 	/**
-	 * @desc A method to Get parcel delivery order by a specific user
+	 * @desc A method to Get parcel delivery orders by a specific user
 	 * @route  GET api/v1/users/:userId/parcels
 	 * @params {object} req
 	 * @params {object} res
@@ -54,15 +56,16 @@ export default class ParcelOrders {
 		const userId = parseInt(req.params.userId, 0);
 		const userOrders = orders.filter(order => userId === order.userId);
 
-		if (userOrders.length < 1) {
+		if (userOrders.length === 0) {
 			return res.status(404).json({
-				Message: 'User do not exist'
+				status: 'error',
+				error: 'user does not have any orders yet'
 			});
 		}
 
 		res.status(201).json({
-			Success: true,
-			Message: `orders by ${userId}`,
+			status: 'success',
+			message: `orders by ${userId}`,
 			userOrders
 		});
 	}
@@ -93,10 +96,9 @@ export default class ParcelOrders {
 		orders.push(createdOrder);
 
 		res.status(201).json({
-			Success: true,
-			Message: 'Parcel delivery order created successully',
-			data: createdOrder,
-			orders: orders
+			status: 'success',
+			message: 'Parcel delivery order created successully',
+			data: createdOrder
 		});
 	}
 
@@ -113,24 +115,33 @@ export default class ParcelOrders {
 			order => parcelId === order.parcelId
 		)[0];
 
+		if (Object.keys(req.body).length === 0) {
+			return res.status(400).json({
+				status: 'error',
+				error: 'no cancell request sent'
+			});
+		}
+
 		if (!orderToCancel) {
 			return res.status(404).json({
-				Message: 'order not found'
+				status: 'error',
+				error: 'order not found'
 			});
 		}
 
 		if (orderToCancel.cancelled === true) {
 			return res.status(400).json({
-				Message: `parcel order #${parcelId} is already cancelled`
+				status: 'error',
+				error: `parcel order #${parcelId} is already cancelled`
 			});
 		}
 
-		orderToCancel.cancelled = cancelled;
+		const cancelledOrder = Object.assign(orderToCancel, { cancelled });
 
 		res.status(201).json({
-			Success: true,
-			Message: `Parcel delivery order #${parcelId} cancelled successully`,
-			order: orderToCancel
+			status: 'success',
+			message: `Parcel delivery order #${parcelId} cancelled successully`,
+			order: cancelledOrder
 		});
 	}
 }
