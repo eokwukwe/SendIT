@@ -27,6 +27,8 @@
   },
   "homepage": "https://github.com/eokwukwe/sendIT#readme",
   "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.2",
@@ -40,8 +42,9 @@
     "swagger-ui-express": "^4.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.5",
+    "@babel/register": "^7.0.0",
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
     "coveralls": "^3.0.2",
     "eslint": "^5.5.0",
     "eslint-config-airbnb-base": "^13.1.0",
