@@ -8,7 +8,7 @@ describe('GET all parcel delivery order', () => {
 	it('should return all parcel delivery orders', done => {
 		request(app)
 			.get('/api/v1/parcels')
-			.expect(201)
+			.expect(200)
 			.expect(res => {
 				expect(res.body.status).toEqual('success');
 				expect(res.body.message).toEqual('Available orders');
@@ -24,7 +24,7 @@ describe('GET a specific parcel delivery order', () => {
 	it('should return a specific parcel order with the given ID', done => {
 		request(app)
 			.get(`/api/v1/parcels/${parcelId}`)
-			.expect(201)
+			.expect(200)
 			.expect(res => {
 				expect(res.body.status).toEqual('success');
 				expect(res.body.message).toEqual('Your order');
@@ -50,7 +50,7 @@ describe('GET parcel delivery orders by a specific user', () => {
 	it('should return parcel delivery orders by a specific user', done => {
 		request(app)
 			.get(`/api/v1/users/${userId}/parcels`)
-			.expect(201)
+			.expect(200)
 			.expect(res => {
 				expect(res.body.status).toEqual('success');
 				expect(res.body.message).toEqual(`orders by ${userId}`);
