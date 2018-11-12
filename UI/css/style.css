@@ -1,13 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
 :root {
-  --bg-primary: rgba(167, 163, 163, 0.4);
+  --bg-primary: rgba(230, 225, 225, 0.1);
   --primary-color: #256188;
   --green: #588a00;
   --blue: #256188;
   --grey: #676e7a;
   --darkgrey: rgba(102, 102, 102, 0.5);
-  --lightgrey: rgba(153, 153, 153, 0.5);
+  --lightgrey: rgba(153, 153, 153, 0.2);
   --darkblue: #244062;
   --lightpurple: #c9bcf0;
   --red: rgba(224, 30, 30, 0.9);
@@ -291,27 +291,21 @@ main {
   text-decoration: none;
 }
 
+.nav-item .signup {
+  padding: 0.3rem 0.6rem;
+}
+
 .nav-item .signup,
-.nav-item .logout {
+.nav-item .logout,
+.nav-item .login {
   border: 1px solid var(--white);
   border-radius: 0.2rem;
 }
 
 .nav-item .signup:hover,
-.nav-item .logout:hover {
-  background: var(--lightpurple);
-  color: var(--black);
-}
-
-.nav-item .login {
-  border: 1px solid var(--white);
-  border-radius: 0.2rem;
-  background: var(--lightpurple);
-  color: var(--black);
-}
-
+.nav-item .logout:hover,
 .nav-item .login:hover {
-  color: var(--white);
+  background: var(--lightgrey);
 }
 
 .side-nav {
@@ -442,11 +436,11 @@ main {
 .signup-index {
   border: 1px solid var(--darkblue);
   border-radius: 0.2rem;
-  padding: 0 0.2rem;
+  padding: 0.2rem 0.8rem;
   margin: 0 0.5rem;
-  background: var(--green);
-  color: var(--darkblue);
-  font-size: 0.8rem;
+  background: var(--blue);
+  color: var(--white);
+  font-size: 1.1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -456,7 +450,8 @@ main {
 .signup-index:hover {
   text-decoration: none;
   color: var(--white);
-  background: var(--blue);
+  background: var(--darkblue);
+  border: 1px dotted var(--white);
 }
 
 @media (max-width: 1300px) {
@@ -527,15 +522,22 @@ main {
 /***********  Sign Up Page  **********/
 
 .signup-body {
-  background: #ccc;
+  background: var(--bg-primary);
 }
 
 .signup-main {
   padding-top: 150px;
 }
 
+.signup-card {
+  background: var(--blue);
+}
+
 .signup-header {
-  padding: 0.5rem 0;
+  padding: 0.8rem 0;
+  background: var(--darkblue);
+  color: var(--white);
+  border-bottom: 1px solid #000;
 }
 .signup-message {
   display: none;
@@ -575,11 +577,12 @@ main {
   font-weight: normal;
   font-size: 1.2rem;
   border: none;
-  background: var(--primary-color);
+  background: var(--darkblue);
 }
 
 .card-form input[type="submit"]:hover {
   font-weight: bold;
+  border: 1px dotted var(--white);
 }
 
 .card-form form div {
@@ -594,7 +597,7 @@ main {
 
 /********  User Page *********/
 .user-body {
-  background: var(--darkgrey);
+  background: var(--bg-primary);
 }
 
 .order-btn-nav {
@@ -843,7 +846,7 @@ span.price {
 
 /********  Admin Page **********/
 .admin-body {
-  background: var(--darkgrey);
+  background: var(--bg-primary);
 }
 
 .admin-page {
@@ -874,7 +877,7 @@ td {
 }
 
 tr:nth-child(even) {
-  background-color: var(--white);
+  background-color: var(--lightgrey);
 }
 
 td:nth-child(1) {
