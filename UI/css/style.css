@@ -88,6 +88,10 @@ li {
   border: 1px solid var(--white);
 }
 
+.bg-primary {
+  background-color: var(--bg-primary);
+}
+
 .default {
   background: var(--primary-color);
 }
@@ -518,22 +522,25 @@ main {
     width: 90%;
   }
 }
+/* 
+.login-main {
+  padding-top: 150px;
+} */
 
-/***********  Sign Up Page  **********/
+/***********  Sign Up and Login Pages  **********/
 
-.signup-body {
-  background: var(--bg-primary);
-}
-
-.signup-main {
+.signup-main,
+.login-main {
   padding-top: 150px;
 }
 
-.signup-card {
+.signup-card,
+.login-card {
   background: var(--blue);
 }
 
-.signup-header {
+.signup-header,
+.login-header {
   padding: 0.8rem 0;
   background: var(--darkblue);
   color: var(--white);
@@ -589,21 +596,22 @@ main {
   position: relative;
 }
 
+.login-footer {
+  background-color: var(--white);
+}
+
 @media (max-width: 578px) {
-  .card.signup {
+  .card.signup,
+  .card.login {
     width: 100%;
   }
 }
 
 /********  User Page *********/
-.user-body {
-  background: var(--bg-primary);
-}
-
 .order-btn-nav {
   border: 1px solid var(--white);
   border-radius: 0.2rem;
-  background: var(--green);
+  background: var(--darkblue);
 }
 
 .order-btn-nav:hover {
@@ -845,10 +853,6 @@ span.price {
 }
 
 /********  Admin Page **********/
-.admin-body {
-  background: var(--bg-primary);
-}
-
 .admin-page {
   padding-top: 100px;
 }
@@ -924,7 +928,8 @@ td:nth-child(1) {
 @media (max-width: 1300px) {
   .container.user-page,
   .container.admin-page,
-  .container.signup-main {
+  .container.signup-main,
+  .container.login-main {
     max-width: 100%;
   }
 }
