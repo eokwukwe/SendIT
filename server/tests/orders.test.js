@@ -275,7 +275,7 @@ describe('PUT a parcel delivery order', () => {
 		request(app)
 			.put(`/api/v1/parcels/${parcelId}/cancel`)
 			.send({ cancelled: 'true' })
-			.expect(201)
+			.expect(200)
 			.expect(res => {
 				expect(res.body.status).toEqual('success');
 				expect(res.body.message).toEqual(
@@ -290,7 +290,7 @@ describe('PUT a parcel delivery order', () => {
 		request(app)
 			.put(`/api/v1/parcels/${parcelId}/cancel`)
 			.send({ cancelled: 'true' })
-			.expect(201)
+			.expect(200)
 			.expect(res => {
 				expect(res.body.status).toEqual('success');
 				expect(res.body.order.cancelled).toBe('true');
