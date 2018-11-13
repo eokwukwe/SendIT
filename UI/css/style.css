@@ -9,6 +9,7 @@
   --darkgrey: rgba(102, 102, 102, 0.5);
   --lightgrey: rgba(153, 153, 153, 0.2);
   --darkblue: #244062;
+  --lightblue: rgba(45, 113, 158, 0.7);
   --lightpurple: #c9bcf0;
   --red: rgba(224, 30, 30, 0.9);
   --white: #fff;
@@ -239,6 +240,9 @@ main {
   display: none;
 }
 
+.divider {
+  border: 1px solid var(--darkblue);
+}
 /***********  Header Styles  **********/
 
 .header {
@@ -362,6 +366,10 @@ main {
   }
   .open-slide {
     right: 15px;
+  }
+
+  input {
+    height: 40px;
   }
 }
 
@@ -536,13 +544,13 @@ main {
 
 .signup-card,
 .login-card {
-  background: var(--blue);
+  background: var(--lightblue);
 }
 
 .signup-header,
 .login-header {
   padding: 0.8rem 0;
-  background: var(--darkblue);
+  background: var(--blue);
   color: var(--white);
   border-bottom: 1px solid #000;
 }
@@ -584,7 +592,7 @@ main {
   font-weight: normal;
   font-size: 1.2rem;
   border: none;
-  background: var(--darkblue);
+  background: var(--blue);
 }
 
 .card-form input[type="submit"]:hover {
@@ -597,13 +605,33 @@ main {
 }
 
 .login-footer {
-  background-color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  color: var(--white);
+}
+
+.login-footer a {
+  border: 1px solid var(--blue);
+  padding: 0.3rem 0.5rem;
+  color: var(--white);
+  background: var(--blue);
+  border-radius: 0.3rem;
+}
+
+.login-footer a:hover {
+  background: var(--lightblue);
+  text-decoration: none;
+  border: 1px dotted var(--white);
 }
 
 @media (max-width: 578px) {
   .card.signup,
   .card.login {
     width: 100%;
+  }
+
+  .login-footer {
+    font-size: 0.8rem;
   }
 }
 
