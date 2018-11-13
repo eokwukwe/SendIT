@@ -536,13 +536,13 @@ main {
 
 .signup-card,
 .login-card {
-  background: var(--blue);
+  background: var(--darkgrey);
 }
 
 .signup-header,
 .login-header {
   padding: 0.8rem 0;
-  background: var(--darkblue);
+  background: var(--blue);
   color: var(--white);
   border-bottom: 1px solid #000;
 }
@@ -584,7 +584,7 @@ main {
   font-weight: normal;
   font-size: 1.2rem;
   border: none;
-  background: var(--darkblue);
+  background: var(--blue);
 }
 
 .card-form input[type="submit"]:hover {
@@ -597,7 +597,16 @@ main {
 }
 
 .login-footer {
-  background-color: var(--white);
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.login-card input[type="submit"] {
+  background: var(--darkgrey);
+}
+
+.login-card input[type="submit"]:hover {
+  background: var(--blue);
 }
 
 @media (max-width: 578px) {
