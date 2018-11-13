@@ -77,7 +77,21 @@ export default class ParcelOrders {
 	 * @params {object} res
 	 */
 	createOrder(req, res) {
-		const { receiverName, receiverEmail, receiverPhone, parcelId, parcelName, parcelWeight, orderPrice, address, city, country, delivered, inTransit, cancelled } = req.body;
+		const {
+			receiverName,
+			receiverEmail,
+			receiverPhone,
+			parcelId,
+			parcelName,
+			parcelWeight,
+			orderPrice,
+			address,
+			city,
+			country,
+			delivered,
+			inTransit,
+			cancelled
+		} = req.body;
 
 		const createdOrder = {
 			receiverName,
@@ -138,12 +152,12 @@ export default class ParcelOrders {
 			});
 		}
 
-		const cancelledOrder = Object.assign(orderToCancel, { cancelled });
+		orderToCancel.cancelled = cancelled;
 
-		res.status(201).json({
+		res.status(200).json({
 			status: 'success',
 			message: `Parcel delivery order #${parcelId} cancelled successully`,
-			order: cancelledOrder
+			order: orderToCancel
 		});
 	}
 }
