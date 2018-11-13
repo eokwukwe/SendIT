@@ -5,6 +5,7 @@ const sideNavItem = document.querySelectorAll('.side-nav-item');
 
 sideBarIcon.addEventListener('click', openSlideMenu);
 closeBtn.addEventListener('click', closeSlideMenu);
+window.addEventListener('click', outsideClick);
 
 function openSlideMenu() {
 	var x = document.querySelector('#side-menu');
@@ -12,6 +13,15 @@ function openSlideMenu() {
 		x.style.width = '0';
 	} else {
 		x.style.width = '250px';
+	}
+}
+
+// outsideClick function
+function outsideClick(e) {
+	const mainBody = document.querySelector('body');
+	const navBar = document.querySelector('.navbar');
+	if (e.target == mainBody || e.target == navBar) {
+		closeSlideMenu();
 	}
 }
 
