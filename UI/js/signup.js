@@ -1,13 +1,14 @@
-const formValues = document.forms['signup-form'],
-	submit = document.querySelector('#signup-submit'),
-	firstname = document.querySelector('#firstname'),
-	lastname = document.querySelector('#lastname'),
-	email = document.querySelector('#email'),
-	pwd = document.querySelector('#pwd'),
-	phoneNo = document.querySelector('#phone'),
-	pwdLabel = document.querySelector('.checkPasswords'),
-	signupMessage = document.querySelector('.signup-message'),
-	conPwd = document.querySelector('#confirmpwd');
+const orderBtn = document.querySelectorAll('.order-btn');
+const logout = document.querySelectorAll('.logout');
+const formValues = document.forms['signup-form'];
+// const submit = document.querySelector('#signup-submit');
+const firstname = document.querySelector('#firstname');
+const lastname = document.querySelector('#lastname');
+const email = document.querySelector('#email');
+const pwd = document.querySelector('#pwd');
+const pwdLabel = document.querySelector('.checkPasswords');
+const signupMessage = document.querySelector('.signup-message');
+const conPwd = document.querySelector('#confirmpwd');
 
 const checkPasswordEquality = () => {
 	conPwd.addEventListener('keyup', e => {
@@ -19,16 +20,11 @@ const checkPasswordEquality = () => {
 };
 
 const validatePwd = pwd => {
-	const validPwd = /^[0-9a-zA-Z\s #$&()%;,_@+|?!\.\-]+$/;
+	const validPwd = /^[0-9a-zA-Z\s #$&()%;,_@+|?!.-]+$/;
 	if (pwd.length >= 6 && !!pwd.match(validPwd)) {
 		return true;
 	}
 	return false;
-};
-
-const validatePhoneNo = phone => {
-	const validPhoneChar = /^[0][7-9]{1}[0-1]{1}[\s]?[0-9][-\s.]?[0-9]{3}[-\s.]?[0-9]{4}$/;
-	return phone.trim().match(validPhoneChar);
 };
 
 const validateString = string => {
@@ -39,13 +35,13 @@ const validateString = string => {
 };
 
 const checkValidEmail = email => {
-	const reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	const isValid = reg.test(String(email).toLowerCase());
 	if (!isValid) return false;
 	return true;
 };
 
-const validateFormData = (fname, lname, email, phone, pwd) => {
+const validateFormData = (fname, lname, email, pwd) => {
 	if (fname === '' || !validateString(fname)) {
 		signupMessage.style.display = 'block';
 		signupMessage.style.backgroundColor = 'red';
@@ -66,12 +62,6 @@ const validateFormData = (fname, lname, email, phone, pwd) => {
 		signupMessage.textContent = 'invalid email';
 		return false;
 	}
-	if (phone === '' || !validatePhoneNo(phone)) {
-		signupMessage.style.display = 'block';
-		signupMessage.style.backgroundColor = 'red';
-		signupMessage.textContent = 'invalid phone number';
-		return false;
-	}
 	if (pwd === '' || !validatePwd(pwd)) {
 		signupMessage.style.display = 'block';
 		signupMessage.style.backgroundColor = 'red';
@@ -87,14 +77,13 @@ const validateFormData = (fname, lname, email, phone, pwd) => {
 const signUpSubmit = e => {
 	e.preventDefault();
 
-	const fname = firstname.value,
-		lname = lastname.value,
-		emailAdd = email.value,
-		phone = phoneNo.value,
-		passwd = pwd.value,
-		cpwd = conPwd.value;
+	const fname = firstname.value;
+	const lname = lastname.value;
+	const emailAdd = email.value;
+	const passwd = pwd.value;
+	const cpwd = conPwd.value;
 
-	if (!validateFormData(fname, lname, emailAdd, phone, passwd)) {
+	if (!validateFormData(fname, lname, emailAdd, passwd)) {
 		return;
 	}
 
@@ -104,13 +93,13 @@ const signUpSubmit = e => {
 		signupMessage.textContent = 'passwords do not match';
 		return;
 	}
-	console.log(fname, lname, emailAdd, phone, passwd);
+	console.log(fname, lname, emailAdd, passwd);
 	window.location.href = 'user.html';
 };
 
 const signupInit = () => {
 	logout.forEach(das => (das.style.display = 'none'));
-	orderBtnModal.forEach(das => (das.style.display = 'none'));
+	orderBtn.forEach(das => (das.style.display = 'none'));
 	checkPasswordEquality();
 	formValues.addEventListener('submit', signUpSubmit);
 };

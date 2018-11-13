@@ -625,7 +625,7 @@ main {
 
 .order-summary {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 1rem;
 }
 
@@ -686,6 +686,10 @@ main {
 }
 
 @media (max-width: 578px) {
+  .order-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .order-header {
     font-size: 1.5rem;
   }
