@@ -5,7 +5,7 @@ export const isNumber = number => {
 export const validateString = string => {
 	if (typeof string !== 'string') return false;
 	if (string.length < 2 || string.length > 250) return false;
-	const validString = /^[a-zA-Z-,'\s\d]+$/;
+	const validString = /^[a-zA-Z-'\s\d]+$/;
 	return string.trim().match(validString);
 };
 
