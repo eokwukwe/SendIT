@@ -1,4 +1,5 @@
 const logout = document.querySelectorAll('.logout');
+const orderBtn = document.querySelectorAll('.order-btn');
 const username = document.querySelector('#loginemail');
 const password = document.querySelector('#loginpwd');
 const loginData = document.forms['login-form'];
@@ -21,6 +22,6 @@ const loginSubmit = e => {
 
 if (document.readyState === 'loading' || document.readyState === 'complete') {
 	logout.forEach(das => (das.style.display = 'none'));
-
+	orderBtn.forEach(item => (item.style.display = 'none'));
 	loginData.addEventListener('submit', loginSubmit);
 }

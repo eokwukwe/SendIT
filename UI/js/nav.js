@@ -1,7 +1,6 @@
 const sideBarIcon = document.querySelector('.sidebar-icon');
 const closeBtn = document.querySelector('.btn-close-sidenav');
 const signUp = document.querySelectorAll('.signup');
-const orderBtnModal = document.querySelectorAll('.order-btn');
 const sideNavItem = document.querySelectorAll('.side-nav-item');
 
 sideBarIcon.addEventListener('click', openSlideMenu);
