@@ -19,11 +19,6 @@ for (let i = 0; i < accordion.length; i++) {
 const userInit = () => {
 	signUpBtn.forEach(item => (item.style.display = 'none'));
 	login.forEach(item => (item.style.display = 'none'));
-	orderBtn.forEach(order =>
-		order.addEventListener('click', () => {
-			console.log('Order button');
-		})
-	);
 
 	logout.forEach(item =>
 		item.addEventListener('click', () => {
