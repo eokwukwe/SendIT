@@ -38,6 +38,7 @@ function nextPrev(n) {
 	currentTab = currentTab + n;
 	if (currentTab >= x.length) {
 		document.querySelector('#orderForm').submit();
+		window.location.href = 'user.html';
 		return false;
 	}
 	showTab(currentTab);

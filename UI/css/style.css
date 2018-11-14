@@ -638,8 +638,8 @@ main {
   background: var(--darkblue);
 }
 
-.order-btn-nav:hover {
-  background: var(--lightpurple);
+.order-btn.order-btn-nav:hover {
+  background: var(--lightblue);
 }
 
 .user-dashboard {
@@ -1071,13 +1071,43 @@ td:nth-child(1) {
 }
 
 .btn-dashboard {
+  width: 80%;
+  max-width: 800px;
   display: flex;
   justify-content: flex-start;
-  margin-left: 110px;
+  margin: 0 auto 0.5rem auto;
+}
+
+.btn-dashboard a {
+  background: var(--darkblue);
+  padding: 0.2rem 0.3rem;
+  color: var(--white);
+  border-radius: 0.2rem;
+}
+
+.btn-dashboard a:hover {
+  text-decoration: none;
 }
 
 @media (max-width: 578px) {
-  .order-card {
+  .order-card,
+  .btn-dashboard {
     width: 100%;
+  }
+  .btn-dashboard a {
+    font-size: 0.8rem;
+  }
+
+  .order-form-header {
+    font-size: 1.5rem;
+  }
+
+  #orderForm input {
+    height: 2.1rem;
+  }
+
+  .step-control button {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
   }
 }
