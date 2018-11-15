@@ -56,9 +56,6 @@ Run `npm run test` to run test
 
 ## Links
 Project Management: https://www.pivotaltracker.com/n/projects/2213004
-
-Gh-pages: https://eokwukwe.github.io/sendIT/UI/
-
 Heroku app: https://fcode-send-it.herokuapp.com
 
 ## Author
