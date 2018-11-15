@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import ParcelOrders from '../../controllers/order.controller';
-import { validateOrder } from '../../middleware/ordersValidation';
+import ParcelOrders from '../controllers/order.controller';
+import { validateOrder } from '../middleware/ordersValidation';
 
 const router = Router();
 const orders = new ParcelOrders();
