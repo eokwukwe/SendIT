@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 import indexRoute from './routes/index';
-import orderRoutes from './routes/orders/order.route';
+import orderRoutes from './routes/order.route';
 app.use('/api/v1', indexRoute);
 app.use('/api/v1', orderRoutes);
 
