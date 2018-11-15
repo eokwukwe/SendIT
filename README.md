@@ -26,7 +26,7 @@ Github homepage [SendIT](https://eokwukwe.github.io/sendIT/UI/)
 - CSS
 - Javascript
 - NodeJS
-- Postgres
+- PostgreSQL
 
 ## Getting Started
 1. Clone the repository
@@ -38,3 +38,25 @@ Github homepage [SendIT](https://eokwukwe.github.io/sendIT/UI/)
 Run `npm run test` to run test
 
 ## API Endpoints
+
+| Endpoints | Functionality | Note |
+| ------ | ------ | ------ |
+| GET /parcels | Fetch all parcel delivery orders |
+| GET /parcels/:parcelId | Fetch a specific parcel delivery order |
+| GET /users/:userId/parcels | Fetch all parcel delivery orders by a specific user |
+| PUT /parcels/:parcelId/cancel | Cancel the specific parcel delivery order |
+| POST /parcels | Create a parcel delivery order |
+| POST /auth/signup | Register a user |
+| POST /auth/login | Login a user |
+| PUT /parcels/:parcelId/destination | Change the location of a specific parcel delivery order | Only the user who created the parcel delivery order can change the destination of the parcel |
+| PUT /parcels/:parcelId/status | Change the status of a specific parcel delivery order | Only the Admin can change the status of a specific parcel delivery order |
+| PUT /parcels/:parcelId/presentLocation | Change the present location of a specific parcel delivery order | Only the Admin can change the present location of a specific parcel delivery order |
+
+
+
+## Links
+Project Management: https://www.pivotaltracker.com/n/projects/2213004
+Heroku app: https://fcode-send-it.herokuapp.com
+
+## Author
+Okwukwe Ewurum

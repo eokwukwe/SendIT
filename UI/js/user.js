@@ -1,5 +1,4 @@
 const accordion = document.querySelectorAll('.accordion');
-const orderBtn = document.querySelectorAll('.order-btn');
 const signUpBtn = document.querySelectorAll('.signup');
 const login = document.querySelectorAll('.login');
 const logout = document.querySelectorAll('.logout');
@@ -7,7 +6,9 @@ const logout = document.querySelectorAll('.logout');
 for (let i = 0; i < accordion.length; i++) {
 	accordion[i].addEventListener('click', function() {
 		this.classList.toggle('active');
-		var panel = this.nextElementSibling;
+		this.querySelector('.icon').classList.toggle('rotate');
+
+		const panel = this.nextElementSibling;
 		if (panel.style.maxHeight) {
 			panel.style.maxHeight = null;
 		} else {

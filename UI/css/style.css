@@ -191,7 +191,7 @@ button {
 .accordion {
   background-color: var(--white);
   color: var(--primary-color);
-  padding: 1.5rem 0.8rem;
+  padding: 1.1rem;
   line-height: 9px;
   font-weight: var(--font-weight-bold);
   cursor: pointer;
@@ -200,6 +200,13 @@ button {
   border: none;
   outline: none;
   transition: all 0.5s ease-in;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordion h5 {
+  margin: 0;
 }
 
 .active,
@@ -215,16 +222,57 @@ button {
   transition: max-height 0.2s ease-out;
 }
 
-.accordion::after {
-  content: "\02795";
-  font-size: 0.8rem;
-  color: var(--black);
-  float: right;
-  margin-left: 0.4rem;
+.accordion .icons {
+  border-radius: 0.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.active::after {
-  content: "\2796";
+.list-group {
+  height: auto;
+  border-radius: 0.2rem;
+}
+
+.list-group ul {
+  margin: 0;
+  box-shadow: var(--shadow);
+}
+
+.list-group ul li {
+  border: 1px solid #ddd;
+  margin-top: -1px;
+}
+
+.order-status {
+  margin: 0;
+  padding: 0.6rem 1rem;
+  background: lightgrey;
+}
+
+.rotate {
+  transform: rotate(180deg);
+  transition: transform 0.2s;
+}
+
+.delivered-color {
+  border-top: 4px solid var(--green);
+  border-left: 1px solid var(--green);
+}
+
+.intransit-color {
+  border-top: 4px solid var(--lightpurple);
+  border-left: 1px solid var(--lightpurple);
+}
+
+.cancelled-color {
+  border-top: 4px solid var(--darkblue);
+  border-left: 1px solid var(--darkblue);
+}
+
+.total-color {
+  border-top: 4px solid var(--black);
+  border-left: 1px solid var(--black);
 }
 
 main {
@@ -642,6 +690,16 @@ main {
   background: var(--lightblue);
 }
 
+.user-page {
+  padding-top: 80px;
+}
+
+.user-info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .user-dashboard {
   display: grid;
   grid-gap: 2rem;
@@ -686,7 +744,7 @@ main {
 .order-list-table {
   display: grid;
   grid-gap: 1rem;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr;
 }
 
 .order-list {
@@ -695,11 +753,6 @@ main {
 
 .order-id {
   color: var(--black);
-}
-
-.acc-container {
-  margin-top: 1rem;
-  box-shadow: var(--shadow);
 }
 
 .map {
@@ -723,58 +776,6 @@ main {
   .box-title {
     font-size: 0.8rem;
   }
-}
-
-/********   Order Form Modal *********/
-/* .order-page {
-  padding-top: 80px;
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: 1fr 1fr;
-  align-items: start;
-} */
-
-/* .order-hr {
-  border: 1px solid var(--darkblue);
-} */
-
-/* .order-form {
-  width: 100%;
-  box-shadow: var(--shadow);
-} */
-
-/* .order-form .card-form input {
-  height: 30px;
-} */
-
-/* .order-form .card-form input[type="submit"]:hover {
-  background: var(--darkblue);
-  font-weight: normal;
-  border: 1px solid var(--white);
-} */
-/* 
-.order-header {
-  padding: 0.2rem;
-  color: var(--darkblue);
-} */
-
-/* .order-info,
-.order-destination label {
-  font-size: 0.9rem;
-  color: var(--darkblue);
-} */
-
-/* .order-info input,
-.order-destination input {
-  margin-top: 0;
-  height: 40px;
-  font-size: 0.9rem;
-} */
-
-.order-list .accordion {
-  color: var(--darkblue);
-  font-weight: var(--font-weight-bold);
-  text-transform: capitalize;
 }
 
 .order-list-content {
@@ -822,6 +823,10 @@ span.price {
 
 .status-delivered {
   background: var(--green);
+}
+
+.status-cancelled {
+  background: var(--red);
 }
 
 .status-in-transit {
@@ -929,10 +934,6 @@ td:nth-child(1) {
   display: grid;
   grid-gap: 1.5rem;
   grid-template-columns: repeat(2, 1fr);
-}
-
-.order-status {
-  box-shadow: var(--shadow);
 }
 
 @media (max-width: 768px) {
