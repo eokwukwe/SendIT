@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="css/style.css" />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.4.2/js/all.js"
+    ></script>
     <title>SendIT | User</title>
   </head>
 
@@ -50,91 +54,8 @@
     </header>
 
     <main class="container user-page">
-      <!-- Order Form Modal -->
-      <div class="modal order-form">
-        <div class="modal-body card animate">
-          <span class="close">&times;</span>
-          <h3 class="card-header order-header">Create Your Order</h3>
-          <div class="card-body dark-grey">
-            <form class="card-form">
-              <div class="order-info">
-                <div class="parcel-count">
-                  <label for="parcelCount">Parcel Count</label>
-                  <input
-                    type="number"
-                    name="parcelCount"
-                    placeholder="1 Parcel"
-                  />
-                </div>
-                <div class="parcel-weight">
-                  <label for="parcelWeight">Parcel Weight</label>
-                  <input
-                    type="number"
-                    name="parcelWeight"
-                    step="0.1"
-                    min="0.1"
-                    placeholder="10 KG"
-                    required=""
-                  />
-                </div>
-              </div>
-
-              <hr class="order-hr" />
-              <div class="order-destination">
-                <h3>Delivery Destination</h3>
-                <div>
-                  <label for="name">Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="First Name and Last Name"
-                    required=""
-                  />
-                </div>
-                <div>
-                  <label for="country">Country</label>
-                  <input
-                    type="text"
-                    name="country"
-                    placeholder="Country"
-                    required=""
-                  />
-                </div>
-                <div class="address">
-                  <label for="address">Address</label>
-                  <input
-                    type="text"
-                    name="address"
-                    placeholder="20 Toyin Street"
-                    required=""
-                  />
-                </div>
-                <div class="city">
-                  <label for="city">City/State</label>
-                  <input type="text" name="city" placeholder="Ikeja, Lagos" />
-                </div>
-                <div class="phone">
-                  <label for="phone">Phone Number</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="Phone"
-                    required=""
-                  />
-                </div>
-                <div class="email">
-                  <label for="email">Email</label>
-                  <input type="email" name="email" placeholder="Email" />
-                </div>
-              </div>
-              <input type="submit" class="order-submit" value="Create Order" />
-            </form>
-          </div>
-        </div>
-      </div>
-
+      <h2 class="user-info">Welcome Tunde Tundale</h2>
       <section class="user-dashboard">
-        <h2 class="user-info">Welcome User</h2>
         <section class="order-summary">
           <div class="order-box total-order">
             <span class="box-title">Total Orders</span>
@@ -155,88 +76,262 @@
         </section>
 
         <section class="order-list-table">
-          <div>
-            <h3 class="order-list-title">Your Orders</h3>
-            <div class="acc-container">
-              <button class="accordion">
-                Order #: <span class="order-id">18480</span>
-              </button>
-              <div class="accordion-content">
-                <div class="order-detail">
-                  <p>
-                    Pickup Location
-                    <span class="price">14 Toyin Street Ikeja</span>
-                  </p>
-                  <p>Destination <span class="price">Lagos, Nigeria</span></p>
-                  <p>
-                    Status
-                    <span class="status status-in-transit">In Transit</span>
-                  </p>
-                  <hr class="order-hr" />
-                  <span class="order-detail-edit">
-                    <button class="btn-cancel">Cancel</button>
-                    <button class="btn-change">change Destination</button>
-                  </span>
+          <div class="list-group intransit-color">
+            <h4 class="order-status">Intransit orders</h4>
+            <ul>
+              <li>
+                <button class="accordion">
+                  <h5>Order #<span class="order-id">12345</span></h5>
+                  <span class="icons"
+                    ><i class="fas fa-chevron-down icon"></i
+                  ></span>
+                </button>
+                <div class="accordion-content">
+                  <div class="order-detail">
+                    <p>
+                      Pickup Location
+                      <span class="price">14 Toyin Street Ikeja</span>
+                    </p>
+                    <p>Destination <span class="price">Lagos, Nigeria</span></p>
+                    <p>
+                      Status
+                      <span class="status status-in-transit">In Transit</span>
+                    </p>
+                    <hr class="order-hr" />
+                    <span class="order-detail-edit">
+                      <button class="btn-cancel">Cancel</button>
+                      <button class="btn-change">change Destination</button>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </li>
 
-            <div class="acc-container">
-              <button class="accordion">
-                Order #: <span class="order-id">18473</span>
-              </button>
-              <div class="accordion-content">
-                <div class="order-detail">
-                  <p>
-                    Pickup Location
-                    <span class="price">14 Toyin Street Ikeja</span>
-                  </p>
-                  <p>Destination <span class="price">Lagos, Nigeria</span></p>
-                  <p>
-                    Status
-                    <span class="status status-delivered">Delivered</span>
-                  </p>
+              <li>
+                <button class="accordion">
+                  <h5>Order #<span class="order-id">12345</span></h5>
+                  <span class="icons"
+                    ><i class="fas fa-chevron-down icon"></i
+                  ></span>
+                </button>
+                <div class="accordion-content">
+                  <div class="order-detail">
+                    <p>
+                      Pickup Location
+                      <span class="price">14 Toyin Street Ikeja</span>
+                    </p>
+                    <p>Destination <span class="price">Lagos, Nigeria</span></p>
+                    <p>
+                      Status
+                      <span class="status status-in-transit">In Transit</span>
+                    </p>
+                    <hr class="order-hr" />
+                    <span class="order-detail-edit">
+                      <button class="btn-cancel">Cancel</button>
+                      <button class="btn-change">change Destination</button>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </li>
 
-            <div class="acc-container">
-              <button class="accordion">
-                Order #: <span class="order-id">18474</span>
-              </button>
-              <div class="accordion-content">
-                <div class="order-detail">
-                  <p>
-                    Pickup Location
-                    <span class="price">14 Toyin Street Ikeja</span>
-                  </p>
-                  <p>Destination <span class="price">Lagos, Nigeria</span></p>
-                  <p>
-                    Status
-                    <span class="status status-delivered">Delivered</span>
-                  </p>
+              <li>
+                <button class="accordion">
+                  Section 1
+                  <span><i class="fas fa-chevron-down icon"></i></span>
+                </button>
+                <div class="accordion-content">
+                  <div class="order-detail">
+                    <p>
+                      Pickup Location
+                      <span class="price">14 Toyin Street Ikeja</span>
+                    </p>
+                    <p>Destination <span class="price">Lagos, Nigeria</span></p>
+                    <p>
+                      Status
+                      <span class="status status-in-transit">In Transit</span>
+                    </p>
+                    <hr class="order-hr" />
+                    <span class="order-detail-edit">
+                      <button class="btn-cancel">Cancel</button>
+                      <button class="btn-change">change Destination</button>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </li>
+              <li>
+                <button class="accordion">
+                  Section 1
+                  <span><i class="fas fa-chevron-down icon"></i></span>
+                </button>
+                <div class="accordion-content">
+                  <div class="order-detail">
+                    <p>
+                      Pickup Location
+                      <span class="price">14 Toyin Street Ikeja</span>
+                    </p>
+                    <p>Destination <span class="price">Lagos, Nigeria</span></p>
+                    <p>
+                      Status
+                      <span class="status status-in-transit">In Transit</span>
+                    </p>
+                    <hr class="order-hr" />
+                    <span class="order-detail-edit">
+                      <button class="btn-cancel">Cancel</button>
+                      <button class="btn-change">change Destination</button>
+                    </span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
 
-            <div class="acc-container">
-              <button class="accordion">
-                Order #: <span class="order-id">18475</span>
-              </button>
-              <div class="accordion-content">
-                <div class="order-detail">
-                  <p>
-                    Pickup Location
-                    <span class="price">14 Toyin Street Ikeja</span>
-                  </p>
-                  <p>Destination <span class="price">Lagos, Nigeria</span></p>
-                  <p>
-                    Status
-                    <span class="status status-delivered">Delivered</span>
-                  </p>
+          <div class="list-group delivered-color">
+            <h4 class="order-status">Delivered orders</h4>
+            <ul>
+              <li>
+                <button class="accordion">
+                  <h5>Order #<span class="order-id">12345</span></h5>
+                  <span class="icons"
+                    ><i class="fas fa-chevron-down icon"></i
+                  ></span>
+                </button>
+                <div class="accordion-content">
+                  <div class="order-detail">
+                    <p>
+                      Pickup Location
+                      <span class="price">14 Toyin Street Ikeja</span>
+                    </p>
+                    <p>Destination <span class="price">Lagos, Nigeria</span></p>
+                    <p>
+                      Status
+                      <span class="status status-delivered">Delivered</span>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </li>
+              <li>
+                <button class="accordion">
+                  <h5>Order #<span class="order-id">12345</span></h5>
+                  <span class="icons"
+                    ><i class="fas fa-chevron-down icon"></i
+                  ></span>
+                </button>
+                <div class="accordion-content">
+                  <div class="order-detail">
+                    <p>
+                      Pickup Location
+                      <span class="price">14 Toyin Street Ikeja</span>
+                    </p>
+                    <p>Destination <span class="price">Lagos, Nigeria</span></p>
+                    <p>
+                      Status
+                      <span class="status status-delivered">Delivered</span>
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <button class="accordion">
+                  Section 1
+                  <span><i class="fas fa-chevron-down icon"></i></span>
+                </button>
+                <div class="accordion-content"><p>Lorem ipsum...</p></div>
+              </li>
+              <li>
+                <button class="accordion">
+                  Section 1
+                  <span><i class="fas fa-chevron-down icon"></i></span>
+                </button>
+                <div class="accordion-content"><p>Lorem ipsum...</p></div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="list-group cancelled-color">
+            <h4 class="order-status">Cancelled orders</h4>
+            <ul>
+              <li>
+                <button class="accordion">
+                  <h5>Order #<span class="order-id">12345</span></h5>
+                  <span class="icons"
+                    ><i class="fas fa-chevron-down icon"></i
+                  ></span>
+                </button>
+                <div class="accordion-content">
+                  <div class="order-detail">
+                    <p>
+                      Pickup Location
+                      <span class="price">14 Toyin Street Ikeja</span>
+                    </p>
+                    <p>Destination <span class="price">Lagos, Nigeria</span></p>
+                    <p>
+                      Status
+                      <span class="status status-cancelled">Cancelled</span>
+                    </p>
+                  </div>
+                </div>
+              </li>
+
+              <li>
+                <button class="accordion">
+                  <h5>Order #<span class="order-id">12345</span></h5>
+                  <span class="icons"
+                    ><i class="fas fa-chevron-down icon"></i
+                  ></span>
+                </button>
+                <div class="accordion-content">
+                  <div class="order-detail">
+                    <p>
+                      Pickup Location
+                      <span class="price">14 Toyin Street Ikeja</span>
+                    </p>
+                    <p>Destination <span class="price">Lagos, Nigeria</span></p>
+                    <p>
+                      Status
+                      <span class="status status-cancelled">Cancelled</span>
+                    </p>
+                  </div>
+                </div>
+              </li>
+
+              <li>
+                <button class="accordion">
+                  Section 1
+                  <span><i class="fas fa-chevron-down icon"></i></span>
+                </button>
+                <div class="accordion-content">
+                  <div class="order-detail">
+                    <p>
+                      Pickup Location
+                      <span class="price">14 Toyin Street Ikeja</span>
+                    </p>
+                    <p>Destination <span class="price">Lagos, Nigeria</span></p>
+                    <p>
+                      Status
+                      <span class="status status-cancelled">Cancelled</span>
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <button class="accordion">
+                  Section 1
+                  <span><i class="fas fa-chevron-down icon"></i></span>
+                </button>
+                <div class="accordion-content">
+                  <div class="order-detail">
+                    <p>
+                      Pickup Location
+                      <span class="price">14 Toyin Street Ikeja</span>
+                    </p>
+                    <p>Destination <span class="price">Lagos, Nigeria</span></p>
+                    <p>
+                      Status
+                      <span class="status status-cancelled">Cancelled</span>
+                    </p>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
 
           <div class="map">
