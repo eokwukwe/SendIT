@@ -1,13 +1,15 @@
 import { orders } from '../model/orders';
+import { validationResult } from 'express-validator/check';
 
 export default class ParcelOrders {
 	/**
-	 * @desc A method to Get all parcel delivery orders
-	 * @route  GET api/v1/parcels
-	 * @params {object} req
-	 * @params {object} res
+	 * @desc GET api/v1/parcels
+	 * @param {object} req
+	 * @param {object} res
+	 * @returns {object} all orders
+	 * @memberof ParcelOrders
 	 */
-	getAllOrders(req, res) {
+	static getAllOrders(req, res) {
 		if (orders.length === 0) {
 			return res.status(404).json({
 				status: 'error',
@@ -23,12 +25,13 @@ export default class ParcelOrders {
 	}
 
 	/**
-	 * @desc A method to Get specific parcel delivery order
-	 * @route  GET api/v1/parcels/:parcelId
-	 * @params {object} req
-	 * @params {object} res
+	 * @desc GET api/v1/parcels/:parcelId
+	 * @param {object} req
+	 * @param {object} res
+	 * @returns {object} one order
+	 * @memberof ParcelOrders
 	 */
-	getOneOrder(req, res) {
+	static getOneOrder(req, res) {
 		const parcelId = parseInt(req.params.parcelId, 0);
 		const parcelOrder = orders.filter(order => parcelId === order.parcelId)[0];
 
@@ -47,12 +50,13 @@ export default class ParcelOrders {
 	}
 
 	/**
-	 * @desc A method to Get parcel delivery orders by a specific user
-	 * @route  GET api/v1/users/:userId/parcels
-	 * @params {object} req
-	 * @params {object} res
+	 * @desc GET api/v1/users/:userId/parcels
+	 * @param {object} req
+	 * @param {object} res
+	 * @returns {object} user orders
+	 * @memberof ParcelOrders
 	 */
-	getOrdersbyUser(req, res) {
+	static getOrdersbyUser(req, res) {
 		const userId = parseInt(req.params.userId, 0);
 		const userOrders = orders.filter(order => userId === order.userId);
 
@@ -71,45 +75,45 @@ export default class ParcelOrders {
 	}
 
 	/**
-	 * @desc A method to Post parcel delivery order
-	 * @route  POST api/v1/parcels
-	 * @params {object} req
-	 * @params {object} res
+	 * @desc POST api/v1/parcels
+	 * @param {object} req
+	 * @param {object} res
+	 * @returns {object} created order
+	 * @memberof ParcelOrders
 	 */
-	createOrder(req, res) {
+	static createOrder(req, res) {
 		const {
-			receiverName,
-			receiverEmail,
-			receiverPhone,
-			parcelId,
-			parcelName,
+			parcelDescription,
 			parcelWeight,
-			orderPrice,
-			address,
-			city,
-			country,
-			delivered,
-			inTransit,
-			cancelled
+			fromAddress,
+			fromCity,
+			fromCountry,
+			toAddress,
+			toCity,
+			toCountry,
+			receiver,
+			receiverPhone
 		} = req.body;
 
 		const createdOrder = {
-			receiverName,
-			receiverEmail,
-			receiverPhone,
-			parcelId,
-			parcelName,
+			parcelDescription,
 			parcelWeight,
-			orderPrice,
-			address,
-			city,
-			country,
-			delivered,
-			inTransit,
-			cancelled
+			fromAddress,
+			fromCity,
+			fromCountry,
+			toAddress,
+			toCity,
+			toCountry,
+			receiver,
+			receiverPhone
 		};
 
+		const errors = validationResult(req);
+
 		orders.push(createdOrder);
+		if (!errors.isEmpty()) {
+			return res.status(400).json(errors.array());
+		}
 
 		res.status(201).json({
 			status: 'success',
@@ -119,12 +123,13 @@ export default class ParcelOrders {
 	}
 
 	/**
-	 * @desc A method to Cancel parcel delivery order
-	 * @route  POST api/v1/parcels/:parcelId/cancel
-	 * @params {object} req
-	 * @params {object} res
+	 * @desc PUT api/v1/parcels/:parcelId/cancel
+	 * @param {object} req
+	 * @param {object} res
+	 * @returns {object} cancelled order
+	 * @memberof ParcelOrders
 	 */
-	cancelOrder(req, res) {
+	static cancelOrder(req, res) {
 		const { cancelled } = req.body;
 		const parcelId = parseInt(req.params.parcelId, 0);
 		const orderToCancel = orders.filter(
