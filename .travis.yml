@@ -3,5 +3,10 @@ node_js:
   - "8"
   - "9"
   - "10"
+services: 
+  - postgresql
 after_success:
   - npm run coverage
+before_script:
+  - psql -c "create database senditdb;" -U postgres
+  - psql -c "ALTER USER postgres WITH PASSWORD 'denja"man5210';" -U postgres
