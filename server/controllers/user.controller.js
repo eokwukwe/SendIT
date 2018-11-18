@@ -35,12 +35,12 @@ export default class User {
 
 		try {
 			const { rows } = await db.query(queryText, values);
-			const { id, usertype, firstname, lastname } = await rows[0];
+			const { id, usertype, firstname, lastname } = rows[0];
 			const token = Helper.generateToken(id, usertype);
 
 			return res.status(201).json({
 				status: 'signup success',
-				messagae: 'you have successfully signed up',
+				message: 'you have successfully signed up',
 				token: token,
 				details: {
 					firstname,
@@ -51,7 +51,7 @@ export default class User {
 			if (error.routine === '_bt_check_unique') {
 				return res.status(400).json({
 					status: 'signup failure',
-					messagae: 'user with that email already exists'
+					message: 'user with that email already exists'
 				});
 			}
 			return res.status(400).json({
@@ -84,13 +84,13 @@ export default class User {
 			if (!rows[0]) {
 				return res.status(400).json({
 					status: 'login failure',
-					messagae: 'user does not exist'
+					message: 'user does not exist'
 				});
 			}
 			if (!Helper.comparePassword(rows[0].password, password)) {
 				return res.status(400).json({
 					status: 'login failure',
-					messagae: 'incorrect password'
+					message: 'incorrect password'
 				});
 			}
 
@@ -98,7 +98,7 @@ export default class User {
 			const token = Helper.generateToken(id, usertype);
 			return res.status(200).json({
 				status: 'login success',
-				messagae: 'you have successfully log in',
+				message: 'you have successfully log in',
 				token: token
 			});
 		} catch (error) {

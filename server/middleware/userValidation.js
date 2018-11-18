@@ -6,14 +6,14 @@ export const validateUser = {
 			.isAlpha()
 			.withMessage('Must be only alphabetical chars')
 			.isLength({ min: 3 })
-			.withMessage('Must be at least 3 chars long')
+			.withMessage('name must be at least 3 chars long')
 			.trim(),
 
 		check('lastname')
 			.isAlpha()
 			.withMessage('Must be only alphabetical chars')
 			.isLength({ min: 3 })
-			.withMessage('Must be at least 3 chars long')
+			.withMessage('name must be at least 3 chars long')
 			.trim(),
 
 		check('email')
