@@ -3,5 +3,10 @@ node_js:
   - "8"
   - "9"
   - "10"
+services: 
+  - postgresql
+before_script:
+  - psql -c "create database senditdb;" -U postgres
+  - npm run migration
 after_success:
   - npm run coverage
