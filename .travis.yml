@@ -5,7 +5,7 @@ node_js:
   - "10"
 services: 
   - postgresql
-after_success:
-  - npm run coverage
 before_script:
   - psql -c "create database senditdb;" -U postgres
+after_success:
+  - npm run coverage
