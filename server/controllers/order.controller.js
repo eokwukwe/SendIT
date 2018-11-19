@@ -116,7 +116,7 @@ export default class Order {
 			if (!rows[0]) {
 				return res.status(404).json({
 					status: 'failure',
-					message: 'user orders not found'
+					message: 'order not found'
 				});
 			}
 			return res.status(200).json({
