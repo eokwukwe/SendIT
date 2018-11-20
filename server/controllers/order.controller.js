@@ -32,10 +32,10 @@ export default class Order {
 		} = req.body;
 
 		const orderPrice = parcelWeight * 150;
-		const userId = parseInt(req.user.id, 0);
+		const userId = parseInt(req.user.userId, 0);
 		const presentLocation = fromAddress;
 		const queryText = `INSERT INTO 
-			orders(parcel_descript, parcel_wgt, price, from_address, from_city, from_country, to_address, to_city, to_country, receiver, receiver_phone, present_location, userid, created_on, updated_on) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) returning *`;
+			orders(parcel_descrpt, parcel_wgt, price, from_address, from_city, from_country, to_address, to_city, to_country, receiver, receiver_phone, present_location, userid, created_on, updated_on) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) returning *`;
 
 		const values = [
 			parcelDescription,
@@ -173,9 +173,9 @@ export default class Order {
 	 * @memberof Order
 	 */
 	static async cancelOrder(req, res) {
-		const { userId } = req.body;
+		const userId = parseInt(req.user.userId, 0);
 		const parcelId = parseInt(req.params.parcelId, 0);
-		const findText = 'SELECT * FROM order WHERE id=$1 AND userid=$2';
+		const findText = 'SELECT * FROM orders WHERE id=$1 AND userid=$2';
 		const updateText =
 			'UPDATE orders SET cancelled=$1, updated_on=$2 WHERE id=$3 AND userid=$4 returning *';
 
@@ -187,12 +187,7 @@ export default class Order {
 					message: 'order not found'
 				});
 			}
-			const values = [
-				'true' || rows[0].cancelled,
-				moment(new Date()),
-				parcelId,
-				userId
-			];
+			const values = ['true', moment(new Date()), parcelId, userId];
 			const result = await db.query(updateText, values);
 			return res.status(200).json({
 				status: 'success',
@@ -215,13 +210,14 @@ export default class Order {
 	 * @memberof Order
 	 */
 	static async changeOrderDestination(req, res) {
-		const { toAddress, toCity, toCountry, userId } = req.body;
+		const { toAddress, toCity, toCountry } = req.body;
+		const userId = parseInt(req.user.userId, 0);
 		const parcelId = parseInt(req.params.parcelId, 0);
-		const findText = 'SELECT * FROM order WHERE id=$1 AND userid=$2';
+		const findText = 'SELECT * FROM orders WHERE id=$1';
 		const updateText =
 			'UPDATE orders SET to_address=$1, to_city=$2, to_country=$3, updated_on=$4 WHERE id=$5 AND userid=$6 returning *';
 		try {
-			const { rows } = await db.query(findText, [parcelId, userId]);
+			const { rows } = await db.query(findText, [parcelId]);
 			if (!rows[0]) {
 				return res.status(404).json({
 					status: 'failure',
@@ -261,7 +257,7 @@ export default class Order {
 		const { status } = req.body;
 		const parcelId = parseInt(req.params.parcelId, 0);
 		const findUser = 'SELECT * FROM users WHERE id=$1';
-		const findText = 'SELECT * FROM order WHERE id=$1';
+		const findText = 'SELECT * FROM orders WHERE id=$1';
 		const updateText =
 			'UPDATE orders SET status=$1, updated_on=$2 WHERE id=$3 returning *';
 
@@ -273,14 +269,18 @@ export default class Order {
 					message: 'order not found'
 				});
 			}
-			const values = [status || rows[0].status, moment(new Date()), parcelId];
+			const values = [
+				status.trim() || rows[0].status,
+				moment(new Date()),
+				parcelId
+			];
 			const result = await db.query(updateText, values);
 			const userInfo = await db.query(findUser, [rows[0].userid]);
-			const to = userInfo[0].email;
+			const to = userInfo.rows[0].email;
 			const subject = 'Notification on parcel status';
-			const user = userInfo[0].firstname;
+			const user = userInfo.rows[0].firstname;
 			const message = `
-			<h3>Hello ${user},</h3>
+			<h3 style="text-transform:capitalize">Hello ${user},</h3>
 			<p>Your parcel is ${status}</p>`;
 
 			sendNotification(to, subject, message, user, res);
@@ -308,9 +308,10 @@ export default class Order {
 		const { fromAddress, fromCity, fromCountry } = req.body;
 		const parcelId = parseInt(req.params.parcelId, 0);
 		const findUser = 'SELECT * FROM users WHERE id=$1';
-		const findText = 'SELECT * FROM order WHERE id=$1';
+		const findText = 'SELECT * FROM orders WHERE id=$1';
 		const updateText =
 			'UPDATE orders SET present_location=$1, updated_on=$2 WHERE id=$3 returning *';
+
 		try {
 			const { rows } = await db.query(findText, [parcelId]);
 			if (!rows[0]) {
@@ -320,21 +321,18 @@ export default class Order {
 				});
 			}
 			const presentLocation = `${fromAddress} ${fromCity}, ${fromCountry}`;
-			const values = [
-				presentLocation || rows[0].present_location,
-				moment(new Date()),
-				parcelId
-			];
+			const values = [presentLocation, moment(new Date()), parcelId];
 			const result = await db.query(updateText, values);
 			const userInfo = await db.query(findUser, [rows[0].userid]);
-			const to = userInfo[0].email;
-			const subject = 'Notification on parcel Location';
-			const user = userInfo[0].firstname;
+
+			const to = userInfo.rows[0].email;
+			const subject = 'Notification on parcel location';
+			const user = userInfo.rows[0].firstname;
 			const message = `
-			<h3>Hello ${user},</h3>
+			<h3 style="text-transform:capitalize">Hello ${user},</h3>
 			<p>Your parcel is currently at ${presentLocation}</p>`;
 
-			sendNotification(to, subject, message, user, res);
+			sendNotification(to, subject, message);
 
 			return res.status(200).json({
 				status: 'success',
@@ -344,6 +342,7 @@ export default class Order {
 		} catch (error) {
 			return res.status(400).json({
 				status: 'error',
+				error,
 				message: 'could not change order present location'
 			});
 		}
