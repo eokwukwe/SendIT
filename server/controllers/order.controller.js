@@ -285,4 +285,46 @@ export default class Order {
 			});
 		}
 	}
+
+	/**
+	 * @desc PUT api/v1/parcels/:parcelId/presentLocation
+	 * @param {object} req
+	 * @param {object} res
+	 * @returns {object} changed present location order
+	 * @memberof Order
+	 */
+	static async changeOrderPresentLocation(req, res) {
+		const { fromAddress, fromCity, fromCountry } = req.body;
+		const parcelId = parseInt(req.params.parcelId, 0);
+		const findText = 'SELECT * FROM order WHERE id=$1';
+		const updateText =
+			'UPDATE orders SET from_address=$1, from_city=$2, from_country=$3, updated_on=$4 WHERE id=$5 returning *';
+		try {
+			const { rows } = await db.query(findText, [parcelId]);
+			if (!rows[0]) {
+				return res.status(404).json({
+					status: 'failure',
+					message: 'order not found'
+				});
+			}
+			const values = [
+				fromAddress || rows[0].from_address,
+				fromCity || rows[0].from_city,
+				fromCountry || rows[0].from_country,
+				moment(new Date()),
+				parcelId
+			];
+			const result = await db.query(updateText, values);
+			return res.status(200).json({
+				status: 'success',
+				message: 'order present location changed',
+				order: result.rows[0]
+			});
+		} catch (error) {
+			return res.status(400).json({
+				status: 'error',
+				message: 'could not change order present location'
+			});
+		}
+	}
 }

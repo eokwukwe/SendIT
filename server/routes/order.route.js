@@ -33,5 +33,10 @@ router.put(
 	Auth.verifyAdminToken,
 	Orders.changeOrderStatus
 );
+router.put(
+	'parcels/:parcelId/presentLocation',
+	Auth.verifyAdminToken,
+	Orders.changeOrderPresentLocation
+);
 
 export default router;
