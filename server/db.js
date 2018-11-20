@@ -3,6 +3,11 @@ import dotenv from 'dotenv';
 
 dotenv.config({ path: '../.env' });
 
+<<<<<<< HEAD
+=======
+const { DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME } = process.env;
+
+>>>>>>> 862d6e0847fc8adfb07aeceb93565c0296ebb08c
 const pool = new Pool({
 	connectionString: process.env.DB_URI
 });
@@ -25,7 +30,7 @@ const createUsersTable = () => {
       usertype VARCHAR(10) NOT NULL DEFAULT 'user',
       created_on TIMESTAMP NOT NULL DEFAULT now(),
       updated_on TIMESTAMP NOT NULL DEFAULT now(),
-      lastLogin TIMESTAMP DEFAULT now()
+      last_login TIMESTAMP DEFAULT now()
     )`;
 
 	pool
