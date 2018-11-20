@@ -63,9 +63,11 @@ const createOrdersTable = () => {
       to_city VARCHAR(100) NOT NULL,
       to_country VARCHAR(100) NOT NULL,
       receiver TEXT NOT NULL,
-      receiver_phone integer NOT NULL,
+			receiver_phone integer NOT NULL,
+			cancelled BOOL DEFAULT 'false',
+			present_location TEXT,
       status CHAR(10) DEFAULT 'pending',
-      userid UUID NOT NULL,
+      userid INT NOT NULL,
       created_on TIMESTAMP NOT NULL default now(),
       updated_on TIMESTAMP NOT NULL default now(),
       FOREIGN KEY (userid) REFERENCES users (id)

@@ -172,11 +172,11 @@ export default class Order {
 	 * @memberof Order
 	 */
 	static async cancelOrder(req, res) {
-		const { status, userId } = req.body;
+		const { userId } = req.body;
 		const parcelId = parseInt(req.params.parcelId, 0);
 		const findText = 'SELECT * FROM order WHERE id=$1 AND userid=$2';
 		const updateText =
-			'UPDATE orders SET status=$1, updated_on=$2 WHERE id=$3 AND userid=$4 returning *';
+			'UPDATE orders SET cancelled=$1, updated_on=$2 WHERE id=$3 AND userid=$4 returning *';
 
 		try {
 			const { rows } = await db.query(findText, [parcelId, userId]);
@@ -187,7 +187,7 @@ export default class Order {
 				});
 			}
 			const values = [
-				status || rows[0].status,
+				'true' || rows[0].cancelled,
 				moment(new Date()),
 				parcelId,
 				userId
@@ -298,7 +298,7 @@ export default class Order {
 		const parcelId = parseInt(req.params.parcelId, 0);
 		const findText = 'SELECT * FROM order WHERE id=$1';
 		const updateText =
-			'UPDATE orders SET from_address=$1, from_city=$2, from_country=$3, updated_on=$4 WHERE id=$5 returning *';
+			'UPDATE orders SET present_location=$1, updated_on=$2 WHERE id=$3 returning *';
 		try {
 			const { rows } = await db.query(findText, [parcelId]);
 			if (!rows[0]) {
@@ -307,10 +307,9 @@ export default class Order {
 					message: 'order not found'
 				});
 			}
+			const presentLocation = `${fromAddress} ${fromCity}, ${fromCountry}`;
 			const values = [
-				fromAddress || rows[0].from_address,
-				fromCity || rows[0].from_city,
-				fromCountry || rows[0].from_country,
+				presentLocation || rows[0].present_location,
 				moment(new Date()),
 				parcelId
 			];
