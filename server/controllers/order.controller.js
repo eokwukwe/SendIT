@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { validationResult } from 'express-validator/check';
+import { sendNotification } from '../mailer/sendMail';
 
 import db from '../model';
 
@@ -259,6 +260,7 @@ export default class Order {
 	static async changeOrderStatus(req, res) {
 		const { status } = req.body;
 		const parcelId = parseInt(req.params.parcelId, 0);
+		const findUser = 'SELECT * FROM users WHERE id=$1';
 		const findText = 'SELECT * FROM order WHERE id=$1';
 		const updateText =
 			'UPDATE orders SET status=$1, updated_on=$2 WHERE id=$3 returning *';
@@ -273,6 +275,15 @@ export default class Order {
 			}
 			const values = [status || rows[0].status, moment(new Date()), parcelId];
 			const result = await db.query(updateText, values);
+			const userInfo = await db.query(findUser, [rows[0].userid]);
+			const to = userInfo[0].email;
+			const subject = 'Notification on parcel status';
+			const user = userInfo[0].firstname;
+			const message = `
+			<h3>Hello ${user},</h3>
+			<p>Your parcel is ${status}</p>`;
+
+			sendNotification(to, subject, message, user, res);
 			return res.status(200).json({
 				status: 'success',
 				message: 'order status changed',
@@ -296,6 +307,7 @@ export default class Order {
 	static async changeOrderPresentLocation(req, res) {
 		const { fromAddress, fromCity, fromCountry } = req.body;
 		const parcelId = parseInt(req.params.parcelId, 0);
+		const findUser = 'SELECT * FROM users WHERE id=$1';
 		const findText = 'SELECT * FROM order WHERE id=$1';
 		const updateText =
 			'UPDATE orders SET present_location=$1, updated_on=$2 WHERE id=$3 returning *';
@@ -314,6 +326,16 @@ export default class Order {
 				parcelId
 			];
 			const result = await db.query(updateText, values);
+			const userInfo = await db.query(findUser, [rows[0].userid]);
+			const to = userInfo[0].email;
+			const subject = 'Notification on parcel Location';
+			const user = userInfo[0].firstname;
+			const message = `
+			<h3>Hello ${user},</h3>
+			<p>Your parcel is currently at ${presentLocation}</p>`;
+
+			sendNotification(to, subject, message, user, res);
+
 			return res.status(200).json({
 				status: 'success',
 				message: 'order present location changed',
