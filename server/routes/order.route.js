@@ -5,7 +5,7 @@ import Auth from '../middleware/auth';
 
 const router = Router();
 
-router.get('/parcels', Auth.verifyAdminToken, Orders.getAllOrders);
+router.get('/parcels', Orders.getAllOrders);
 router.get('/parcels/:parcelId', Auth.verifyUserToken, Orders.getOneOrder);
 router.get(
 	'/users/:userId/parcels',
@@ -23,7 +23,11 @@ router.put(
 	Auth.verifyUserToken,
 	Orders.cancelOrder
 );
-router.put('/parcels/:parcelId/destination', Orders.changeOrderDestination);
+router.put(
+	'/parcels/:parcelId/destination',
+	Auth.verifyUserToken,
+	Orders.changeOrderDestination
+);
 router.put(
 	'/parcels/:parcelId/status',
 	Auth.verifyAdminToken,
