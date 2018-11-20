@@ -248,4 +248,41 @@ export default class Order {
 			});
 		}
 	}
+
+	/**
+	 * @desc PUT api/v1/parcels/:parcelId/status
+	 * @param {object} req
+	 * @param {object} res
+	 * @returns {object} changed status order
+	 * @memberof Order
+	 */
+	static async changeOrderStatus(req, res) {
+		const { status } = req.body;
+		const parcelId = parseInt(req.params.parcelId, 0);
+		const findText = 'SELECT * FROM order WHERE id=$1';
+		const updateText =
+			'UPDATE orders SET status=$1, updated_on=$2 WHERE id=$3 returning *';
+
+		try {
+			const { rows } = await db.query(findText, [parcelId]);
+			if (!rows[0]) {
+				return res.status(404).json({
+					status: 'failure',
+					message: 'order not found'
+				});
+			}
+			const values = [status || rows[0].status, moment(new Date()), parcelId];
+			const result = await db.query(updateText, values);
+			return res.status(200).json({
+				status: 'success',
+				message: 'order status changed',
+				order: result.rows[0]
+			});
+		} catch (error) {
+			return res.status(400).json({
+				status: 'error',
+				message: 'could not change order status'
+			});
+		}
+	}
 }
