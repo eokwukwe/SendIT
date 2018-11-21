@@ -21,12 +21,19 @@ export default class UserController {
     }
 
     const {
-      fname, lname, eml, password
+      firstName, lastName, userEmail, password
     } = req.body;
     const hassPassword = Helper.hashPassword(password);
     const queryText = 'INSERT INTO users(firstname, lastname, email, password, created_on, updated_on) VALUES ($1, $2, $3, $4, $5, $6) returning *';
 
-    const values = [fname, lname, eml, hassPassword, moment(new Date()), moment(new Date())];
+    const values = [
+      firstName,
+      lastName,
+      userEmail,
+      hassPassword,
+      moment(new Date()),
+      moment(new Date())
+    ];
 
     try {
       const { rows } = await db.query(queryText, values);
@@ -74,11 +81,11 @@ export default class UserController {
       return res.status(400).json(errors.array());
     }
 
-    const { eml, password } = req.body;
+    const { userEmail, password } = req.body;
     const queryText = 'SELECT * FROM users WHERE email = $1';
 
     try {
-      const { rows } = await db.query(queryText, [eml]);
+      const { rows } = await db.query(queryText, [userEmail]);
       if (!rows[0]) {
         return res.status(400).json({
           status: 'login failure',
