@@ -16,7 +16,7 @@ const validateUser = {
       .withMessage('name must be at least 3 chars long')
       .trim(),
 
-    check('email')
+    check('eml')
       .isEmail()
       .withMessage('invalid email')
       .trim(),
@@ -37,7 +37,7 @@ const validateUser = {
   ],
 
   validLogin: [
-    check('email')
+    check('eml')
       .isEmail()
       .withMessage('invalid email')
       .trim(),

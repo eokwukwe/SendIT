@@ -2,17 +2,17 @@ import moment from 'moment';
 import { validationResult } from 'express-validator/check';
 
 import db from '../model';
-import Helper from './helper';
+import Helper from '../helper/helper';
 
 /** Users Controller Class */
-export default class User {
+export default class UserController {
   /**
    * @static
    * @desc POST /api/v1/auth/signup
    * @param {object} req
    * @param {object} res
    * @returns user token
-   * @memberof User
+   * @memberof UserController
    */
   static async create(req, res) {
     const errors = validationResult(req);
@@ -21,19 +21,20 @@ export default class User {
     }
 
     const {
-      fname, lname, email, password
+      fname, lname, eml, password
     } = req.body;
     const hassPassword = Helper.hashPassword(password);
     const queryText = 'INSERT INTO users(firstname, lastname, email, password, created_on, updated_on) VALUES ($1, $2, $3, $4, $5, $6) returning *';
 
-    const values = [fname, lname, email, hassPassword, moment(new Date()), moment(new Date())];
+    const values = [fname, lname, eml, hassPassword, moment(new Date()), moment(new Date())];
 
     try {
       const { rows } = await db.query(queryText, values);
       const {
-        id, usertype, firstname, lastname
+        id, firstname, lastname, email, usertype
       } = rows[0];
-      const token = Helper.generateToken(id, usertype);
+      const payload = { userId: id, usertype, email };
+      const token = Helper.generateToken(payload);
 
       return res.status(201).json({
         status: 'signup success',
@@ -44,17 +45,17 @@ export default class User {
           lastname
         }
       });
-    } catch (error) {
-      if (error.routine === '_bt_check_unique') {
+    } catch (err) {
+      if (err.routine === '_bt_check_unique') {
         return res.status(400).json({
           status: 'signup failure',
           message: 'user with that email already exists'
         });
       }
       return res.status(400).json({
-        status: 'signup failure',
-        message: 'signup unsuccessful',
-        error
+        status: 'error',
+        error: 'signup unsuccessful',
+        err
       });
     }
   }
@@ -65,7 +66,7 @@ export default class User {
    * @param {object} req
    * @param {object} res
    * @returns user token
-   * @memberof User
+   * @memberof UserController
    */
   static async login(req, res) {
     const errors = validationResult(req);
@@ -73,11 +74,11 @@ export default class User {
       return res.status(400).json(errors.array());
     }
 
-    const { email, password } = req.body;
+    const { eml, password } = req.body;
     const queryText = 'SELECT * FROM users WHERE email = $1';
 
     try {
-      const { rows } = await db.query(queryText, [email]);
+      const { rows } = await db.query(queryText, [eml]);
       if (!rows[0]) {
         return res.status(400).json({
           status: 'login failure',
@@ -90,18 +91,18 @@ export default class User {
           message: 'incorrect password'
         });
       }
-
-      const { id, usertype } = rows[0];
-      const token = Helper.generateToken(id, usertype);
+      const { id, usertype, email } = rows[0];
+      const payload = { userId: id, usertype, email };
+      const token = Helper.generateToken(payload);
       return res.status(200).json({
         status: 'login success',
         message: 'you have successfully log in',
         token
       });
-    } catch (error) {
+    } catch (err) {
       return res.status(400).json({
-        status: 'login failure',
-        error
+        status: 'error',
+        err
       });
     }
   }

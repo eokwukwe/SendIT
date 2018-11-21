@@ -58,7 +58,7 @@ const validateOrder = {
     check('receiver')
       .isLength({ min: 2 })
       .withMessage('name too short')
-      .isAlpha()
+      .isString()
       .withMessage('receiver name cannot be number')
       .trim(),
 

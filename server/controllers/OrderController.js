@@ -5,13 +5,13 @@ import sendNotification from '../mailer/sendMail';
 import db from '../model';
 
 /** Orders Controller Class */
-export default class Order {
+export default class OrderController {
   /**
    * @desc POST api/v1/parcels
    * @param {object} req
    * @param {object} res
    * @returns {object} created order
-   * @memberof Order
+   * @memberof OrderController
    */
   static async createOrder(req, res) {
     const errors = validationResult(req);
@@ -63,11 +63,11 @@ export default class Order {
         message: 'parcel delivery order created successully',
         order: rows[0]
       });
-    } catch (error) {
+    } catch (err) {
       return res.status(400).json({
         status: 'error',
-        message: 'order not created',
-        error
+        error: 'order not created',
+        err
       });
     }
   }
@@ -77,7 +77,7 @@ export default class Order {
    * @param {object} req
    * @param {object} res
    * @returns {object} all orders
-   * @memberof Order
+   * @memberof OrderController
    */
   static async getAllOrders(req, res) {
     const queryText = 'SELECT * FROM orders';
@@ -95,10 +95,10 @@ export default class Order {
         rows,
         total: rowCount
       });
-    } catch (error) {
+    } catch (err) {
       return res.status(400).json({
         status: 'error',
-        message: 'could not get the orders'
+        error: 'could not get the orders'
       });
     }
   }
@@ -108,7 +108,7 @@ export default class Order {
    * @param {object} req
    * @param {object} res
    * @returns {object} one order
-   * @memberof Order
+   * @memberof OrderController
    */
   static async getOneOrder(req, res) {
     const parcelId = parseInt(req.params.parcelId, 0);
@@ -126,10 +126,10 @@ export default class Order {
         message: 'user orders found',
         order: rows[0]
       });
-    } catch (error) {
+    } catch (err) {
       return res.status(400).json({
         status: 'error',
-        message: 'could not get user orders'
+        error: 'could not get user orders'
       });
     }
   }
@@ -139,7 +139,7 @@ export default class Order {
    * @param {object} req
    * @param {object} res
    * @returns {object} user orders
-   * @memberof Order
+   * @memberof OrderController
    */
   static async getOrdersbyUser(req, res) {
     const userId = parseInt(req.params.userId, 0);
@@ -149,7 +149,7 @@ export default class Order {
       if (rows.length === 0) {
         return res.status(404).json({
           status: 'failure',
-          error: 'user orders not found'
+          message: 'user orders not found'
         });
       }
       return res.status(200).json({
@@ -158,10 +158,10 @@ export default class Order {
         rows,
         total: rowCount
       });
-    } catch (error) {
+    } catch (err) {
       return res.status(400).json({
         status: 'error',
-        message: 'could not get the order'
+        error: 'could not get the order'
       });
     }
   }
@@ -171,7 +171,7 @@ export default class Order {
    * @param {object} req
    * @param {object} res
    * @returns {object} cancelled order
-   * @memberof Order
+   * @memberof OrderController
    */
   static async cancelOrder(req, res) {
     const userId = parseInt(req.user.userId, 0);
@@ -194,10 +194,10 @@ export default class Order {
         message: 'order cancelled',
         order: result.rows[0]
       });
-    } catch (error) {
+    } catch (err) {
       return res.status(400).json({
         status: 'error',
-        message: 'could not cancell order'
+        error: 'could not cancell order'
       });
     }
   }
@@ -207,7 +207,7 @@ export default class Order {
    * @param {object} req
    * @param {object} res
    * @returns {object} changed destination order
-   * @memberof Order
+   * @memberof OrderController
    */
   static async changeOrderDestination(req, res) {
     const { toAddress, toCity, toCountry } = req.body;
@@ -237,10 +237,10 @@ export default class Order {
         message: 'order destination changed',
         order: result.rows[0]
       });
-    } catch (error) {
+    } catch (err) {
       return res.status(400).json({
         status: 'error',
-        message: 'could not change order destination'
+        error: 'could not change order destination'
       });
     }
   }
@@ -250,7 +250,7 @@ export default class Order {
    * @param {object} req
    * @param {object} res
    * @returns {object} changed status order
-   * @memberof Order
+   * @memberof OrderController
    */
   static async changeOrderStatus(req, res) {
     const { status } = req.body;
@@ -282,10 +282,10 @@ export default class Order {
         message: 'order status changed',
         order: result.rows[0]
       });
-    } catch (error) {
+    } catch (err) {
       return res.status(400).json({
         status: 'error',
-        message: 'could not change order status'
+        error: 'could not change order status'
       });
     }
   }
@@ -295,7 +295,7 @@ export default class Order {
    * @param {object} req
    * @param {object} res
    * @returns {object} changed present location order
-   * @memberof Order
+   * @memberof OrderController
    */
   static async changeOrderPresentLocation(req, res) {
     const { fromAddress, fromCity, fromCountry } = req.body;
@@ -331,11 +331,11 @@ export default class Order {
         message: 'order present location changed',
         order: result.rows[0]
       });
-    } catch (error) {
+    } catch (err) {
       return res.status(400).json({
         status: 'error',
-        error,
-        message: 'could not change order present location'
+        err,
+        error: 'could not change order present location'
       });
     }
   }

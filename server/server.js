@@ -8,8 +8,8 @@ import config from './config/config';
 
 // Routes
 import indexRoute from './routes/index';
-import orderRoutes from './routes/order.route';
-import userRoutes from './routes/user.route';
+import orderRoutes from './routes/orderRoute';
+import userRoutes from './routes/userRoute';
 
 dotenv.config();
 

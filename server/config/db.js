@@ -1,18 +1,10 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 
-dotenv.config({ path: '../.env' });
-
-const {
-  DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME
-} = process.env;
+dotenv.config();
 
 const pool = new Pool({
-  host: DB_HOST,
-  port: DB_PORT,
-  user: DB_USER,
-  password: DB_PASS,
-  database: DB_NAME
+  connectionString: process.env.DBASE_URL
 });
 
 pool.on('connect', () => {

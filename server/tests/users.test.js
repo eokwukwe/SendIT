@@ -9,13 +9,13 @@ describe('TEST for users endpoint', () => {
   const user = {
     fname: 'mary',
     lname: 'kay',
-    email: 'mary.kay@test.com',
+    eml: 'mary.kay@test.com',
     password: 'mary.Kay',
     confirmPassword: 'mary.Kay'
   };
 
   const cleanUp = async () => {
-    await db.query('DELETE FROM users WHERE email=$1', [user.email]);
+    await db.query('DELETE FROM users WHERE email=$1', [user.eml]);
   };
 
   after(cleanUp);
@@ -36,7 +36,7 @@ describe('TEST for users endpoint', () => {
     const user1 = {
       fname: 'ma',
       lname: 'kay',
-      email: 'marked.kay@test.com',
+      eml: 'marked.kay@test.com',
       password: 'mary.Kay',
       confirmPassword: 'mary.Kay'
     };
@@ -54,7 +54,7 @@ describe('TEST for users endpoint', () => {
     const user2 = {
       fname: 'mary',
       lname: 'ka',
-      email: 'marked.kay@test.com',
+      eml: 'marked.kay@test.com',
       password: 'mary.Kay',
       confirmPassword: 'mary.Kay'
     };
@@ -72,7 +72,7 @@ describe('TEST for users endpoint', () => {
     const user3 = {
       fname: 'mary',
       lname: 'kay',
-      email: 'marked.kaytest.com',
+      eml: 'marked.kaytest.com',
       password: 'mary.Kay',
       confirmPassword: 'mary.Kay'
     };
@@ -90,7 +90,7 @@ describe('TEST for users endpoint', () => {
     const user4 = {
       fname: 'mary',
       lname: 'kay',
-      email: 'marked.kay@test.com',
+      eml: 'marked.kay@test.com',
       password: 'maay',
       confirmPassword: 'maryay'
     };
@@ -108,7 +108,7 @@ describe('TEST for users endpoint', () => {
     const user5 = {
       fname: 'mary',
       lname: 'kay',
-      email: 'marked.kay@test.com',
+      eml: 'marked.kay@test.com',
       password: 'mar.Yay',
       confirmPassword: 'mar.Jay'
     };
@@ -136,7 +136,7 @@ describe('TEST for users endpoint', () => {
 
   it('should login users', (done) => {
     const userDetail = {
-      email: 'mary.kay@test.com',
+      eml: 'mary.kay@test.com',
       password: 'mary.Kay'
     };
     request(app)
@@ -152,7 +152,7 @@ describe('TEST for users endpoint', () => {
 
   it('should return 400 if the user does not exist', (done) => {
     const userDetail = {
-      email: 'mary.ay@test.com',
+      eml: 'mary.ay@test.com',
       password: 'mary.Kay'
     };
     request(app)
@@ -167,7 +167,7 @@ describe('TEST for users endpoint', () => {
 
   it('should return 400 if the password is not correct', (done) => {
     const userDetail = {
-      email: 'mary.kay@test.com',
+      eml: 'mary.kay@test.com',
       password: 'mary.ay'
     };
     request(app)
