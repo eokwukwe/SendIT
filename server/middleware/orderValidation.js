@@ -14,9 +14,9 @@ export const validateOrder = {
 			.trim(),
 
 		check('fromAddress')
-			.isLength({ min: 10 })
+			.isLength({ min: 5 })
 			.withMessage('address is too short')
-			.matches(/^[a-zA-Z\d]+?(\s+[a-zA-Z,\d]+)+[a-zA-Z]+\s{1}/)
+			.matches(/^[a-zA-Z-\d,\s]+$/)
 			.withMessage('invalid input, please enter a valid address')
 			.trim(),
 
@@ -35,9 +35,9 @@ export const validateOrder = {
 			.trim(),
 
 		check('toAddress')
-			.isLength({ min: 10 })
+			.isLength({ min: 5 })
 			.withMessage('address is too short')
-			.matches(/^[a-zA-Z\d]+?(\s+[a-zA-Z,\d]+)+[a-zA-Z]+\s{1}/)
+			.matches(/^[a-zA-Z-\d,\s]+$/)
 			.withMessage('invalid input, please enter a valid address')
 			.trim(),
 

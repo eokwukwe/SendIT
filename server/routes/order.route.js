@@ -34,7 +34,7 @@ router.put(
 	Orders.changeOrderStatus
 );
 router.put(
-	'parcels/:parcelId/presentLocation',
+	'/parcels/:parcelId/presentLocation',
 	Auth.verifyAdminToken,
 	Orders.changeOrderPresentLocation
 );
