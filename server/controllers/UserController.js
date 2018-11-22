@@ -123,7 +123,7 @@ export default class UserController {
    * @memberof UserController
    */
   static async getAllUsers(req, res) {
-    const queryText = 'SELECT * FROM users WHERE usertype=$1';
+    const queryText = 'SELECT * FROM users WHERE usertype=$1 returning firstname, lastname, email';
     try {
       const { rows, rowCount } = await db.query(queryText, ['user']);
       if (rows.length === 0) {
@@ -155,7 +155,7 @@ export default class UserController {
    */
   static async getOneUser(req, res) {
     const userId = parseInt(req.params.userId, 0);
-    const queryText = 'SELECT * FROM users WHERE id=$1';
+    const queryText = 'SELECT * FROM users WHERE id=$1 returning firstname, lastname, email';
     try {
       const { rows } = await db.query(queryText, [userId]);
       if (!rows[0]) {
