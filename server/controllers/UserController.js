@@ -113,4 +113,37 @@ export default class UserController {
       });
     }
   }
+
+  /**
+   * @static
+   * @desc GET /api/v1/users
+   * @param {object} req
+   * @param {object} res
+   * @returns user token
+   * @memberof UserController
+   */
+  static async getAllUsers(req, res) {
+    const queryText = 'SELECT * FROM users';
+
+    try {
+      const { rows, rowCount } = await db.query(queryText);
+      if (rows.length === 0) {
+        return res.status(404).json({
+          status: 'failure',
+          message: 'users not found'
+        });
+      }
+      return res.status(200).json({
+        status: 'success',
+        message: 'available users',
+        rows,
+        total: rowCount
+      });
+    } catch (err) {
+      return res.status(400).json({
+        status: 'error',
+        error: 'could not get the orders'
+      });
+    }
+  }
 }
