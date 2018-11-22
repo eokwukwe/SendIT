@@ -123,10 +123,9 @@ export default class UserController {
    * @memberof UserController
    */
   static async getAllUsers(req, res) {
-    const queryText = 'SELECT * FROM users';
-
+    const queryText = 'SELECT * FROM users WHERE usertype=$1';
     try {
-      const { rows, rowCount } = await db.query(queryText);
+      const { rows, rowCount } = await db.query(queryText, ['user']);
       if (rows.length === 0) {
         return res.status(404).json({
           status: 'failure',
