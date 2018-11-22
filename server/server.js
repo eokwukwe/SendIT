@@ -5,7 +5,6 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 
 import config from './config/config';
-import { createAllTables } from './config/db';
 
 // Routes
 import indexRoute from './routes/index';
@@ -46,7 +45,5 @@ app.use((error, req, res) => {
 app.listen(config.port, () => {
   console.log(`SendIT Server is listening on port ${config.port}`);
 });
-
-createAllTables();
 
 export default app;
