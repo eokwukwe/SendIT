@@ -2,9 +2,21 @@ import { Pool } from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
+let connectionString;
+switch (process.env.NODE_ENV) {
+  case 'test' || 'development':
+    connectionString = process.env.DBASE_URL;
+    console.log(connectionString);
+  // break;
+  case 'production':
+    connectionString = process.env.DATABASE_URL;
+  // break;
+  default:
+    connectionString = process.env.DBASE_URL;
+  // break;
+}
 const pool = new Pool({
-  connectionString: process.env.DBASE_URL
+  connectionString
 });
 
 pool.on('connect', () => {
@@ -129,10 +141,10 @@ const dropAllTables = () => {
 
 pool.on('remove', () => {
   console.log('client removed');
-  process.exit(0);
+  pool.end();
 });
 
-module.exports = {
+export {
   createUsersTable,
   createOrdersTable,
   dropOrdersTable,

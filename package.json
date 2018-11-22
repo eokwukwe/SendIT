@@ -5,14 +5,15 @@
   "main": "./server/server.js",
   "scripts": {
     "babel-node": "babel-node --presets=env",
-    "dev": "nodemon --exec npm run babel-node -- ./server/server.js",
-    "start": "node --require babel-register ./server/server.js",
+    "dev": "NODE_ENV=development nodemon --exec npm run babel-node -- ./server/server.js",
+    "start": "NODE_ENV=development node --require babel-register ./server/server.js",
     "build": "babel src -d dist",
     "mocha": "mocha --compilers js:babel-register",
-    "test": "nyc --reporter=html --reporter=text mocha --compilers js:babel-register --recursive ./**/**/*.test.js  --timeout=3000 --exit",
-    "test-watch": "nodemon --exec 'npm test'",
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha --compilers js:babel-register --recursive ./**/**/*.test.js  --timeout=3000 --exit",
+    "test-watch": "NODE_ENV=test nodemon --exec 'npm test'",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "migration": "node --require babel-register -- ./server/config/db.js createUsersTable createOrdersTable"
+    "migration": "node --require babel-register -- ./server/config/db.js createUsersTable createOrdersTable",
+    "heroku": "node --require babel-register -- ./server/config/db.js createAllTables"
   },
   "engines": {
     "node": "10.8.0"
