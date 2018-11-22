@@ -3,14 +3,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// const databaseURL = process.env.NODE_ENV.trim() === 'development' || process.env.NODE_ENV.trim() === 'test'
-//   ? process.env.DBASE_URL
-//   : process.env.DB_URI;
-
-// const pool = new Pool({
-//   connectionString: databaseURL
-// });
-
 let connectionString;
 switch (process.env.NODE_ENV) {
   case 'test' || 'development':

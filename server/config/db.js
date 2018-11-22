@@ -138,7 +138,6 @@ const dropAllTables = () => {
 
 pool.on('remove', () => {
   console.log('client removed');
-  pool.end();
 });
 
 export {
