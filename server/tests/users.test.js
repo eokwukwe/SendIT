@@ -7,15 +7,15 @@ import app from '../server';
 
 describe('TEST for users endpoint', () => {
   const user = {
-    fname: 'mary',
-    lname: 'kay',
-    email: 'mary.kay@test.com',
+    firstName: 'mary',
+    lastName: 'kay',
+    userEmail: 'mary.kay@test.com',
     password: 'mary.Kay',
     confirmPassword: 'mary.Kay'
   };
 
   const cleanUp = async () => {
-    await db.query('DELETE FROM users WHERE email=$1', [user.email]);
+    await db.query('DELETE FROM users WHERE email=$1', [user.userEmail]);
   };
 
   after(cleanUp);
@@ -34,9 +34,9 @@ describe('TEST for users endpoint', () => {
 
   it('should return 400 if the firstname is invalid', (done) => {
     const user1 = {
-      fname: 'ma',
-      lname: 'kay',
-      email: 'marked.kay@test.com',
+      firstName: 'ma',
+      lastName: 'kay',
+      userEmail: 'marked.kay@test.com',
       password: 'mary.Kay',
       confirmPassword: 'mary.Kay'
     };
@@ -52,9 +52,9 @@ describe('TEST for users endpoint', () => {
 
   it('should return 400 if the lastname is invalid', (done) => {
     const user2 = {
-      fname: 'mary',
-      lname: 'ka',
-      email: 'marked.kay@test.com',
+      firstName: 'mary',
+      lastName: 'ka',
+      userEmail: 'marked.kay@test.com',
       password: 'mary.Kay',
       confirmPassword: 'mary.Kay'
     };
@@ -70,9 +70,9 @@ describe('TEST for users endpoint', () => {
 
   it('should return 400 if the email is invalid', (done) => {
     const user3 = {
-      fname: 'mary',
-      lname: 'kay',
-      email: 'marked.kaytest.com',
+      firstName: 'mary',
+      lastName: 'kay',
+      userEmail: 'marked.kaytest.com',
       password: 'mary.Kay',
       confirmPassword: 'mary.Kay'
     };
@@ -88,9 +88,9 @@ describe('TEST for users endpoint', () => {
 
   it('should return 400 if the password is invalid', (done) => {
     const user4 = {
-      fname: 'mary',
-      lname: 'kay',
-      email: 'marked.kay@test.com',
+      firstName: 'mary',
+      lastName: 'kay',
+      userEmail: 'marked.kay@test.com',
       password: 'maay',
       confirmPassword: 'maryay'
     };
@@ -106,9 +106,9 @@ describe('TEST for users endpoint', () => {
 
   it('should return 400 if the passwords does not match', (done) => {
     const user5 = {
-      fname: 'mary',
-      lname: 'kay',
-      email: 'marked.kay@test.com',
+      firstName: 'mary',
+      lastName: 'kay',
+      userEmail: 'marked.kay@test.com',
       password: 'mar.Yay',
       confirmPassword: 'mar.Jay'
     };
@@ -136,7 +136,7 @@ describe('TEST for users endpoint', () => {
 
   it('should login users', (done) => {
     const userDetail = {
-      email: 'mary.kay@test.com',
+      userEmail: 'mary.kay@test.com',
       password: 'mary.Kay'
     };
     request(app)
@@ -152,7 +152,7 @@ describe('TEST for users endpoint', () => {
 
   it('should return 400 if the user does not exist', (done) => {
     const userDetail = {
-      email: 'mary.ay@test.com',
+      userEmail: 'mary.ay@test.com',
       password: 'mary.Kay'
     };
     request(app)
@@ -167,7 +167,7 @@ describe('TEST for users endpoint', () => {
 
   it('should return 400 if the password is not correct', (done) => {
     const userDetail = {
-      email: 'mary.kay@test.com',
+      userEmail: 'mary.kay@test.com',
       password: 'mary.ay'
     };
     request(app)

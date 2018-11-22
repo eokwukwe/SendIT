@@ -2,21 +2,21 @@ import { check } from 'express-validator/check';
 
 const validateUser = {
   validSignup: [
-    check('fname')
+    check('firstName')
       .isAlpha()
       .withMessage('Must be only alphabetical chars')
       .isLength({ min: 3 })
       .withMessage('name must be at least 3 chars long')
       .trim(),
 
-    check('lname')
+    check('lastName')
       .isAlpha()
       .withMessage('Must be only alphabetical chars')
       .isLength({ min: 3 })
       .withMessage('name must be at least 3 chars long')
       .trim(),
 
-    check('email')
+    check('userEmail')
       .isEmail()
       .withMessage('invalid email')
       .trim(),
@@ -37,7 +37,7 @@ const validateUser = {
   ],
 
   validLogin: [
-    check('email')
+    check('userEmail')
       .isEmail()
       .withMessage('invalid email')
       .trim(),

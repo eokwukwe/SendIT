@@ -33,20 +33,12 @@ export default class Helper {
   /**
    * Generate Token
    * @static
-   * @param {number} id - User ID
-   * @param {string} usertype - Type user (Admin || User)
+   * @param {object} payload - User data
    * @returns {object} token
    * @memberof Helper
    */
-  static generateToken(id, usertype) {
-    const token = jwt.sign(
-      {
-        userId: id,
-        usertype
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' }
-    );
+  static generateToken(payload) {
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7h' });
     return token;
   }
 }
