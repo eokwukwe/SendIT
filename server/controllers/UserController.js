@@ -59,7 +59,7 @@ export default class UserController {
           message: 'user with that email already exists'
         });
       }
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         error: 'signup unsuccessful',
         err
@@ -107,7 +107,7 @@ export default class UserController {
         token
       });
     } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         err
       });
@@ -139,7 +139,7 @@ export default class UserController {
         total: rowCount
       });
     } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         error: 'could not get the orders'
       });
@@ -170,7 +170,7 @@ export default class UserController {
         user: rows[0]
       });
     } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         error: 'could not get user'
       });

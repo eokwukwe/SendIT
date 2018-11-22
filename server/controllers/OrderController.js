@@ -64,7 +64,7 @@ export default class OrderController {
         order: rows[0]
       });
     } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         error: 'order not created',
         err
@@ -96,7 +96,7 @@ export default class OrderController {
         total: rowCount
       });
     } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         error: 'could not get the orders'
       });
@@ -127,7 +127,7 @@ export default class OrderController {
         order: rows[0]
       });
     } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         error: 'could not get user orders'
       });
@@ -159,7 +159,7 @@ export default class OrderController {
         total: rowCount
       });
     } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         error: 'could not get the order'
       });
@@ -195,7 +195,7 @@ export default class OrderController {
         order: result.rows[0]
       });
     } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         error: 'could not cancell order'
       });
@@ -238,7 +238,7 @@ export default class OrderController {
         order: result.rows[0]
       });
     } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         error: 'could not change order destination'
       });
@@ -283,7 +283,7 @@ export default class OrderController {
         order: result.rows[0]
       });
     } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         error: 'could not change order status'
       });
@@ -332,7 +332,7 @@ export default class OrderController {
         order: result.rows[0]
       });
     } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         err,
         error: 'could not change order present location'
