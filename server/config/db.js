@@ -1,8 +1,10 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
+import Helper from '../helper/helper';
 
 dotenv.config();
 let connectionString;
+const adminPassword = process.env.ADMIN_PASS;
 
 switch (process.env.NODE_ENV) {
   case 'test' || 'development':
@@ -39,6 +41,24 @@ const createUsersTable = () => {
 
   pool
     .query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+};
+
+const insertUser = () => {
+  const password = Helper.hashPassword(adminPassword);
+  const queryText = `INSERT INTO 
+    users(firstname, lastname, email, password, usertype) 
+    VALUES ($1, $2, $3, $4, $5)`;
+  const values = ['admin', 'sendit', 'admin@sendit.com', password, 'admin'];
+  pool
+    .query(queryText, values)
     .then((res) => {
       console.log(res);
       pool.end();
@@ -92,7 +112,7 @@ const createOrdersTable = () => {
  * Drop Users Table
  */
 const dropUsersTable = () => {
-  const queryText = 'DROP TABLE IF EXISTS users returning *';
+  const queryText = 'DROP TABLE IF EXISTS users';
   pool
     .query(queryText)
     .then((res) => {
@@ -108,7 +128,7 @@ const dropUsersTable = () => {
  * Drop Orders Table
  */
 const dropOrdersTable = () => {
-  const queryText = 'DROP TABLE IF EXISTS users orders *';
+  const queryText = 'DROP TABLE IF EXISTS orders';
   pool
     .query(queryText)
     .then((res) => {
@@ -127,6 +147,7 @@ const dropOrdersTable = () => {
 const createAllTables = () => {
   createUsersTable();
   createOrdersTable();
+  insertUser();
 };
 /**
  * Drop All Tables
@@ -146,7 +167,8 @@ export {
   dropOrdersTable,
   dropUsersTable,
   createAllTables,
-  dropAllTables
+  dropAllTables,
+  insertUser
 };
 
 require('make-runnable');
