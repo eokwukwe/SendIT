@@ -119,7 +119,7 @@ export default class UserController {
    * @desc GET /api/v1/users
    * @param {object} req
    * @param {object} res
-   * @returns user token
+   * @returns all users
    * @memberof UserController
    */
   static async getAllUsers(req, res) {
@@ -142,6 +142,37 @@ export default class UserController {
       return res.status(400).json({
         status: 'error',
         error: 'could not get the orders'
+      });
+    }
+  }
+
+  /**
+   * @desc GET api/v1/users/:userId
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} one user
+   * @memberof UserController
+   */
+  static async getOneUser(req, res) {
+    const userId = parseInt(req.params.userId, 0);
+    const queryText = 'SELECT * FROM users WHERE id=$1';
+    try {
+      const { rows } = await db.query(queryText, [userId]);
+      if (!rows[0]) {
+        return res.status(404).json({
+          status: 'failure',
+          message: 'user not found'
+        });
+      }
+      return res.status(200).json({
+        status: 'success',
+        message: 'user orders found',
+        user: rows[0]
+      });
+    } catch (err) {
+      return res.status(400).json({
+        status: 'error',
+        error: 'could not get user'
       });
     }
   }

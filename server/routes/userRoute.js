@@ -9,5 +9,6 @@ const router = Router();
 router.post('/auth/signup', validateUser.validSignup, UserController.create);
 router.post('/auth/login', validateUser.validLogin, UserController.login);
 router.get('/users', verifyToken, Authentications.authAdmin, UserController.getAllUsers);
+router.get('/users/:userId', verifyToken, Authentications.authAdmin, UserController.getOneUser);
 
 export default router;
