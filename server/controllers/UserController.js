@@ -59,7 +59,7 @@ export default class UserController {
           message: 'user with that email already exists'
         });
       }
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         error: 'signup unsuccessful',
         err
@@ -107,7 +107,7 @@ export default class UserController {
         token
       });
     } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         err
       });
@@ -123,7 +123,7 @@ export default class UserController {
    * @memberof UserController
    */
   static async getAllUsers(req, res) {
-    const queryText = 'SELECT * FROM users WHERE usertype=$1';
+    const queryText = 'SELECT * FROM users WHERE usertype=$1 returning firstname, lastname, email';
     try {
       const { rows, rowCount } = await db.query(queryText, ['user']);
       if (rows.length === 0) {
@@ -139,7 +139,7 @@ export default class UserController {
         total: rowCount
       });
     } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         error: 'could not get the orders'
       });
@@ -155,7 +155,7 @@ export default class UserController {
    */
   static async getOneUser(req, res) {
     const userId = parseInt(req.params.userId, 0);
-    const queryText = 'SELECT * FROM users WHERE id=$1';
+    const queryText = 'SELECT * FROM users WHERE id=$1 returning firstname, lastname, email';
     try {
       const { rows } = await db.query(queryText, [userId]);
       if (!rows[0]) {
@@ -170,7 +170,7 @@ export default class UserController {
         user: rows[0]
       });
     } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: 'error',
         error: 'could not get user'
       });

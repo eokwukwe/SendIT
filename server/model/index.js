@@ -3,8 +3,17 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+let connectionString;
+switch (process.env.NODE_ENV) {
+  case 'test' || 'development':
+    connectionString = process.env.DATABASE_URL;
+    break;
+  default:
+    connectionString = process.env.DATABASE_URL;
+    break;
+}
 const pool = new Pool({
-  connectionString: process.env.DBASE_URL
+  connectionString
 });
 
 export default {
