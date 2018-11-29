@@ -16,8 +16,12 @@ export default class UserController {
    */
   static async create(req, res) {
     const errors = validationResult(req);
+    const errorsMsg = {};
+    errors.array().forEach((error) => {
+      errorsMsg[error.param] = error.msg;
+    });
     if (!errors.isEmpty()) {
-      return res.status(400).json(errors.array());
+      return res.status(400).json(errorsMsg);
     }
 
     const {
@@ -40,29 +44,27 @@ export default class UserController {
       const {
         id, firstname, lastname, email, usertype
       } = rows[0];
-      const payload = { userId: id, usertype, email };
+      const payload = {
+        userId: id,
+        usertype,
+        email,
+        lastname,
+        firstname
+      };
       const token = Helper.generateToken(payload);
 
       return res.status(201).json({
-        status: 'signup success',
         message: 'you have successfully signed up',
-        token,
-        details: {
-          firstname,
-          lastname
-        }
+        token
       });
     } catch (err) {
       if (err.routine === '_bt_check_unique') {
         return res.status(400).json({
-          status: 'signup failure',
           message: 'user with that email already exists'
         });
       }
       return res.status(500).json({
-        status: 'error',
-        error: 'signup unsuccessful',
-        err
+        error: 'signup unsuccessful'
       });
     }
   }
@@ -77,10 +79,13 @@ export default class UserController {
    */
   static async login(req, res) {
     const errors = validationResult(req);
+    const errorsMsg = {};
+    errors.array().forEach((error) => {
+      errorsMsg[error.param] = error.msg;
+    });
     if (!errors.isEmpty()) {
-      return res.status(400).json(errors.array());
+      return res.status(400).json(errorsMsg);
     }
-
     const { userEmail, password } = req.body;
     const queryText = 'SELECT * FROM users WHERE email = $1';
 
@@ -88,13 +93,11 @@ export default class UserController {
       const { rows } = await db.query(queryText, [userEmail]);
       if (!rows[0]) {
         return res.status(400).json({
-          status: 'login failure',
           message: 'user does not exist'
         });
       }
       if (!Helper.comparePassword(rows[0].password, password)) {
         return res.status(400).json({
-          status: 'login failure',
           message: 'incorrect password'
         });
       }
@@ -102,14 +105,12 @@ export default class UserController {
       const payload = { userId: id, usertype, email };
       const token = Helper.generateToken(payload);
       return res.status(200).json({
-        status: 'login success',
         message: 'you have successfully log in',
         token
       });
     } catch (err) {
       return res.status(500).json({
-        status: 'error',
-        err
+        error: 'cannot login'
       });
     }
   }
@@ -123,25 +124,35 @@ export default class UserController {
    * @memberof UserController
    */
   static async getAllUsers(req, res) {
-    const queryText = 'SELECT * FROM users WHERE usertype=$1 returning firstname, lastname, email';
+    const queryText = 'SELECT * FROM users WHERE usertype=$1';
     try {
       const { rows, rowCount } = await db.query(queryText, ['user']);
       if (rows.length === 0) {
         return res.status(404).json({
-          status: 'failure',
           message: 'users not found'
         });
       }
+      const users = [];
+      rows.forEach((row) => {
+        const {
+          id, firstname, lastname, email
+        } = row;
+        const user = {
+          id,
+          firstname,
+          lastname,
+          email
+        };
+        users.push(user);
+      });
+
       return res.status(200).json({
-        status: 'success',
-        message: 'available users',
-        rows,
-        total: rowCount
+        users,
+        totalUsers: rowCount
       });
     } catch (err) {
       return res.status(500).json({
-        status: 'error',
-        error: 'could not get the orders'
+        error: 'could not get the users'
       });
     }
   }
@@ -155,23 +166,28 @@ export default class UserController {
    */
   static async getOneUser(req, res) {
     const userId = parseInt(req.params.userId, 0);
-    const queryText = 'SELECT * FROM users WHERE id=$1 returning firstname, lastname, email';
+    const queryText = 'SELECT * FROM users WHERE id=$1 AND usertype=$2';
     try {
-      const { rows } = await db.query(queryText, [userId]);
+      const { rows } = await db.query(queryText, [userId, 'user']);
+      const {
+        id, firstname, lastname, email
+      } = rows[0];
+      const user = {
+        id,
+        firstname,
+        lastname,
+        email
+      };
       if (!rows[0]) {
         return res.status(404).json({
-          status: 'failure',
           message: 'user not found'
         });
       }
       return res.status(200).json({
-        status: 'success',
-        message: 'user orders found',
-        user: rows[0]
+        user
       });
     } catch (err) {
       return res.status(500).json({
-        status: 'error',
         error: 'could not get user'
       });
     }

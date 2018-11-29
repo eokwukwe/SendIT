@@ -15,8 +15,12 @@ export default class OrderController {
    */
   static async createOrder(req, res) {
     const errors = validationResult(req);
+    const errorsMsg = {};
+    errors.array().forEach((error) => {
+      errorsMsg[error.param] = error.msg;
+    });
     if (!errors.isEmpty()) {
-      return res.status(400).json(errors.array());
+      return res.status(400).json(errorsMsg);
     }
 
     const {
@@ -59,15 +63,12 @@ export default class OrderController {
     try {
       const { rows } = await db.query(queryText, values);
       return res.status(201).json({
-        status: 'success',
-        message: 'parcel delivery order created successully',
+        message: 'order created successully',
         order: rows[0]
       });
     } catch (err) {
       return res.status(500).json({
-        status: 'error',
-        error: 'order not created',
-        err
+        error: 'can not create order'
       });
     }
   }
@@ -85,19 +86,15 @@ export default class OrderController {
       const { rows, rowCount } = await db.query(queryText);
       if (rows.length === 0) {
         return res.status(404).json({
-          status: 'failure',
           message: 'orders not found'
         });
       }
       return res.status(200).json({
-        status: 'success',
-        message: 'available orders',
-        rows,
-        total: rowCount
+        orders: rows,
+        totalOrders: rowCount
       });
     } catch (err) {
       return res.status(500).json({
-        status: 'error',
         error: 'could not get the orders'
       });
     }
@@ -117,19 +114,15 @@ export default class OrderController {
       const { rows } = await db.query(queryText, [parcelId]);
       if (!rows[0]) {
         return res.status(404).json({
-          status: 'failure',
           message: 'order not found'
         });
       }
       return res.status(200).json({
-        status: 'success',
-        message: 'user orders found',
         order: rows[0]
       });
     } catch (err) {
       return res.status(500).json({
-        status: 'error',
-        error: 'could not get user orders'
+        error: 'could not get the order'
       });
     }
   }
@@ -148,20 +141,16 @@ export default class OrderController {
       const { rows, rowCount } = await db.query(queryText, [userId]);
       if (rows.length === 0) {
         return res.status(404).json({
-          status: 'failure',
           message: 'user orders not found'
         });
       }
       return res.status(200).json({
-        status: 'success',
-        message: 'user orders',
-        rows,
+        userOrders: rows,
         total: rowCount
       });
     } catch (err) {
       return res.status(500).json({
-        status: 'error',
-        error: 'could not get the order'
+        error: 'could not get user orders'
       });
     }
   }
@@ -183,20 +172,16 @@ export default class OrderController {
       const { rows } = await db.query(findText, [parcelId, userId]);
       if (!rows[0]) {
         return res.status(404).json({
-          status: 'failure',
           message: 'order not found'
         });
       }
       const values = ['true', moment(new Date()), parcelId, userId];
       const result = await db.query(updateText, values);
       return res.status(200).json({
-        status: 'success',
-        message: 'order cancelled',
-        order: result.rows[0]
+        message: `order cancelled ${result.rows[0].cancelled}`
       });
     } catch (err) {
       return res.status(500).json({
-        status: 'error',
         error: 'could not cancell order'
       });
     }
@@ -210,6 +195,14 @@ export default class OrderController {
    * @memberof OrderController
    */
   static async changeOrderDestination(req, res) {
+    const errors = validationResult(req);
+    const errorsMsg = {};
+    errors.array().forEach((error) => {
+      errorsMsg[error.param] = error.msg;
+    });
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errorsMsg);
+    }
     const { toAddress, toCity, toCountry } = req.body;
     const userId = parseInt(req.user.userId, 0);
     const parcelId = parseInt(req.params.parcelId, 0);
@@ -219,7 +212,6 @@ export default class OrderController {
       const { rows } = await db.query(findText, [parcelId]);
       if (!rows[0]) {
         return res.status(404).json({
-          status: 'failure',
           message: 'order not found'
         });
       }
@@ -232,14 +224,15 @@ export default class OrderController {
         userId
       ];
       const result = await db.query(updateText, values);
+      const newDestination = `${result.rows[0].to_address} ${result.rows[0].to_city}, ${
+        result.rows[0].to_country
+      }`;
+
       return res.status(200).json({
-        status: 'success',
-        message: 'order destination changed',
-        order: result.rows[0]
+        message: `destination changed successfully to ${newDestination}`
       });
     } catch (err) {
       return res.status(500).json({
-        status: 'error',
         error: 'could not change order destination'
       });
     }
@@ -263,7 +256,6 @@ export default class OrderController {
       const { rows } = await db.query(findText, [parcelId]);
       if (!rows[0]) {
         return res.status(404).json({
-          status: 'failure',
           message: 'order not found'
         });
       }
@@ -274,18 +266,15 @@ export default class OrderController {
       const subject = 'Notification on parcel status';
       const user = userInfo.rows[0].firstname;
       const message = `
-        <h3 style="text-transform:capitalize">Hello ${user},</h3><p>Your parcel is ${status}</p>`;
+        <h3 style="text-transform:capitalize">Hello ${user},</h3><p>Your parcel is ${result.rows[0].status.trim()}</p>`;
 
-      sendNotification(to, subject, message, user, res);
+      sendNotification(to, subject, message);
       return res.status(200).json({
-        status: 'success',
-        message: 'order status changed',
-        order: result.rows[0]
+        message: `order status updated successfully to ${result.rows[0].status.trim()}`
       });
     } catch (err) {
       return res.status(500).json({
-        status: 'error',
-        error: 'could not change order status'
+        error: 'could not update order status'
       });
     }
   }
@@ -298,6 +287,15 @@ export default class OrderController {
    * @memberof OrderController
    */
   static async changeOrderPresentLocation(req, res) {
+    const errors = validationResult(req);
+    const errorsMsg = {};
+    errors.array().forEach((error) => {
+      errorsMsg[error.param] = error.msg;
+    });
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errorsMsg);
+    }
+
     const { fromAddress, fromCity, fromCountry } = req.body;
     const parcelId = parseInt(req.params.parcelId, 0);
     const findUser = 'SELECT * FROM users WHERE id=$1';
@@ -308,12 +306,12 @@ export default class OrderController {
       const { rows } = await db.query(findText, [parcelId]);
       if (!rows[0]) {
         return res.status(404).json({
-          status: 'failure',
           message: 'order not found'
         });
       }
-      const presentLocation = `${fromAddress} ${fromCity}, ${fromCountry}`;
-      const values = [presentLocation, moment(new Date()), parcelId];
+
+      const presentLocation = `${fromAddress} ${fromCity} ${fromCountry}`;
+      const values = [presentLocation || rows[0].present_location, moment(new Date()), parcelId];
       const result = await db.query(updateText, values);
       const userInfo = await db.query(findUser, [rows[0].userid]);
 
@@ -322,19 +320,15 @@ export default class OrderController {
       const user = userInfo.rows[0].firstname;
       const message = `
       <h3 style="text-transform:capitalize">Hello ${user},</h3>
-      <p>Your parcel is currently at ${presentLocation}</p>`;
+      <p>Your parcel is currently at ${rows[0].present_location}</p>`;
 
       sendNotification(to, subject, message);
 
       return res.status(200).json({
-        status: 'success',
-        message: 'order present location changed',
-        order: result.rows[0]
+        message: `present location successfully changed to ${result.rows[0].present_location}`
       });
     } catch (err) {
       return res.status(500).json({
-        status: 'error',
-        err,
         error: 'could not change order present location'
       });
     }
