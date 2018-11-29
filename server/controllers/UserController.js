@@ -16,10 +16,7 @@ export default class UserController {
    */
   static async create(req, res) {
     const errors = validationResult(req);
-    const errorsMsg = {};
-    errors.array().forEach((error) => {
-      errorsMsg[error.param] = error.msg;
-    });
+    const errorsMsg = errors.array().reduce((acc, error) => [...acc, error.msg], []);
     if (!errors.isEmpty()) {
       return res.status(400).json(errorsMsg);
     }

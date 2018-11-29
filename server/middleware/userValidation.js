@@ -4,16 +4,16 @@ const validateUser = {
   validSignup: [
     check('firstName')
       .isAlpha()
-      .withMessage('Must be only alphabetical chars')
-      .isLength({ min: 3 })
-      .withMessage('name must be at least 3 chars long')
+      .withMessage('firstname must be only alphabetical chars')
+      .isLength({ min: 2 })
+      .withMessage('firstname is too short')
       .trim(),
 
     check('lastName')
       .isAlpha()
-      .withMessage('Must be only alphabetical chars')
-      .isLength({ min: 3 })
-      .withMessage('name must be at least 3 chars long')
+      .withMessage('lastname must be only alphabetical chars')
+      .isLength({ min: 2 })
+      .withMessage('lastname is too short')
       .trim(),
 
     check('userEmail')
@@ -23,16 +23,20 @@ const validateUser = {
 
     check('password')
       .isLength({ min: 6 })
-      .withMessage('Password must be at least 6 characters in length.')
-      .matches(/^[0-9a-zA-Z"#$&()%;,_@+|?!£^.*-]+$/)
-      .withMessage('Password must contain at least one Uppercase, one number and one symbol')
+      .withMessage('password must be at least 6 characters in length.')
+      .matches('[0-9]')
+      .withMessage('password must contain at least 1 number.')
+      .matches('[A-Z]')
+      .withMessage('password must contain at least 1 uppercase letter.')
+      .matches('["#$&()%;,_@+|?!£^.*-]')
+      .withMessage('password must contain at least 1 symbol.')
       .custom((value, { req }) => {
         if (value !== req.body.confirmPassword) {
           return false;
         }
         return value;
       })
-      .withMessage('Passwords does not match.')
+      .withMessage('passwords does not match.')
       .trim()
   ],
 
