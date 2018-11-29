@@ -10,8 +10,8 @@ describe('TEST for users endpoint', () => {
     firstName: 'mary',
     lastName: 'kay',
     userEmail: 'mary.kay@test.com',
-    password: 'mary.Kay',
-    confirmPassword: 'mary.Kay'
+    password: 'mary.Kay1',
+    confirmPassword: 'mary.Kay1'
   };
 
   const cleanUp = async () => {
@@ -26,7 +26,6 @@ describe('TEST for users endpoint', () => {
       .send(user)
       .expect(201)
       .expect((res) => {
-        expect(res.body.status).toEqual('signup success');
         expect(res.body.message).toEqual('you have successfully signed up');
       })
       .end(done);
@@ -34,18 +33,18 @@ describe('TEST for users endpoint', () => {
 
   it('should return 400 if the firstname is invalid', (done) => {
     const user1 = {
-      firstName: 'ma',
+      firstName: 'm',
       lastName: 'kay',
       userEmail: 'marked.kay@test.com',
-      password: 'mary.Kay',
-      confirmPassword: 'mary.Kay'
+      password: 'mary.Kay1',
+      confirmPassword: 'mary.Kay1'
     };
     request(app)
       .post('/api/v1/auth/signup')
       .send(user1)
       .expect(400)
       .expect((res) => {
-        expect(res.body[0].msg).toEqual('name must be at least 3 chars long');
+        expect(res.body[0]).toEqual('firstname is too short');
       })
       .end(done);
   });
@@ -53,17 +52,17 @@ describe('TEST for users endpoint', () => {
   it('should return 400 if the lastname is invalid', (done) => {
     const user2 = {
       firstName: 'mary',
-      lastName: 'ka',
+      lastName: 'k',
       userEmail: 'marked.kay@test.com',
-      password: 'mary.Kay',
-      confirmPassword: 'mary.Kay'
+      password: 'mary.Kay1',
+      confirmPassword: 'mary.Kay1'
     };
     request(app)
       .post('/api/v1/auth/signup')
       .send(user2)
       .expect(400)
       .expect((res) => {
-        expect(res.body[0].msg).toEqual('name must be at least 3 chars long');
+        expect(res.body[0]).toEqual('lastname is too short');
       })
       .end(done);
   });
@@ -73,15 +72,15 @@ describe('TEST for users endpoint', () => {
       firstName: 'mary',
       lastName: 'kay',
       userEmail: 'marked.kaytest.com',
-      password: 'mary.Kay',
-      confirmPassword: 'mary.Kay'
+      password: 'mary.Kay1',
+      confirmPassword: 'mary.Kay1'
     };
     request(app)
       .post('/api/v1/auth/signup')
       .send(user3)
       .expect(400)
       .expect((res) => {
-        expect(res.body[0].msg).toEqual('invalid email');
+        expect(res.body[0]).toEqual('invalid email');
       })
       .end(done);
   });
@@ -99,7 +98,7 @@ describe('TEST for users endpoint', () => {
       .send(user4)
       .expect(400)
       .expect((res) => {
-        expect(res.body[0].msg).toEqual('Password must be at least 6 characters in length.');
+        expect(res.body[0]).toEqual('password must be at least 6 characters in length.');
       })
       .end(done);
   });
@@ -109,7 +108,7 @@ describe('TEST for users endpoint', () => {
       firstName: 'mary',
       lastName: 'kay',
       userEmail: 'marked.kay@test.com',
-      password: 'mar.Yay',
+      password: 'mar.Yay1',
       confirmPassword: 'mar.Jay'
     };
     request(app)
@@ -117,7 +116,7 @@ describe('TEST for users endpoint', () => {
       .send(user5)
       .expect(400)
       .expect((res) => {
-        expect(res.body[0].msg).toEqual('Passwords does not match.');
+        expect(res.body[0]).toEqual('passwords does not match.');
       })
       .end(done);
   });
@@ -128,7 +127,6 @@ describe('TEST for users endpoint', () => {
       .send(user)
       .expect(400)
       .expect((res) => {
-        expect(res.body.status).toEqual('signup failure');
         expect(res.body.message).toEqual('user with that email already exists');
       })
       .end(done);
@@ -137,7 +135,7 @@ describe('TEST for users endpoint', () => {
   it('should login users', (done) => {
     const userDetail = {
       userEmail: 'mary.kay@test.com',
-      password: 'mary.Kay'
+      password: 'mary.Kay1'
     };
     request(app)
       .post('/api/v1/auth/login')
@@ -145,7 +143,6 @@ describe('TEST for users endpoint', () => {
       .expect(200)
       .expect((res) => {
         expect(res.body.message).toEqual('you have successfully log in');
-        expect(res.body.status).toEqual('login success');
       })
       .end(done);
   });

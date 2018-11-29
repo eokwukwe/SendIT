@@ -28,7 +28,7 @@ describe('TEST for orders endpoint', () => {
       .set({ Authorization: token })
       .expect(400)
       .expect((res) => {
-        expect(res.body[0].msg).toEqual('The description is too short');
+        expect(res.body.parcelDescription).toEqual('Invalid value');
       })
       .end(done);
   });
@@ -51,7 +51,7 @@ describe('TEST for orders endpoint', () => {
       .set({ Authorization: token })
       .expect(400)
       .expect((res) => {
-        expect(res.body[0].msg).toEqual('weight must be decimal value');
+        expect(res.body.parcelWeight).toEqual('weight must be decimal value');
       })
       .end(done);
   });
@@ -74,7 +74,7 @@ describe('TEST for orders endpoint', () => {
       .set({ Authorization: token })
       .expect(400)
       .expect((res) => {
-        expect(res.body[0].msg).toEqual('address is too short');
+        expect(res.body.fromAddress).toEqual('invalid input, please enter a valid address');
       })
       .end(done);
   });
@@ -84,6 +84,7 @@ describe('TEST for orders endpoint', () => {
       parcelDescription: '12 mando road, owowo',
       parcelWeight: 1.2,
       fromAddress: '12 mango, Lagos lagos',
+      fromCity: 'b',
       fromCountry: 'nigeria',
       toAddress: '67 olorufumi street',
       toCity: 'lagos',
@@ -97,7 +98,7 @@ describe('TEST for orders endpoint', () => {
       .set({ Authorization: token })
       .expect(400)
       .expect((res) => {
-        expect(res.body[0].msg).toEqual('City name is too short');
+        expect(res.body.fromCity).toEqual('city name is too short');
       })
       .end(done);
   });
@@ -108,6 +109,7 @@ describe('TEST for orders endpoint', () => {
       parcelWeight: 1.2,
       fromAddress: '12 mango, Lagos lagos',
       fromCity: 'lagos',
+      fromCountry: 'ng',
       toAddress: '67 olorufumi street',
       toCity: 'lagos',
       toCountry: 'nigeria',
@@ -120,7 +122,7 @@ describe('TEST for orders endpoint', () => {
       .set({ Authorization: token })
       .expect(400)
       .expect((res) => {
-        expect(res.body[0].msg).toEqual('country name is too short');
+        expect(res.body.fromCountry).toEqual('country name is too short');
       })
       .end(done);
   });
@@ -143,7 +145,7 @@ describe('TEST for orders endpoint', () => {
       .set({ Authorization: token })
       .expect(400)
       .expect((res) => {
-        expect(res.body[0].msg).toEqual('address is too short');
+        expect(res.body.toAddress).toEqual('invalid input, please enter a valid address');
       })
       .end(done);
   });
