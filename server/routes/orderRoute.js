@@ -37,6 +37,7 @@ router.put(
   '/parcels/:parcelId/destination',
   verifyToken,
   Authentications.authUser,
+  validateOrder.validDestination,
   OrderController.changeOrderDestination
 );
 router.put(
@@ -49,6 +50,7 @@ router.put(
   '/parcels/:parcelId/presentLocation',
   verifyToken,
   Authentications.authAdmin,
+  validateOrder.validLocation,
   OrderController.changeOrderPresentLocation
 );
 

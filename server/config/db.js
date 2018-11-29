@@ -89,7 +89,7 @@ const createOrdersTable = () => {
       receiver_phone VARCHAR(11) NOT NULL,
       cancelled BOOL DEFAULT 'false',
       present_location VARCHAR(100),
-      status CHAR(10) DEFAULT 'pending',
+      status CHAR DEFAULT 'pending',
       userid INT NOT NULL,
       created_on TIMESTAMP NOT NULL default now(),
       updated_on TIMESTAMP NOT NULL default now(),
