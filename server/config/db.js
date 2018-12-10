@@ -1,4 +1,5 @@
 import { Pool } from 'pg';
+import moment from 'moment';
 import dotenv from 'dotenv';
 import Helper from '../helper/helper';
 
@@ -33,6 +34,8 @@ const createUsersTable = () => {
       lastname TEXT NOT NULL,
       email VARCHAR(128) UNIQUE NOT NULL,
       password VARCHAR(128) NOT NULL,
+      reset_password_token VARCHAR,
+      reset_password_expires DATE,
       usertype VARCHAR(10) NOT NULL DEFAULT 'user',
       created_on TIMESTAMP NOT NULL DEFAULT now(),
       updated_on TIMESTAMP NOT NULL DEFAULT now(),
@@ -51,12 +54,20 @@ const createUsersTable = () => {
     });
 };
 
-const insertUser = () => {
+const insertAdmin = () => {
   const password = Helper.hashPassword(adminPassword);
   const queryText = `INSERT INTO 
-    users(firstname, lastname, email, password, usertype) 
-    VALUES ($1, $2, $3, $4, $5)`;
-  const values = ['admin', 'sendit', 'admin@sendit.com', password, 'admin'];
+    users(firstname, lastname, email, password, usertype, created_on, updated_on) 
+    VALUES ($1, $2, $3, $4, $5, $6, $7)`;
+  const values = [
+    'admin',
+    'sendit',
+    'admin@sendit.com',
+    password,
+    'admin',
+    moment(new Date()),
+    moment(new Date())
+  ];
   pool
     .query(queryText, values)
     .then((res) => {
@@ -76,20 +87,17 @@ const createOrdersTable = () => {
   const queryText = `CREATE TABLE IF NOT EXISTS 
     orders(
       id SERIAL PRIMARY KEY NOT NULL,
-      parcel_descrpt VARCHAR(100) NOT NULL,
-      parcel_wgt REAL NOT NULL,
+      weight REAL NOT NULL,
       price REAL NOT NULL,
-      from_address VARCHAR(100) NOT NULL,
-      from_city VARCHAR(100) NOT NULL,
-      from_country VARCHAR(100) NOT NULL,
-      to_address VARCHAR(100) NOT NULL,
-      to_city VARCHAR(100) NOT NULL,
-      to_country VARCHAR(100) NOT NULL,
-      receiver VARCHAR(100) NOT NULL,
+      distance REAL,
+      description VARCHAR NOT NULL,
+      pickup VARCHAR NOT NULL,
+      destination VARCHAR NOT NULL,
+      location VARCHAR,
+      receiver_name VARCHAR NOT NULL,
       receiver_phone VARCHAR(11) NOT NULL,
       cancelled BOOL DEFAULT 'false',
-      present_location VARCHAR(100),
-      status CHAR DEFAULT 'pending',
+      status VARCHAR DEFAULT 'pending',
       userid INT NOT NULL,
       created_on TIMESTAMP NOT NULL default now(),
       updated_on TIMESTAMP NOT NULL default now(),
@@ -147,7 +155,7 @@ const dropOrdersTable = () => {
 const createAllTables = () => {
   createUsersTable();
   createOrdersTable();
-  insertUser();
+  insertAdmin();
 };
 /**
  * Drop All Tables
@@ -168,7 +176,7 @@ export {
   dropUsersTable,
   createAllTables,
   dropAllTables,
-  insertUser
+  insertAdmin
 };
 
 require('make-runnable');

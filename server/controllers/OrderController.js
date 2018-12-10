@@ -24,37 +24,24 @@ export default class OrderController {
     }
 
     const {
-      parcelDescription,
-      parcelWeight,
-      fromAddress,
-      fromCity,
-      fromCountry,
-      toAddress,
-      toCity,
-      toCountry,
-      receiver,
-      receiverPhone
+      weight, price, distance, description, pickup, destination, receiver, phone
     } = req.body;
 
-    const orderPrice = parcelWeight * 150;
     const userId = parseInt(req.user.userId, 0);
-    const presentLocation = fromAddress;
+    const location = pickup;
     const queryText = `INSERT INTO 
-      orders(parcel_descrpt, parcel_wgt, price, from_address, from_city, from_country, to_address, to_city, to_country, receiver, receiver_phone, present_location, userid, created_on, updated_on) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) returning *`;
+      orders(weight, price, distance, description, pickup, destination, location, receiver_name, receiver_phone, userid, created_on, updated_on) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) returning *`;
 
     const values = [
-      parcelDescription,
-      parcelWeight,
-      orderPrice,
-      fromAddress,
-      fromCity,
-      fromCountry,
-      toAddress,
-      toCity,
-      toCountry,
+      weight,
+      price.trim(),
+      distance.trim(),
+      description,
+      pickup,
+      destination,
+      location,
       receiver,
-      receiverPhone,
-      presentLocation,
+      phone,
       userId,
       moment(new Date()),
       moment(new Date())
@@ -68,7 +55,9 @@ export default class OrderController {
       });
     } catch (err) {
       return res.status(500).json({
-        error: 'can not create order'
+        error: 'can not create order',
+        err,
+        body: req.body
       });
     }
   }
@@ -203,11 +192,11 @@ export default class OrderController {
     if (!errors.isEmpty()) {
       return res.status(400).json(errorsMsg);
     }
-    const { toAddress, toCity, toCountry } = req.body;
+    const { destination } = req.body;
     const userId = parseInt(req.user.userId, 0);
     const parcelId = parseInt(req.params.parcelId, 0);
     const findText = 'SELECT * FROM orders WHERE id=$1';
-    const updateText = 'UPDATE orders SET to_address=$1, to_city=$2, to_country=$3, updated_on=$4 WHERE id=$5 AND userid=$6 returning *';
+    const updateText = 'UPDATE orders SET destination=$1, updated_on=$2 WHERE id=$3 AND userid=$4 returning *';
     try {
       const { rows } = await db.query(findText, [parcelId]);
       if (!rows[0]) {
@@ -215,21 +204,12 @@ export default class OrderController {
           message: 'order not found'
         });
       }
-      const values = [
-        toAddress || rows[0].to_address,
-        toCity || rows[0].to_city,
-        toCountry || rows[0].to_country,
-        moment(new Date()),
-        parcelId,
-        userId
-      ];
+      const values = [destination || rows[0].destination, moment(new Date()), parcelId, userId];
       const result = await db.query(updateText, values);
-      const newDestination = `${result.rows[0].to_address} ${result.rows[0].to_city}, ${
-        result.rows[0].to_country
-      }`;
+      const newDestination = `${result.rows[0].destination}`;
 
       return res.status(200).json({
-        message: `destination changed successfully to ${newDestination}`
+        message: `parcel destination changed successfully to ${newDestination}`
       });
     } catch (err) {
       return res.status(500).json({
@@ -296,11 +276,11 @@ export default class OrderController {
       return res.status(400).json(errorsMsg);
     }
 
-    const { fromAddress, fromCity, fromCountry } = req.body;
+    const { location } = req.body;
     const parcelId = parseInt(req.params.parcelId, 0);
     const findUser = 'SELECT * FROM users WHERE id=$1';
     const findText = 'SELECT * FROM orders WHERE id=$1';
-    const updateText = 'UPDATE orders SET present_location=$1, updated_on=$2 WHERE id=$3 returning *';
+    const updateText = 'UPDATE orders SET location=$1, updated_on=$2 WHERE id=$3 returning *';
 
     try {
       const { rows } = await db.query(findText, [parcelId]);
@@ -310,8 +290,7 @@ export default class OrderController {
         });
       }
 
-      const presentLocation = `${fromAddress} ${fromCity} ${fromCountry}`;
-      const values = [presentLocation || rows[0].present_location, moment(new Date()), parcelId];
+      const values = [location || rows[0].location, moment(new Date()), parcelId];
       const result = await db.query(updateText, values);
       const userInfo = await db.query(findUser, [rows[0].userid]);
 
@@ -320,12 +299,12 @@ export default class OrderController {
       const user = userInfo.rows[0].firstname;
       const message = `
       <h3 style="text-transform:capitalize">Hello ${user},</h3>
-      <p>Your parcel is currently at ${rows[0].present_location}</p>`;
+      <p>Your parcel is currently at ${result.rows[0].location}</p>`;
 
       sendNotification(to, subject, message);
 
       return res.status(200).json({
-        message: `present location successfully changed to ${result.rows[0].present_location}`
+        message: `present location successfully changed to ${result.rows[0].location}`
       });
     } catch (err) {
       return res.status(500).json({
