@@ -4,19 +4,10 @@ import dotenv from 'dotenv';
 import Helper from '../helper/helper';
 
 dotenv.config();
-let connectionString;
 const adminPassword = process.env.ADMIN_PASS;
 
-switch (process.env.NODE_ENV) {
-  case 'test' || 'development':
-    connectionString = process.env.DATABASE_URL;
-    break;
-  default:
-    connectionString = process.env.DATABASE_URL;
-    break;
-}
 const pool = new Pool({
-  connectionString
+  connectionString: process.env.DATABASE_URL
 });
 
 pool.on('connect', () => {

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" type="image/jpg" href="./img/pageicon.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.4.2/js/all.js"
+    ></script>
+
+    <!--
+      <script
+        async
+        defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUzHg3TmmcuHVRnYyAx5reBG-fVIn4wYc&callback=initMap"
+      ></script>
+    -->
+
+    <title>SendIT | User</title>
+  </head>
+
+  <body class="user-body light-grey">
+    <header id="header-nav" class="header default">
+      <nav class="container navbar">
+        <span class="open-slide">
+          <a href="#" class="sidebar-icon">
+            <svg width="30" height="30">
+              <path d="M0,5 30,5" stroke="#fff" stroke-width="5" />
+              <path d="M0,14 30,14" stroke="#fff" stroke-width="5" />
+              <path d="M0,23 30,23" stroke="#fff" stroke-width="5" />
+            </svg>
+          </a>
+        </span>
+
+        <div class="nav-logo"><a href="index.html">SendIT</a></div>
+
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="signup.html" class="signup">Sign Up</a>
+          </li>
+          <li class="nav-item"><a href="login.html" class="login">Login</a></li>
+          <li class="nav-item">
+            <a href="order.html" class="side-nav-item order-btn  order-btn-nav"
+              >Create Order</a
+            >
+          </li>
+          <li class="nav-item">
+            <a href="#" class="side-nav-item logout">Logout</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Side Bar -->
+      <div id="side-menu" class="side-nav default">
+        <a href="#" class="btn-close-sidenav">&times;</a>
+        <a href="signup.html" class="side-nav-item signup">Sign Up</a>
+        <a href="login.html" class="side-nav-item login">Login</a>
+        <a href="order.html" class="side-nav-item order-btn">Create Order</a>
+        <a href="#" class="side-nav-item logout">Logout</a>
+      </div>
+    </header>
+
+    <main class="container user-page">
+      <div class="user-info">
+        <h3 id="user-name">Welcome Tunde</h3>
+        <p class="total-orders">Orders <span id="total-orders">8</span></p>
+      </div>
+      <section class="user-dashboard">
+        <!-- Order Summary -->
+        <section class="summary">
+          <div class="summary-box pending-order pending">
+            <span class="summary-box-title">Pending</span>
+            <h3>
+              <i class="fas fa-shopping-cart fa-1x"></i>
+              <span class="number">8</span>
+            </h3>
+          </div>
+          <div class="summary-box intransit-order intransit">
+            <span class="summary-box-title">In Transit</span>
+            <h3>
+              <i class="fas fa-truck-moving"></i> <span class="number">2</span>
+            </h3>
+          </div>
+          <div class="summary-box delivered-order deliver">
+            <span class="summary-box-title">Delivered</span>
+            <h3>
+              <i class="fas fa-calendar-check"></i>
+              <span class="number">2</span>
+            </h3>
+          </div>
+          <div class="summary-box cancelled-order cancelled">
+            <span class="summary-box-title">Cancelled</span>
+            <h3>
+              <i class="fas fa-calendar-times"></i>
+              <span class="number">2</span>
+            </h3>
+          </div>
+        </section>
+
+        <!-- Order Lists -->
+        <section class="order-list-table">
+          <div class="list-group">
+            <div class="order-filter">
+              <h3 class="filter-heading">Filter Order</h3>
+              <select id="search-filter" class="filter-control">
+                <option value="">Select...</option>
+                <option value="pending">Pending</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="intransit">Intransit</option>
+                <option value="delivered">Delivered</option>
+                <option value="date">Order Date</option>
+              </select>
+            </div>
+            <ul id="order-list">
+              <li>
+                <div class="accordion-header pending">
+                  <h5>Order #<span class="order-id">12345</span></h5>
+                  <div class="accordion-btn-icons">
+                    <span class="btn-destination">
+                      <i class="fas fa-map-marker-alt"></i>
+                    </span>
+                    <span id="btn-cancel" class="btn-cancel">
+                      <i class="far fa-times-circle"></i>
+                    </span>
+                    <span class="accordion">
+                      <i class="fas fa-chevron-down open"></i>
+                    </span>
+                  </div>
+                  <div id="cancel-modal" class="modal">
+                    <div class="modal-content cancel-modal-content">
+                      <div class="modal-header cancel-modal-header">
+                        <h4>Warning !!!</h4>
+                      </div>
+                      <div class="modal-body cancel-modal-body">
+                        <p>You cannot undo it after cancel</p>
+                      </div>
+                      <div class="modal-footer cancel-modal-footer">
+                        <button
+                          id="dismiss"
+                          class="btn danger cancel-footer-btn"
+                        >
+                          dismiss
+                        </button>
+                        <button id="accept" class="btn info cancel-footer-btn">
+                          accept
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-content">
+                  <div class="order-details">
+                    <div class="info-card">
+                      <h4 class="heading pending-heading">Sender</h4>
+                      <p>
+                        Name <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Pickup Location
+                        <span class="price">Lagos, Nigeria</span>
+                      </p>
+                    </div>
+                    <div class="info-card">
+                      <h4 class="heading pending-heading">Receiver</h4>
+                      <p>
+                        Name <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Destination
+                        <span class="price"
+                          >14 Toyin Street Ikeja Lagos, Nigeria</span
+                        >
+                      </p>
+                    </div>
+                    <div class="info-card">
+                      <h4 class="heading pending-heading">Order Info</h4>
+                      <p>
+                        Order Date
+                        <span class="price date">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Parcel Description
+                        <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Parcel Weight <span class="price">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Delivery Price <span class="price">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Status
+                        <span class="status status-pending">Pending</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div id="map"></div>
+                </div>
+              </li>
+
+              <li>
+                <div class="accordion-header pending">
+                  <h5>Order #<span class="order-id">12345</span></h5>
+                  <div class="accordion-btn-icons">
+                    <span class="btn-destination">
+                      <i class="fas fa-map-marker-alt"></i>
+                    </span>
+                    <span class="btn-cancel">
+                      <i class="far fa-times-circle"></i>
+                    </span>
+                    <span class="accordion">
+                      <i class="fas fa-chevron-down open"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="accordion-content">
+                  <div class="order-details">
+                    <div class="info-card">
+                      <h4 class="heading pending-heading">Sender</h4>
+                      <p>
+                        Name <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Pickup Location
+                        <span class="price">Lagos, Nigeria</span>
+                      </p>
+                    </div>
+                    <div class="info-card">
+                      <h4 class="heading pending-heading">Receiver</h4>
+                      <p>
+                        Name <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Destination
+                        <span class="price"
+                          >14 Toyin Street Ikeja Lagos, Nigeria</span
+                        >
+                      </p>
+                    </div>
+                    <div class="info-card">
+                      <h4 class="heading pending-heading">Order Info</h4>
+                      <p>
+                        Order Date
+                        <span class="price date">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Parcel Description
+                        <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Parcel Weight <span class="price">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Delivery Price <span class="price">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Status
+                        <span class="status status-pending">Pending</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div id="map"></div>
+                </div>
+              </li>
+
+              <li>
+                <div class="accordion-header intransit">
+                  <h5>Order #<span class="order-id">12345</span></h5>
+                  <div class="accordion-btn-icons">
+                    <span class="btn-destination">
+                      <i class="fas fa-map-marker-alt"></i>
+                    </span>
+                    <span class="accordion">
+                      <i class="fas fa-chevron-down open"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="accordion-content">
+                  <div class="order-details">
+                    <div class="info-card">
+                      <h4 class="heading intransit-heading">Sender</h4>
+                      <p>
+                        Name <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Pickup Location
+                        <span class="price">Lagos, Nigeria</span>
+                      </p>
+                    </div>
+                    <div class="info-card">
+                      <h4 class="heading intransit-heading">Receiver</h4>
+                      <p>
+                        Name <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Destination
+                        <span class="price"
+                          >14 Toyin Street Ikeja Lagos, Nigeria</span
+                        >
+                      </p>
+                    </div>
+                    <div class="info-card">
+                      <h4 class="heading intransit-heading">Order Info</h4>
+                      <p>
+                        Order Date
+                        <span class="price date">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Parcel Description
+                        <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Parcel Weight <span class="price">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Delivery Price <span class="price">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Status
+                        <span class="status status-in-transit">Intransit</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div id="map"></div>
+                </div>
+              </li>
+
+              <li>
+                <div class="accordion-header cancelled">
+                  <h5>Order #<span class="order-id">12345</span></h5>
+                  <div class="accordion-btn-icons">
+                    <span class="accordion">
+                      <i class="fas fa-chevron-down open"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="accordion-content">
+                  <div class="order-details">
+                    <div class="info-card">
+                      <h4 class="heading cancelled-heading">Sender</h4>
+                      <p>
+                        Name <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Pickup Location
+                        <span class="price">Lagos, Nigeria</span>
+                      </p>
+                    </div>
+                    <div class="info-card">
+                      <h4 class="heading cancelled-heading">Receiver</h4>
+                      <p>
+                        Name <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Destination
+                        <span class="price"
+                          >14 Toyin Street Ikeja Lagos, Nigeria</span
+                        >
+                      </p>
+                    </div>
+                    <div class="info-card">
+                      <h4 class="heading cancelled-heading">Order Info</h4>
+                      <p>
+                        Order Date
+                        <span class="price date">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Parcel Description
+                        <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Parcel Weight <span class="price">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Delivery Price <span class="price">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Status
+                        <span class="status status-cancelled">Cancelled</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div id="map"></div>
+                </div>
+              </li>
+
+              <li>
+                <div class="accordion-header deliver">
+                  <h5>Order #<span class="order-id">12345</span></h5>
+                  <div class="accordion-btn-icons">
+                    <span class="accordion">
+                      <i class="fas fa-chevron-down open"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="accordion-content">
+                  <div class="order-details">
+                    <div class="info-card">
+                      <h4 class="heading delivered-heading">Sender</h4>
+                      <p>
+                        Name <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Pickup Location
+                        <span class="price">Lagos, Nigeria</span>
+                      </p>
+                    </div>
+                    <div class="info-card">
+                      <h4 class="heading delivered-heading">Receiver</h4>
+                      <p>
+                        Name <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Destination
+                        <span class="price"
+                          >14 Toyin Street Ikeja Lagos, Nigeria</span
+                        >
+                      </p>
+                    </div>
+                    <div class="info-card">
+                      <h4 class="heading delivered-heading">Order Info</h4>
+                      <p>
+                        Order Date
+                        <span class="price date">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Parcel Description
+                        <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Parcel Weight <span class="price">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Delivery Price <span class="price">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Status
+                        <span class="status status-delivered">Delivered</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div id="map"></div>
+                </div>
+              </li>
+
+              <li>
+                <div class="accordion-header deliver">
+                  <h5>Order #<span class="order-id">12345</span></h5>
+                  <div class="accordion-btn-icons">
+                    <span class="accordion">
+                      <i class="fas fa-chevron-down open"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="accordion-content">
+                  <div class="order-details">
+                    <div class="info-card">
+                      <h4 class="heading delivered-heading">Sender</h4>
+                      <p>
+                        Name <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Pickup Location
+                        <span class="price">Lagos, Nigeria</span>
+                      </p>
+                    </div>
+                    <div class="info-card">
+                      <h4 class="heading delivered-heading">Receiver</h4>
+                      <p>
+                        Name <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Destination
+                        <span class="price"
+                          >14 Toyin Street Ikeja Lagos, Nigeria</span
+                        >
+                      </p>
+                    </div>
+                    <div class="info-card">
+                      <h4 class="heading delivered-heading">Order Info</h4>
+                      <p>
+                        Order Date
+                        <span class="price date">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Parcel Description
+                        <span class="price">14 Toyin Street Ikeja</span>
+                      </p>
+                      <p>
+                        Parcel Weight <span class="price">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Delivery Price <span class="price">Lagos, Nigeria</span>
+                      </p>
+                      <p>
+                        Status
+                        <span class="status status-delivered">Delivered</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div id="map"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="main-footer">Copyright &copy; 2018</footer>
+
+    <script src="js/nav.js"></script>
+    <script src="js/user.js"></script>
+  </body>
+</html>
