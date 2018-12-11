@@ -1,84 +1,81 @@
-const signUpBtn = document.querySelectorAll(".signup");
-const login = document.querySelectorAll(".login");
-const logout = document.querySelectorAll(".logout");
-const orderBtn = document.querySelectorAll(".order-btn");
-const orderSubmitBtn = document.querySelector("#order-submit");
-const viewOrderBtn = document.querySelector("#view-order");
-const previewOrderModal = document.querySelector("#preview-order");
-const reject = document.querySelector("#reject");
-const accept = document.querySelector("#accept");
-const orderForm = document.forms["order-form"];
+/* eslint-disable */
+const signUpBtn = document.querySelectorAll('.signup');
+const login = document.querySelectorAll('.login');
+const logout = document.querySelectorAll('.logout');
+const orderBtn = document.querySelectorAll('.order-btn');
+const orderSubmitBtn = document.querySelector('#order-submit');
+const viewOrderBtn = document.querySelector('#view-order');
+const previewOrderModal = document.querySelector('#preview-order');
+const reject = document.querySelector('#reject');
+const accept = document.querySelector('#accept');
+const orderForm = document.forms['order-form'];
 
 const hideNavBtns = () => {
-  signUpBtn.forEach(item => (item.style.display = "none"));
-  login.forEach(item => (item.style.display = "none"));
-  orderBtn.forEach(das => (das.style.display = "none"));
+  signUpBtn.forEach(item => (item.style.display = 'none'));
+  login.forEach(item => (item.style.display = 'none'));
+  orderBtn.forEach(das => (das.style.display = 'none'));
 };
 
 const showModal = () => {
-  previewOrderModal.style.display = "block";
+  previewOrderModal.style.display = 'block';
 };
 
 const hideModal = () => {
-  previewOrderModal.style.display = "none";
+  previewOrderModal.style.display = 'none';
 };
 
 const logoutUser = () => {
   logout.forEach(item =>
-    item.addEventListener("click", () => {
-      window.location.href = "index.html";
+    item.addEventListener('click', () => {
+      window.location.href = 'index.html';
     })
   );
 };
 
 const rejectOrder = () => {
-  reject.addEventListener("click", () => {
+  reject.addEventListener('click', () => {
     hideModal();
-    orderSubmitBtn.style.display = "";
-    viewOrderBtn.style.display = "block";
+    orderSubmitBtn.style.display = '';
+    viewOrderBtn.style.display = 'block';
   });
 };
 
 const acceptOrder = orderData => {
-  accept.addEventListener("click", () => {
+  accept.addEventListener('click', () => {
     hideModal();
-    orderSubmitBtn.style.display = "none";
-    viewOrderBtn.style.display = "block";
-    console.log("accepted order", orderData);
+    orderSubmitBtn.style.display = 'none';
+    viewOrderBtn.style.display = 'block';
+    console.log('accepted order', orderData);
   });
 };
 
 function loadAutocomplete() {
-  const fromPlaces = new google.maps.places.Autocomplete(
-    document.querySelector("#pickup")
-  );
-  const toPlaces = new google.maps.places.Autocomplete(
-    document.querySelector("#destination")
-  );
+  const fromPlaces = new google.maps.places.Autocomplete(document.querySelector('#pickup'));
+  const toPlaces = new google.maps.places.Autocomplete(document.querySelector('#destination'));
 
-  google.maps.event.addListener(fromPlaces, "place_changed", function() {
+  google.maps.event.addListener(fromPlaces, 'place_changed', function() {
     const fromPlace = fromPlaces.getPlace();
-    document.querySelector("#pickup").value = fromPlace.formatted_address;
+    document.querySelector('#pickup').value = fromPlace.formatted_address;
   });
 
-  google.maps.event.addListener(toPlaces, "place_changed", function() {
+  google.maps.event.addListener(toPlaces, 'place_changed', function() {
     const toPlace = toPlaces.getPlace();
-    document.querySelector("#destination").value = toPlace.formatted_address;
+    document.querySelector('#destination').value = toPlace.formatted_address;
   });
 }
 
 const callback = (response, status) => {
-  if (status == "OK") {
+  if (status == 'OK') {
     const origin = response.originAddresses[0];
     const destination = response.destinationAddresses[0];
     console.log(response);
     const distance = response.rows[0].elements[0].distance.value;
-    document.querySelector("#distance").value = distance / 1000;
+    document.querySelector('#distance').value = distance / 1000;
     console.log(
-      "callback origin, destination",
+      'callback origin, destination',
       origin,
       destination,
-      document.querySelector("#distance").value
+      document.querySelector('#distance').value
     );
   } else {
     console.log(status);
@@ -86,15 +83,15 @@ const callback = (response, status) => {
 };
 
 const calculateDistance = () => {
-  const origin = document.querySelector("#pickup").value;
-  const destination = document.querySelector("#destination").value;
+  const origin = document.querySelector('#pickup').value;
+  const destination = document.querySelector('#destination').value;
   const service = new google.maps.DistanceMatrixService();
-  console.log("origin and destination ", origin, destination);
+  console.log('origin and destination ', origin, destination);
   service.getDistanceMatrix(
     {
       origins: [origin],
       destinations: [destination],
-      travelMode: "DRIVING",
+      travelMode: 'DRIVING',
       unitSystem: google.maps.UnitSystem.IMPERIAL,
       avoidHighways: false,
       avoidTolls: false
@@ -104,17 +101,8 @@ const calculateDistance = () => {
 };
 
 const createOrderPreview = orderData => {
-  let previewData = document.querySelector(".preview-table");
-  const {
-    description,
-    weight,
-    pickup,
-    destination,
-    receiver,
-    distance,
-    price,
-    phone
-  } = orderData;
+  let previewData = document.querySelector('.preview-table');
+  const { description, weight, pickup, destination, receiver, distance, price, phone } = orderData;
 
   const data = `
     <p class="preview-data">
@@ -139,7 +127,7 @@ const createOrderPreview = orderData => {
       >
     </p>
     <p class="preview-data">
-      Date <span class="price date">${moment(Date.now()).format("llll")}</span>
+      Date <span class="price date">${moment(Date.now()).format('llll')}</span>
     </p>
     <p class="preview-data">
       Weight <span class="price">${weight}</span>
@@ -149,9 +137,9 @@ const createOrderPreview = orderData => {
   </p>
     <hr class="divider" />
     <p class=" preview-data preview-price">
-      Price <span>${price.toLocaleString("en-NG", {
-        style: "currency",
-        currency: "NGN"
+      Price <span>${price.toLocaleString('en-NG', {
+        style: 'currency',
+        currency: 'NGN'
       })}</span>
     </p>
   `;
@@ -161,22 +149,22 @@ const createOrderPreview = orderData => {
   return orderData;
 };
 
-viewOrderBtn.addEventListener("click", () => {
+viewOrderBtn.addEventListener('click', () => {
   calculateDistance();
-  viewOrderBtn.style.display = "none";
-  orderSubmitBtn.style.display = "block";
+  viewOrderBtn.style.display = 'none';
+  orderSubmitBtn.style.display = 'block';
 });
 
 const submitOrder = e => {
   e.preventDefault();
 
-  const description = document.querySelector("#description").value;
-  const weight = document.querySelector("#weight").value;
-  const pickup = document.querySelector("#pickup").value;
-  const destination = document.querySelector("#destination").value;
-  const receiver = document.querySelector("#receiver").value;
-  const phone = document.querySelector("#phone").value;
-  const distance = document.querySelector("#distance").value;
+  const description = document.querySelector('#description').value;
+  const weight = document.querySelector('#weight').value;
+  const pickup = document.querySelector('#pickup').value;
+  const destination = document.querySelector('#destination').value;
+  const receiver = document.querySelector('#receiver').value;
+  const phone = document.querySelector('#phone').value;
+  const distance = document.querySelector('#distance').value;
   const price = weight * 200 + distance * 100;
 
   const orderData = {
@@ -198,14 +186,14 @@ const submitOrder = e => {
 };
 
 const orderInit = () => {
-  viewOrderBtn.style.display = "block";
-  orderSubmitBtn.style.display = "none";
+  viewOrderBtn.style.display = 'block';
+  orderSubmitBtn.style.display = 'none';
   hideNavBtns();
   loadAutocomplete();
   logoutUser();
-  orderSubmitBtn.addEventListener("click", submitOrder);
+  orderSubmitBtn.addEventListener('click', submitOrder);
 };
 
-window.addEventListener("load", () => {
+window.addEventListener('load', () => {
   orderInit();
 });

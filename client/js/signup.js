@@ -1,21 +1,22 @@
-const orderBtn = document.querySelectorAll(".order-btn");
-const logout = document.querySelectorAll(".logout");
-const formValues = document.forms["signup-form"];
+/* eslint-disable */
+const orderBtn = document.querySelectorAll('.order-btn');
+const logout = document.querySelectorAll('.logout');
+const formValues = document.forms['signup-form'];
 // const submit = document.querySelector('#signup-submit');
-const firstname = document.querySelector("#firstname");
-const lastname = document.querySelector("#lastname");
-const email = document.querySelector("#email");
-const pwd = document.querySelector("#pwd");
-const pwdLabel = document.querySelector(".checkPasswords");
-const signupMessage = document.querySelector(".signup-message");
-const conPwd = document.querySelector("#confirmpwd");
+const firstname = document.querySelector('#firstname');
+const lastname = document.querySelector('#lastname');
+const email = document.querySelector('#email');
+const pwd = document.querySelector('#pwd');
+const pwdLabel = document.querySelector('.checkPasswords');
+const signupMessage = document.querySelector('.signup-message');
+const conPwd = document.querySelector('#confirmpwd');
 
 const checkPasswordEquality = () => {
-  conPwd.addEventListener("keyup", e => {
-    return e.target.value !== pwd.value
-      ? (conPwd.style.border = "2px solid red")
-      : (conPwd.style.border = "2px solid green");
-  });
+  conPwd.addEventListener('keyup', e =>
+    e.target.value !== pwd.value
+      ? (conPwd.style.border = '2px solid red')
+      : (conPwd.style.border = '2px solid green')
+  );
 };
 
 const validatePwd = pwd => {
@@ -27,7 +28,7 @@ const validatePwd = pwd => {
 };
 
 const validateString = string => {
-  if (typeof string !== "string") return false;
+  if (typeof string !== 'string') return false;
   if (string.length < 2 || string.length > 25) return false;
   const validString = /^[a-zA-Z-']+$/;
   return string.trim().match(validString);
@@ -41,30 +42,30 @@ const checkValidEmail = email => {
 };
 
 const validateFormData = (fname, lname, email, pwd) => {
-  if (fname === "" || !validateString(fname)) {
-    signupMessage.style.display = "block";
-    signupMessage.textContent = "firstname too short";
+  if (fname === '' || !validateString(fname)) {
+    signupMessage.style.display = 'block';
+    signupMessage.textContent = 'firstname too short';
     return false;
   }
 
-  if (lname === "" || !validateString(lname)) {
-    signupMessage.style.display = "block";
-    signupMessage.textContent = "lastname too short";
+  if (lname === '' || !validateString(lname)) {
+    signupMessage.style.display = 'block';
+    signupMessage.textContent = 'lastname too short';
     return false;
   }
 
-  if (email === "" || !checkValidEmail(email)) {
-    signupMessage.style.display = "block";
-    signupMessage.textContent = "invalid email";
+  if (email === '' || !checkValidEmail(email)) {
+    signupMessage.style.display = 'block';
+    signupMessage.textContent = 'invalid email';
     return false;
   }
-  if (pwd === "" || !validatePwd(pwd)) {
-    signupMessage.style.display = "block";
-    signupMessage.textContent = "password must be aleast 6 characters";
+  if (pwd === '' || !validatePwd(pwd)) {
+    signupMessage.style.display = 'block';
+    signupMessage.textContent = 'password must be aleast 6 characters';
     return false;
   }
 
-  signupMessage.style.display = "none";
+  signupMessage.style.display = 'none';
   return true;
 };
 
@@ -114,8 +115,8 @@ const signUpSubmit = e => {
   }
 
   if (password.length != confirmPassword.length) {
-    signupMessage.style.display = "block";
-    signupMessage.textContent = "passwords do not match";
+    signupMessage.style.display = 'block';
+    signupMessage.textContent = 'passwords do not match';
     return;
   }
 
@@ -134,10 +135,10 @@ const signUpSubmit = e => {
 };
 
 const signupInit = () => {
-  logout.forEach(das => (das.style.display = "none"));
-  orderBtn.forEach(das => (das.style.display = "none"));
+  logout.forEach(das => (das.style.display = 'none'));
+  orderBtn.forEach(das => (das.style.display = 'none'));
   // checkPasswordEquality();
-  formValues.addEventListener("submit", signUpSubmit);
+  formValues.addEventListener('submit', signUpSubmit);
 };
 
 signupInit();
