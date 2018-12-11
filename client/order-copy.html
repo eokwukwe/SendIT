@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" type="image/jpg" href="./img/pageicon.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>SendIT | Create Order</title>
+  </head>
+
+  <body class="login-body light-blue">
+    <header id="header-nav" class="header default">
+      <nav class="container navbar">
+        <span class="open-slide">
+          <a href="#" class="sidebar-icon">
+            <svg width="30" height="30">
+              <path d="M0,5 30,5" stroke="#fff" stroke-width="5" />
+              <path d="M0,14 30,14" stroke="#fff" stroke-width="5" />
+              <path d="M0,23 30,23" stroke="#fff" stroke-width="5" />
+            </svg>
+          </a>
+        </span>
+
+        <div class="nav-logo"><a href="index.html">SendIT</a></div>
+
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="signup.html" class="signup">Sign Up</a>
+          </li>
+          <li class="nav-item"><a href="login.html" class="login">Login</a></li>
+          <li class="nav-item">
+            <a href="order.html" class="nav-item order-btn order-btn-nav"
+              >Create Order</a
+            >
+          </li>
+          <li class="nav-item">
+            <a href="#" class="side-nav-item logout">Logout</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Side Bar -->
+      <div id="side-menu" class="side-nav default">
+        <a href="#" class="btn-close-sidenav">&times;</a>
+        <a href="signup.html" class="side-nav-item signup">Sign Up</a>
+        <a href="login.html" class="side-nav-item login">Login</a>
+        <a href="order.html" class="side-nav-item order-btn">Create Order</a>
+        <a href="#" class="side-nav-item logout">Logout</a>
+      </div>
+    </header>
+
+    <!-- Order -->
+    <main class="container order-main">
+      <div class="btn-dashboard">
+        <a href="user.html"> &#8656; Back to Dashboard</a>
+      </div>
+
+      <div class="card data-form-card">
+        <h3 class="card-header data-form-card-header">Create Order</h3>
+        <div class="card-body data-form-card-body">
+          <form action="" id="order-form" class="card-form order-form">
+            <input
+              type="text"
+              id="parcelDescription"
+              placeholder="Parcel description"
+              required
+              autofocus
+            />
+            <input
+              type="number"
+              step="0.1"
+              id="parcelWeight"
+              placeholder="Parcel weight in kg"
+              required
+            />
+            <input
+              type="text"
+              id="pickupAddress"
+              placeholder="Pickup address e.g. 12 Toyin street, Ikeja Lagos"
+              required
+            />
+            <input type="hidden" id="origin" name="origin" required />
+            <input type="hidden" id="distance" name="distance" />
+            <input
+              type="text"
+              id="destinationAddress"
+              placeholder="Destination address"
+              required
+            />
+            <input type="hidden" id="destination" name="destination" required />
+            <input
+              type="text"
+              id="receiverName"
+              placeholder="Receiver name (firstname and lastname)"
+              required
+            />
+            <input
+              type="text"
+              id="receiverPhone"
+              placeholder="Receiver phone number"
+              required
+            />
+            <input type="submit" id="order-submit" value="Submit Order" />
+          </form>
+        </div>
+        <div class="card-footer data-form-card-footer order-card-footer">
+          <button type="button" id="view-order" class="btn info">
+            View Order
+          </button>
+
+          <div id="preview-order" class="modal">
+            <div class="modal-content preview-order-content">
+              <div class="modal-header preview-order-header">
+                <h4>Order Summary</h4>
+              </div>
+              <div class="modal-body cancel-modal-body">
+                <div class="preview-table">
+                  <!--
+                    <p class="preview-data">
+                      Customer <span class="price">14 Toyin Street Ikeja</span>
+                    </p>
+                    <p class="preview-data">
+                      Receiver <span class="price">14 Toyin Street Ikeja</span>
+                    </p>
+                    <p class="preview-data">
+                      Description <span class="price">14 Toyin Street Ikeja</span>
+                    </p>
+                    <p class="preview-data">
+                      Pickup <span class="price">Lagos, Nigeria</span>
+                    </p>
+                    <p class="preview-data">
+                      Destination
+                      <span class="price"
+                        >14 Toyin Street Ikeja Lagos, Nigeria</span
+                      >
+                    </p>
+                    <p class="preview-data">
+                      Date <span class="price date">Lagos, Nigeria</span>
+                    </p>
+                    <p class="preview-data">
+                      Weight <span class="price">Lagos, Nigeria</span>
+                    </p>
+                    <hr class="divider" />
+                    <p class=" preview-data preview-price">
+                      Price <span>&#8358;1250</span>
+                    </p>
+                  -->
+                </div>
+              </div>
+              <div class="modal-footer preview-order-footer">
+                <button id="reject" class="btn danger preview-footer-btn">
+                  Reject
+                </button>
+                <button id="accept" class="btn info preview-footer-btn">
+                  Accept
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="main-footer">Copyright &copy; 2018</footer>
+
+    <script src="js/nav.js"></script>
+    <!--
+      <script
+        defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5_M8AcnHc6vYH_zl3r2VkH3V9LRls1rc&libraries=places"
+      ></script>
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="js/order.js"></script>
+  </body>
+</html>

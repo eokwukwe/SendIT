@@ -12,15 +12,11 @@ describe('TEST for orders endpoint', () => {
   const token = Helper.generateToken(payload);
   it('should return 400 if the parcel description is invalid', (done) => {
     order = {
-      parcelWeight: 1.2,
-      fromAddress: '12 mango, Lagos lagos',
-      fromCity: 'lagos',
-      fromCountry: 'nigeria',
-      toAddress: '67 olorufumi street',
-      toCity: 'lagos',
-      toCountry: 'nigeria',
+      weight: 1.2,
+      pickup: '12 mango, Lagos lagos',
+      destination: '67 olorufumi street, lagos',
       receiver: 'mane',
-      receiverPhone: '07061234562'
+      phone: '07061234562'
     };
     request(app)
       .post('/api/v1/parcels')
@@ -28,22 +24,18 @@ describe('TEST for orders endpoint', () => {
       .set({ Authorization: token })
       .expect(400)
       .expect((res) => {
-        expect(res.body.parcelDescription).toEqual('Invalid value');
+        expect(res.body.description).toEqual('Invalid value');
       })
       .end(done);
   });
 
   it('should return 400 if the parcel weight is invalid', (done) => {
     order = {
-      parcelDescription: '12 mando road, owowo',
-      fromAddress: '12 mango, Lagos lagos',
-      fromCity: 'lagos',
-      fromCountry: 'nigeria',
-      toAddress: '67 olorufumi street',
-      toCity: 'lagos',
-      toCountry: 'nigeria',
+      description: '12 mando road, owowo',
+      pickup: '12 mango, Lagos lagos',
+      destination: '67 olorufumi street',
       receiver: 'mane',
-      receiverPhone: '07061234562'
+      phone: '07061234562'
     };
     request(app)
       .post('/api/v1/parcels')
@@ -51,22 +43,18 @@ describe('TEST for orders endpoint', () => {
       .set({ Authorization: token })
       .expect(400)
       .expect((res) => {
-        expect(res.body.parcelWeight).toEqual('weight must be decimal value');
+        expect(res.body.weight).toEqual('weight must be decimal value');
       })
       .end(done);
   });
 
-  it('should return 400 if fromAddress is invalid', (done) => {
+  it('should return 400 if pickup address is invalid', (done) => {
     order = {
-      parcelDescription: '12 mando road, owowo',
-      parcelWeight: 1.2,
-      fromCity: 'lagos',
-      fromCountry: 'nigeria',
-      toAddress: '67 olorufumi street',
-      toCity: 'lagos',
-      toCountry: 'nigeria',
+      description: '12 mando road, owowo',
+      weight: 1.2,
+      destination: '67 olorufumi street',
       receiver: 'mane',
-      receiverPhone: '07061234562'
+      phone: '07061234562'
     };
     request(app)
       .post('/api/v1/parcels')
@@ -74,23 +62,18 @@ describe('TEST for orders endpoint', () => {
       .set({ Authorization: token })
       .expect(400)
       .expect((res) => {
-        expect(res.body.fromAddress).toEqual('invalid input, please enter a valid address');
+        expect(res.body.pickup).toEqual('invalid input, please enter a valid address');
       })
       .end(done);
   });
 
-  it('should return 400 if fromCity is invalid', (done) => {
+  it('should return 400 if destination is invalid', (done) => {
     order = {
-      parcelDescription: '12 mando road, owowo',
-      parcelWeight: 1.2,
-      fromAddress: '12 mango, Lagos lagos',
-      fromCity: 'b',
-      fromCountry: 'nigeria',
-      toAddress: '67 olorufumi street',
-      toCity: 'lagos',
-      toCountry: 'nigeria',
+      description: '12 mando road, owowo',
+      weight: 1.2,
+      pickup: '12 mango, Lagos lagos',
       receiver: 'mane',
-      receiverPhone: '07061234562'
+      phone: '07061234562'
     };
     request(app)
       .post('/api/v1/parcels')
@@ -98,23 +81,18 @@ describe('TEST for orders endpoint', () => {
       .set({ Authorization: token })
       .expect(400)
       .expect((res) => {
-        expect(res.body.fromCity).toEqual('city name is too short');
+        expect(res.body.destination).toEqual('invalid input, please enter a valid address');
       })
       .end(done);
   });
 
-  it('should return 400 if fromCountry is invalid', (done) => {
+  it('should return 400 if phone number is invalid', (done) => {
     order = {
-      parcelDescription: '12 mando road, owowo',
-      parcelWeight: 1.2,
-      fromAddress: '12 mango, Lagos lagos',
-      fromCity: 'lagos',
-      fromCountry: 'ng',
-      toAddress: '67 olorufumi street',
-      toCity: 'lagos',
-      toCountry: 'nigeria',
+      description: '12 mando road, owowo',
+      weight: 1.2,
+      pickup: '12 mango, Lagos lagos',
       receiver: 'mane',
-      receiverPhone: '07061234562'
+      destination: '67 olorufumi street'
     };
     request(app)
       .post('/api/v1/parcels')
@@ -122,30 +100,7 @@ describe('TEST for orders endpoint', () => {
       .set({ Authorization: token })
       .expect(400)
       .expect((res) => {
-        expect(res.body.fromCountry).toEqual('country name is too short');
-      })
-      .end(done);
-  });
-
-  it('should return 400 if toAddress is invalid', (done) => {
-    order = {
-      parcelDescription: '12 mando road, owowo',
-      parcelWeight: 1.2,
-      fromAddress: '12 mango, Lagos lagos',
-      fromCity: 'lagos',
-      fromCountry: 'nigeria',
-      toCity: 'lagos',
-      toCountry: 'nigeria',
-      receiver: 'mane',
-      receiverPhone: '07061234562'
-    };
-    request(app)
-      .post('/api/v1/parcels')
-      .send(order)
-      .set({ Authorization: token })
-      .expect(400)
-      .expect((res) => {
-        expect(res.body.toAddress).toEqual('invalid input, please enter a valid address');
+        expect(res.body.phone).toEqual('invalid receiver phone number');
       })
       .end(done);
   });
