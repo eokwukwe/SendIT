@@ -22,21 +22,10 @@ const validateUser = {
       .trim(),
 
     check('password')
-      .isLength({ min: 6 })
-      .withMessage('password must be at least 6 characters in length.')
-      .matches('[0-9]')
-      .withMessage('password must contain at least 1 number.')
-      .matches('[A-Z]')
-      .withMessage('password must contain at least 1 uppercase letter.')
-      .matches('["#$&()%;,_@+|?!£^.*-]')
-      .withMessage('password must contain at least 1 symbol.')
-      .custom((value, { req }) => {
-        if (value !== req.body.confirmPassword) {
-          return false;
-        }
-        return value;
-      })
-      .withMessage('passwords does not match.')
+      .matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.]).{6,}$/)
+      .withMessage(
+        'password must be at least 6 characters with at least 1 uppercase, 1 lowercase & 1 special character'
+      )
       .trim()
   ],
 

@@ -10,8 +10,7 @@ describe('TEST for users endpoint', () => {
     firstName: 'mary',
     lastName: 'kay',
     userEmail: 'mary.kay@test.com',
-    password: 'mary.Kay1',
-    confirmPassword: 'mary.Kay1'
+    password: 'mary.Kay1'
   };
 
   const cleanUp = async () => {
@@ -36,15 +35,14 @@ describe('TEST for users endpoint', () => {
       firstName: 'm',
       lastName: 'kay',
       userEmail: 'marked.kay@test.com',
-      password: 'mary.Kay1',
-      confirmPassword: 'mary.Kay1'
+      password: 'mary.Kay1'
     };
     request(app)
       .post('/api/v1/auth/signup')
       .send(user1)
       .expect(400)
       .expect((res) => {
-        expect(res.body[0]).toEqual('firstname is too short');
+        expect(res.body.firstName).toEqual('firstname is too short');
       })
       .end(done);
   });
@@ -54,15 +52,14 @@ describe('TEST for users endpoint', () => {
       firstName: 'mary',
       lastName: 'k',
       userEmail: 'marked.kay@test.com',
-      password: 'mary.Kay1',
-      confirmPassword: 'mary.Kay1'
+      password: 'mary.Kay1'
     };
     request(app)
       .post('/api/v1/auth/signup')
       .send(user2)
       .expect(400)
       .expect((res) => {
-        expect(res.body[0]).toEqual('lastname is too short');
+        expect(res.body.lastName).toEqual('lastname is too short');
       })
       .end(done);
   });
@@ -72,15 +69,14 @@ describe('TEST for users endpoint', () => {
       firstName: 'mary',
       lastName: 'kay',
       userEmail: 'marked.kaytest.com',
-      password: 'mary.Kay1',
-      confirmPassword: 'mary.Kay1'
+      password: 'mary.Kay1'
     };
     request(app)
       .post('/api/v1/auth/signup')
       .send(user3)
       .expect(400)
       .expect((res) => {
-        expect(res.body[0]).toEqual('invalid email');
+        expect(res.body.userEmail).toEqual('invalid email');
       })
       .end(done);
   });
@@ -90,33 +86,16 @@ describe('TEST for users endpoint', () => {
       firstName: 'mary',
       lastName: 'kay',
       userEmail: 'marked.kay@test.com',
-      password: 'maay',
-      confirmPassword: 'maryay'
+      password: 'maay'
     };
     request(app)
       .post('/api/v1/auth/signup')
       .send(user4)
       .expect(400)
       .expect((res) => {
-        expect(res.body[0]).toEqual('password must be at least 6 characters in length.');
-      })
-      .end(done);
-  });
-
-  it('should return 400 if the passwords does not match', (done) => {
-    const user5 = {
-      firstName: 'mary',
-      lastName: 'kay',
-      userEmail: 'marked.kay@test.com',
-      password: 'mar.Yay1',
-      confirmPassword: 'mar.Jay'
-    };
-    request(app)
-      .post('/api/v1/auth/signup')
-      .send(user5)
-      .expect(400)
-      .expect((res) => {
-        expect(res.body[0]).toEqual('passwords does not match.');
+        expect(res.body.password).toEqual(
+          'password must be at least 6 characters with at least 1 uppercase, 1 lowercase & 1 special character'
+        );
       })
       .end(done);
   });
