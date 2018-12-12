@@ -6,6 +6,7 @@ const firstname = document.querySelector('#firstname');
 const lastname = document.querySelector('#lastname');
 const email = document.querySelector('#email');
 const pwd = document.querySelector('#pwd');
+const signupMessage = document.querySelector('.signup-message');
 const passwordMsg = document.querySelector('.password-message');
 const snackbar = document.querySelector('#snackbar');
 const spinner = document.querySelector('.page-loader');

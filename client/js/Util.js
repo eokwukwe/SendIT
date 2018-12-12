@@ -7,7 +7,7 @@ class Util {
     element.textContent = textContent;
     setTimeout(function() {
       element.className = element.className.replace('show', '');
-    }, 3000);
+    }, 5500);
   }
 
   static showSpinner(element) {
@@ -16,6 +16,10 @@ class Util {
 
   static hideSpinner(element) {
     element.style.visibility = 'hidden';
+  }
+
+  static isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
   }
 
   static async doFetch(input, settings = {}) {
