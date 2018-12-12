@@ -42,25 +42,24 @@ export default class UserController {
     try {
       const { rows } = await db.query(queryText, values);
       const {
-        id, firstname, lastname, email, usertype
+        id, firstname, lastname, usertype
       } = rows[0];
       const payload = {
         userId: id,
         usertype,
-        email,
         lastname,
         firstname
       };
       const token = Helper.generateToken(payload);
 
       return res.status(201).json({
-        message: 'you have successfully signed up',
+        message: 'You have successfully signed up',
         token
       });
     } catch (err) {
       if (err.routine === '_bt_check_unique') {
         return res.status(400).json({
-          message: 'user with that email already exists'
+          message: 'A user with that email already exists'
         });
       }
       return res.status(500).json({
@@ -93,19 +92,26 @@ export default class UserController {
       const { rows } = await db.query(queryText, [userEmail]);
       if (!rows[0]) {
         return res.status(400).json({
-          message: 'user does not exist'
+          message: 'User does not exist'
         });
       }
       if (!Helper.comparePassword(rows[0].password, password)) {
         return res.status(400).json({
-          message: 'incorrect password'
+          message: 'Incorrect password'
         });
       }
-      const { id, usertype, email } = rows[0];
-      const payload = { userId: id, usertype, email };
+      const {
+        id, usertype, firstname, lastname
+      } = rows[0];
+      const payload = {
+        userId: id,
+        usertype,
+        firstname,
+        lastname
+      };
       const token = Helper.generateToken(payload);
       return res.status(200).json({
-        message: 'you have successfully log in',
+        message: 'You have successfully log in',
         token
       });
     } catch (err) {
