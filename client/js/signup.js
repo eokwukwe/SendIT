@@ -1,105 +1,85 @@
 /* eslint-disable */
 const orderBtn = document.querySelectorAll('.order-btn');
 const logout = document.querySelectorAll('.logout');
-const formValues = document.forms['signup-form'];
-// const submit = document.querySelector('#signup-submit');
+const submitForm = document.forms['signup-form'];
 const firstname = document.querySelector('#firstname');
 const lastname = document.querySelector('#lastname');
 const email = document.querySelector('#email');
 const pwd = document.querySelector('#pwd');
-const pwdLabel = document.querySelector('.checkPasswords');
-const signupMessage = document.querySelector('.signup-message');
-const conPwd = document.querySelector('#confirmpwd');
-
-const checkPasswordEquality = () => {
-  conPwd.addEventListener('keyup', e =>
-    e.target.value !== pwd.value
-      ? (conPwd.style.border = '2px solid red')
-      : (conPwd.style.border = '2px solid green')
-  );
-};
+const passwordMsg = document.querySelector('.password-message');
+const snackbar = document.querySelector('#snackbar');
+const spinner = document.querySelector('.page-loader');
 
 const validatePwd = pwd => {
-  const validPwd = /^[0-9a-zA-Z\s#$&()%;,_@+|?!.-]+$/;
-  if (pwd.length >= 6 && !!pwd.match(validPwd)) {
-    return true;
-  }
-  return false;
+  const validPwd = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.]).{6,}$/;
+  return pwd.match(validPwd);
 };
 
 const validateString = string => {
-  if (typeof string !== 'string') return false;
-  if (string.length < 2 || string.length > 25) return false;
+  if (typeof string !== 'string' || string.length < 2) return false;
   const validString = /^[a-zA-Z-']+$/;
   return string.trim().match(validString);
 };
 
-const checkValidEmail = email => {
-  const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  const isValid = reg.test(String(email).toLowerCase());
-  if (!isValid) return false;
-  return true;
+const isValidEmail = email => /\S+@\S+\.\S+/.test(email);
+
+const hideNavItems = () => {
+  logout.forEach(das => (das.style.display = 'none'));
+  orderBtn.forEach(das => (das.style.display = 'none'));
+};
+
+const validPassword = () => {
+  pwd.addEventListener('keyup', e =>
+    !validatePwd(e.target.value)
+      ? (pwd.style.border = '2px solid red')
+      : ((pwd.style.border = '2px solid green'), (passwordMsg.style.display = 'none'))
+  );
 };
 
 const validateFormData = (fname, lname, email, pwd) => {
   if (fname === '' || !validateString(fname)) {
     signupMessage.style.display = 'block';
-    signupMessage.textContent = 'firstname too short';
+    signupMessage.textContent = 'Firstname too short';
     return false;
   }
 
   if (lname === '' || !validateString(lname)) {
     signupMessage.style.display = 'block';
-    signupMessage.textContent = 'lastname too short';
+    signupMessage.textContent = 'Lastname too short';
     return false;
   }
 
-  if (email === '' || !checkValidEmail(email)) {
+  if (email === '' || !isValidEmail(email)) {
     signupMessage.style.display = 'block';
-    signupMessage.textContent = 'invalid email';
+    signupMessage.textContent = 'Invalid email';
     return false;
   }
-  if (pwd === '' || !validatePwd(pwd)) {
-    signupMessage.style.display = 'block';
-    signupMessage.textContent = 'password must be aleast 6 characters';
-    return false;
-  }
-
-  signupMessage.style.display = 'none';
   return true;
 };
 
-// const validateInput = () => {
-//   conPwd.addEventListener("keyup", e => {
-//     return e.target.value !== pwd.value
-//       ? (conPwd.style.border = "2px solid red")
-//       : (conPwd.style.border = "2px solid green");
-//   });
-
-//   pwd.addEventListener("keyup", e => {
-//     return !validatePwd(e.target.value)
-//       ? (pwd.style.border = "2px solid red")
-//       : (pwd.style.border = "2px solid green");
-//   });
-
-//   firstname.addEventListener("keyup", e => {
-//     return !validateString(e.target.value)
-//       ? (firstname.style.border = "2px solid red")
-//       : (firstname.style.border = "2px solid green");
-//   });
-
-//   lastname.addEventListener("keyup", e => {
-//     return !validateString(e.target.value)
-//       ? (lastname.style.border = "2px solid red")
-//       : (lastname.style.border = "2px solid green");
-//   });
-
-//   email.addEventListener("keyup", e => {
-//     return !checkValidEmail(e.target.value)
-//       ? (email.style.border = "2px solid red")
-//       : (email.style.border = "2px solid grren");
-//   });
-// };
+const registerUser = async userData => {
+  try {
+    const url = 'https://fcode-send-it.herokuapp.com/api/v1/auth/signup';
+    const result = await Util.doFetch(url, {
+      method: 'POST',
+      body: JSON.stringify(userData)
+    });
+    const data = await result.json();
+    if (result.status === 400) {
+      Util.showSnackbar(snackbar, '#ff6666', data.message);
+      spinner.style.visibility = '';
+      return;
+    }
+    if (result.status === 201) {
+      Util.showSnackbar(snackbar, '#4CAF50', data.message);
+      Util.hideSpinner(spinner);
+      window.location.href = 'login.html';
+    }
+  } catch (error) {
+    Util.showSnackbar(snackbar, 'red', result.message);
+    Util.hideSpinner(spinner);
+  }
+};
 
 const signUpSubmit = e => {
   e.preventDefault();
@@ -108,37 +88,27 @@ const signUpSubmit = e => {
   const lastName = lastname.value;
   const userEmail = email.value;
   const password = pwd.value;
-  const confirmPassword = conPwd.value;
-
-  if (!validateFormData(firstName, lastName, userEmail, password)) {
-    return;
-  }
-
-  if (password.length != confirmPassword.length) {
-    signupMessage.style.display = 'block';
-    signupMessage.textContent = 'passwords do not match';
-    return;
-  }
-
   const signupData = {
     firstName,
     lastName,
     userEmail,
-    password,
-    confirmPassword
+    password
   };
+  if (!validateFormData(firstName, lastName, userEmail, password)) {
+    return;
+  }
+  Util.showSpinner(spinner);
+  registerUser(signupData);
 
-  console.log(signupData);
-  // window.location.href = "user.html";
-
-  formValues.reset();
+  submitForm.reset();
+  pwd.style.border = '';
+  passwordMsg.style.display = '';
 };
 
 const signupInit = () => {
-  logout.forEach(das => (das.style.display = 'none'));
-  orderBtn.forEach(das => (das.style.display = 'none'));
-  // checkPasswordEquality();
-  formValues.addEventListener('submit', signUpSubmit);
+  hideNavItems();
+  validPassword();
+  submitForm.addEventListener('submit', signUpSubmit);
 };
 
 signupInit();

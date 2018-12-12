@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/eokwukwe/sendIT.svg?branch=develop)](https://travis-ci.org/eokwukwe/sendIT) [![Coverage Status](https://coveralls.io/repos/github/eokwukwe/sendIT/badge.svg?branch=ch-add-badges-to-ReadMe-%23161788243)](https://coveralls.io/github/eokwukwe/sendIT?branch=ch-add-badges-to-ReadMe-%23161788243) [![Maintainability](https://api.codeclimate.com/v1/badges/5a04d6642dc7f1a8018e/maintainability)](https://codeclimate.com/github/eokwukwe/sendIT/maintainability)
+[![Build Status](https://travis-ci.org/eokwukwe/sendIT.svg?branch=develop)](https://travis-ci.org/eokwukwe/sendIT) [![Coverage Status](https://coveralls.io/repos/github/eokwukwe/sendIT/badge.svg?branch=develop)](https://coveralls.io/github/eokwukwe/sendIT?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/5a04d6642dc7f1a8018e/maintainability)](https://codeclimate.com/github/eokwukwe/sendIT/maintainability)
 
 # Introduction
 SendIT is a courier service that helps users deliver parcels to different destinations. SendIT provides courier quotes based on weight categories.
@@ -56,6 +56,7 @@ Run `npm run test` to run test
 
 ## Links
 Project Management: https://www.pivotaltracker.com/n/projects/2213004
+
 Heroku app: https://fcode-send-it.herokuapp.com
 
 ## Author

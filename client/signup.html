@@ -52,6 +52,8 @@
 
     <!-- Sign Up -->
     <main class="container signup-main">
+      <div id="snackbar"></div>
+      <div class="page-loader"><div class="loader"></div></div>
       <div class="card signup data-form-card">
         <h3 class="card-header data-form-card-header">Sign Up</h3>
         <div class="card-body data-form-card-body">
@@ -73,17 +75,14 @@
             <input
               type="password"
               id="pwd"
-              placeholder="Password (6 characters and above)"
+              placeholder="Password"
               required=""
             />
-            <input
-              type="password"
-              id="confirmpwd"
-              placeholder="Confirm Password"
-              required=""
-            />
-            <span class="signup-message"></span>
-            <label class="checkPasswords">passwords do not match</label>
+            <label class="password-message">
+              Password must be at least 6 characters with at least 1 uppercase 1
+              lowercase and 1 special character (#?!@$%^&*-.)
+            </label>
+            <!-- <span class="signup-message"></span> -->
             <input type="submit" id="signup-submit" value="Sign Up" />
           </form>
         </div>
@@ -98,6 +97,7 @@
     <footer class="main-footer">Copyright &copy; 2018</footer>
 
     <script src="js/nav.js"></script>
+    <script src="js/Util.js"></script>
     <script src="js/signup.js"></script>
   </body>
 </html>

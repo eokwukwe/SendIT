@@ -509,6 +509,115 @@ span.price {
   cursor: pointer;
 }
 
+#snackbar {
+  visibility: hidden;
+  min-width: 100px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 3px;
+  padding: 8px 16px;
+  position: fixed;
+  z-index: 5;
+  right: 30px;
+  top: 30px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    right: 0;
+    opacity: 0;
+  }
+  to {
+    right: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    right: 0;
+    opacity: 0;
+  }
+  to {
+    right: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    right: 30px;
+    opacity: 1;
+  }
+  to {
+    right: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    right: 30px;
+    opacity: 1;
+  }
+  to {
+    right: 0;
+    opacity: 0;
+  }
+}
+
+.page-loader {
+  position: absolute;
+  top: 30%;
+  left: 45%;
+  z-index: 5;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--lightblue);
+  visibility: hidden;
+}
+
+.loader {
+  border: 5px solid var(--white);
+  border-radius: 50%;
+  border-top: 5px solid var(--darkblue);
+  width: 50px;
+  height: 50px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media (max-width: 578px) {
   .summary {
     grid-template-columns: repeat(2, 1fr);
@@ -807,11 +916,10 @@ span.price {
   font-size: 0.8rem;
 }
 
-.checkPasswords {
+.password-message {
   font-size: 0.8rem;
-  color: var(--red);
-  display: none;
-  margin: 0 auto;
+  text-align: center;
+  color: var(--grey);
 }
 
 .card-form input {
