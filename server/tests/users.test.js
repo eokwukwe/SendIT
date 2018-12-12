@@ -25,7 +25,7 @@ describe('TEST for users endpoint', () => {
       .send(user)
       .expect(201)
       .expect((res) => {
-        expect(res.body.message).toEqual('you have successfully signed up');
+        expect(res.body.message).toEqual('You have successfully signed up');
       })
       .end(done);
   });
@@ -106,7 +106,7 @@ describe('TEST for users endpoint', () => {
       .send(user)
       .expect(400)
       .expect((res) => {
-        expect(res.body.message).toEqual('user with that email already exists');
+        expect(res.body.message).toEqual('A user with that email already exists');
       })
       .end(done);
   });
@@ -121,7 +121,7 @@ describe('TEST for users endpoint', () => {
       .send(userDetail)
       .expect(200)
       .expect((res) => {
-        expect(res.body.message).toEqual('you have successfully log in');
+        expect(res.body.message).toEqual('You have successfully log in');
       })
       .end(done);
   });
@@ -136,7 +136,7 @@ describe('TEST for users endpoint', () => {
       .send(userDetail)
       .expect(400)
       .expect((res) => {
-        expect(res.body.message).toEqual('user does not exist');
+        expect(res.body.message).toEqual('User does not exist');
       })
       .end(done);
   });
@@ -151,7 +151,7 @@ describe('TEST for users endpoint', () => {
       .send(userDetail)
       .expect(400)
       .expect((res) => {
-        expect(res.body.message).toEqual('incorrect password');
+        expect(res.body.message).toEqual('Incorrect password');
       })
       .end(done);
   });
