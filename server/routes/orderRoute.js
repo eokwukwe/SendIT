@@ -16,8 +16,6 @@ router.get(
 router.get(
   '/users/:userId/parcels',
   verifyToken,
-  Authentications.authUser,
-  Authentications.authAdmin,
   OrderController.getOrdersbyUser
 );
 router.post(

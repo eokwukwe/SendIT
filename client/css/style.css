@@ -79,6 +79,11 @@ li {
   list-style: none;
 }
 
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .btn {
   border: none;
   padding: 0.5rem 0.8rem;
@@ -210,12 +215,20 @@ input {
   margin: 0;
 }
 
+.accordion {
+  cursor: pointer;
+}
+
+.accordion:hover {
+  background-color: var(--lightgrey);
+}
+
 .accordion-content {
   padding: 0;
   background-color: var(--white);
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.1s ease-in;
+  transition: max-height 0.4s ease-in;
   display: grid;
   grid-gap: 1.5rem;
   grid-template-columns: repeat(2, 1fr);
@@ -238,20 +251,6 @@ input {
   display: flex;
   align-items: center;
   margin-bottom: 0;
-}
-
-.accordion-btn-icons span {
-  font-size: 2rem;
-  cursor: pointer;
-  background: none;
-}
-
-.accordion-btn-icons span:hover {
-  opacity: 0.8;
-}
-
-.accordion-btn-icons span .open:hover {
-  color: var(--grey);
 }
 
 .list-group {
@@ -329,7 +328,6 @@ main {
   box-shadow: var(--shadow);
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
-  /* border-radius: 0.5rem; */
 }
 
 .order-id {
@@ -341,7 +339,7 @@ main {
   font-size: 0.8rem;
 }
 
-.order-details p {
+.order-section-detail {
   display: flex;
   justify-content: space-between;
   margin: 0;
@@ -384,7 +382,7 @@ main {
   border: 1px solid var(--green);
 }
 
-#map {
+.map {
   padding: 1rem;
   box-shadow: var(--shadow);
   border: 5px solid var(--white);
@@ -415,7 +413,7 @@ main {
   background: var(--red);
 }
 
-.status-in-transit {
+.status-intransit {
   background: var(--lightpurple);
 }
 
@@ -434,7 +432,7 @@ span.price {
   border-left: 5px solid var(--lightpurple);
 }
 
-.deliver {
+.delivered {
   border-left: 5px solid var(--green);
 }
 
@@ -1023,7 +1021,7 @@ span.price {
   align-items: center;
 }
 
-#user-name {
+.user-name {
   color: var(--blue);
   text-shadow: 0px 0px 3px var(--blue);
 }
@@ -1072,46 +1070,112 @@ span.price {
   font-size: 1rem;
 }
 
-.cancel-modal-content {
+.action-modal-content {
   max-width: 400px;
+  border-radius: 0.2rem;
 }
 
-.cancel-modal-header {
+.action-modal-header {
   background: var(--lightgrey);
   color: var(--red);
   letter-spacing: 2px;
-  font-size: 1.3rem;
-  padding: 0.8rem;
+  font-size: 1.1rem;
 }
 
-.cancel-modal-header h4 {
+.action-modal-header h4 {
   margin: 0;
 }
 
-.cancel-modal-body {
+.action-modal-body {
   text-align: center;
   color: var(--darkblue);
   font-weight: var(--font-weight-bold);
   letter-spacing: 2px;
 }
-.cancel-modal-footer {
-  /* text-align: end; */
+.action-modal-footer {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
   background: var(--lightgrey);
-  padding: 0.2rem 1.5rem;
+  padding: 0.3rem 1rem;
 }
 
-.cancel-footer-btn {
+.action-btn {
+  margin-top: 0.5rem;
+}
+
+.action-footer-btn {
   font-size: 0.8rem;
   padding: 0.2rem 0.5rem;
   border-radius: 0.2rem;
   text-transform: uppercase;
+  font-weight: var(--font-weight-bold);
 }
 
 .rotate {
   transform: rotate(180deg);
   transition: transform 0.1s;
+}
+
+.dismiss {
+  margin-right: 1rem;
+}
+
+.change-address-header {
+  background: var(--darkgrey);
+  color: var(--darkblue);
+  letter-spacing: normal;
+}
+
+.change-address-modal .modal-body {
+  padding: 1rem;
+}
+
+.change-address-form input {
+  height: 40px;
+  width: 100%;
+  margin: 0.7rem 0;
+  font-size: 1.1rem;
+  background-color: var(--lightgrey);
+  padding: 0 0.5rem;
+  border-radius: 0.2rem;
+  transition: all 0.5s ease;
+  border: 1px solid var(--lightgrey);
+  color: var(--blue);
+}
+
+.change-address-form input:focus::placeholder {
+  color: var(--lightblue);
+  transform: translatey(-10px);
+  transition: all 0.5s ease;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.change-address-form input[type="submit"]:hover {
+  font-weight: bold;
+  transition: all 0.5s ease;
+  background-color: var(--green);
+}
+
+.btn-group {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-group input {
+  height: 30px;
+  width: 30%;
+  border-radius: 0.2rem;
+  text-transform: uppercase;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  color: var(--white);
+  font-size: 1rem;
+}
+
+.btn-group .dismiss-destination-btn {
+  background-color: var(--red);
 }
 
 /********  Admin Page **********/
@@ -1248,11 +1312,11 @@ span.price {
     grid-template-columns: 1fr;
   }
 
-  #map {
+  .map {
     height: 300px;
   }
 
-  #map,
+  .map,
   .order-details {
     margin: 0.5rem 0;
     border-radius: 0;
