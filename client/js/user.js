@@ -56,68 +56,74 @@ const openAccordion = accordion => {
   }
 };
 
-const showActionModals = (elementBtns, elementModals) => {
-  elementBtns.forEach((elementBtn, i) => {
-    elementBtn.addEventListener('click', e => {
-      console.log('clicked', e.target.id);
-      Util.showModal(elementModals[i]);
-    });
-  });
-};
-
 const changeAddressModals = (elementBtns, elementModals) => {
   elementBtns.forEach((elementBtn, i) => {
     elementBtn.addEventListener('click', e => {
       console.log('clicked', e.target.id);
       Util.showModal(elementModals[i]);
-      console.log(elementModals[i].querySelector("input[type='text']"));
-
       const inputField = elementModals[i].querySelector("input[type='text']");
       Util.placesAutocomplete(inputField);
     });
   });
 };
 
-const hideActionModals = (elementBtns, elementModals) => {
-  elementBtns.forEach((elementBtn, i) => {
-    elementBtn.addEventListener('click', e => {
-      Util.hideModal(elementModals[i]);
-    });
+const cancelOrder = async parcelId => {
+  const token = localStorage.getItem('user');
+  const url = `https://fcode-send-it.herokuapp.com/api/v1/parcels/${parcelId}/cancel`;
+  const results = await Util.doFetchWithToken(url, token, {
+    method: 'PUT'
   });
+  const data = await results.json();
+  if (results.status === 404) {
+    Util.showSnackbar(snackbar, '#ff6666', data.message);
+    return;
+  }
+  if (results.status === 500) {
+    Util.showSnackbar(snackbar, '#ff6666', data.error);
+    return;
+  }
+  location.reload();
+};
+
+const changeDestination = async (parcelId, address) => {
+  const token = localStorage.getItem('user');
+  const url = `https://fcode-send-it.herokuapp.com/api/v1/parcels/${parcelId}/destination`;
+  const results = await Util.doFetchWithToken(url, token, {
+    method: 'PUT',
+    body: JSON.stringify(address)
+  });
+  const data = await results.json();
+  if (results.status === 404) {
+    Util.showSnackbar(snackbar, '#ff6666', data.message);
+    return;
+  }
+  if (results.status === 500) {
+    Util.showSnackbar(snackbar, '#ff6666', data.error);
+    return;
+  }
+  location.reload();
 };
 
 const acceptCancel = (elementBtns, elementModals) => {
   elementBtns.forEach((elementBtn, i) => {
     elementBtn.addEventListener('click', e => {
+      const parcelId = e.target.id.split('-')[1];
+      cancelOrder(parcelId);
       Util.hideModal(elementModals[i]);
-      console.log(e.target.id.split('-')[1]);
+      Util.showSpinner(spinner);
     });
   });
 };
-
-function initMap() {
-  mapData = {
-    pickup:
-      'Metrock Enterprises, Agricultural Development Project,Egbeada, Amakohia-Akwakuma, Owerri',
-    destination: '19 Ezekiel Street, Allen, Ikeja',
-    pickupIcon:
-      'https://chart.googleapis.com/chart?' + 'chst=d_map_pin_letter&chld=P|FFFF00|000000',
-    destinationIcon:
-      'https://chart.googleapis.com/chart?' + 'chst=d_map_pin_letter&chld=D|FF0000|000000',
-    elementId: 'map'
-  };
-
-  Util.loadMap(mapData);
-}
 
 const submitForm = (changeAddressForms, changeDestinationModals) => {
   changeAddressForms.forEach((addressForm, i) => {
     addressForm.addEventListener('submit', e => {
       e.preventDefault();
-      console.log('address changed');
-      console.log(addressForm[0].value);
-      console.log('input id ===>', addressForm[0].id.split('-')[2]);
+      const destination = addressForm[0].value.trim();
+      const parcelId = addressForm[0].id.split('-')[2];
+      changeDestination(parcelId, { destination });
       Util.hideModal(changeDestinationModals[i]);
+      Util.showSpinner(spinner);
     });
   });
 };
@@ -332,12 +338,12 @@ const userInit = () => {
   const changeDestinationModals = document.querySelectorAll('.change-address-modal');
   const changeAddressForms = document.querySelectorAll('.change-address-form');
   changeAddressModals(changeDestinationBtns, changeDestinationModals);
-  hideActionModals(closeChangeDestinationBtns, changeDestinationModals);
   openAccordion(accordion);
   submitForm(changeAddressForms, changeDestinationModals);
-  showActionModals(cancelBtns, cancelOrderModals);
-  hideActionModals(dismissBtns, cancelOrderModals);
   acceptCancel(acceptBtns, cancelOrderModals);
+  Util.hideActionModals(closeChangeDestinationBtns, changeDestinationModals);
+  Util.showActionModals(cancelBtns, cancelOrderModals);
+  Util.hideActionModals(dismissBtns, cancelOrderModals);
 };
 
 Util.verifyUser(userName);

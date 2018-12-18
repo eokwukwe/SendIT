@@ -2,11 +2,11 @@
 
 class Util {
   static showSpinner(element) {
-    element.style.visibility = "visible";
+    element.style.visibility = 'visible';
   }
 
   static hideSpinner(element) {
-    element.style.visibility = "hidden";
+    element.style.visibility = 'hidden';
   }
 
   static isValidEmail(email) {
@@ -14,11 +14,11 @@ class Util {
   }
 
   static showModal(element) {
-    element.style.display = "block";
+    element.style.display = 'block';
   }
 
   static hideModal(element) {
-    element.style.display = "none";
+    element.style.display = 'none';
   }
 
   static updateElement(element, content) {
@@ -35,10 +35,10 @@ class Util {
   }
 
   static logoutUser(elements) {
-    elements.forEach((element) =>
-      element.addEventListener("click", () => {
-        localStorage.removeItem("user");
-        window.location.href = "index.html";
+    elements.forEach(element =>
+      element.addEventListener('click', () => {
+        localStorage.removeItem('user');
+        window.location.href = 'index.html';
       })
     );
   }
@@ -57,8 +57,8 @@ class Util {
   static async doFetchWithToken(input, token, settings = {}) {
     const response = await fetch(input, {
       headers: {
-        Accept: "application/json, text/plain, */**",
-        "Content-Type": "application/json",
+        Accept: 'application/json, text/plain, */**',
+        'Content-Type': 'application/json',
         Authorization: token
       },
       ...settings
@@ -78,7 +78,7 @@ class Util {
     const geocoder = new google.maps.Geocoder();
     const { address, icon, map } = geocodeData;
     geocoder.geocode({ address }, function(results, status) {
-      if (status === "OK") {
+      if (status === 'OK') {
         const coords = results[0].geometry.location;
         Util.addMaker({ coords, map, icon });
       }
@@ -86,13 +86,7 @@ class Util {
   }
 
   static loadMap(mapData) {
-    const {
-      pickup,
-      destination,
-      pickupIcon,
-      destinationIcon,
-      element
-    } = mapData;
+    const { pickup, destination, pickupIcon, destinationIcon, element } = mapData;
     const options = {
       zoom: 5,
       center: { lat: 9.081999, lng: 8.675277 }
@@ -112,24 +106,40 @@ class Util {
 
   static verifyUser(element) {
     try {
-      const token = localStorage.getItem("user");
+      const token = localStorage.getItem('user');
       const decoded = jwt_decode(token);
       if (!decoded) {
-        window.location.href = "login.html";
+        window.location.href = 'login.html';
       }
 
       Util.updateElement(element, decoded.firstname);
     } catch (error) {
-      window.location.href = "login.html";
+      window.location.href = 'login.html';
     }
   }
 
   static placesAutocomplete(element) {
     const addressText = new google.maps.places.Autocomplete(element);
 
-    google.maps.event.addListener(addressText, "place_changed", function() {
+    google.maps.event.addListener(addressText, 'place_changed', function() {
       const address = addressText.getPlace();
       element.value = address.formatted_address;
+    });
+  }
+
+  static showActionModals(elementBtns, elementModals) {
+    elementBtns.forEach((elementBtn, i) => {
+      elementBtn.addEventListener('click', e => {
+        Util.showModal(elementModals[i]);
+      });
+    });
+  }
+
+  static hideActionModals(elementBtns, elementModals) {
+    elementBtns.forEach((elementBtn, i) => {
+      elementBtn.addEventListener('click', e => {
+        Util.hideModal(elementModals[i]);
+      });
     });
   }
 }
