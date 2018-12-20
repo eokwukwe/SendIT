@@ -60,7 +60,7 @@ const changeAddressModals = (elementBtns, elementModals) => {
   elementBtns.forEach((elementBtn, i) => {
     elementBtn.addEventListener('click', e => {
       console.log('clicked', e.target.id);
-      Util.showModal(elementModals[i]);
+      Util.showElement(elementModals[i]);
       const inputField = elementModals[i].querySelector("input[type='text']");
       Util.placesAutocomplete(inputField);
     });
@@ -93,6 +93,12 @@ const changeDestination = async (parcelId, address) => {
     body: JSON.stringify(address)
   });
   const data = await results.json();
+  if (results.status === 400) {
+    for (let props in data) {
+      Util.showSnackbar(snackbar, '#ff6666', data[props]);
+    }
+    return;
+  }
   if (results.status === 404) {
     Util.showSnackbar(snackbar, '#ff6666', data.message);
     return;
@@ -109,7 +115,7 @@ const acceptCancel = (elementBtns, elementModals) => {
     elementBtn.addEventListener('click', e => {
       const parcelId = e.target.id.split('-')[1];
       cancelOrder(parcelId);
-      Util.hideModal(elementModals[i]);
+      Util.hideElement(elementModals[i]);
       Util.showSpinner(spinner);
     });
   });
@@ -122,7 +128,7 @@ const submitForm = (changeAddressForms, changeDestinationModals) => {
       const destination = addressForm[0].value.trim();
       const parcelId = addressForm[0].id.split('-')[2];
       changeDestination(parcelId, { destination });
-      Util.hideModal(changeDestinationModals[i]);
+      Util.hideElement(changeDestinationModals[i]);
       Util.showSpinner(spinner);
     });
   });
@@ -241,29 +247,26 @@ const loadUserOrders = async () => {
             </p>
           </div>
         </div>
-        <div id="map-${order.id}" class="map"></div>
+        <div id="map-${order.id}" class="map">Map is not available</div>
 
         <div class="modal action-modal cancel-order-modal">
           <div class="modal-content action-modal-content">
-            <div class="modal-header action-modal-header">
-              <h4>Warning !!!</h4>
-            </div>
             <div class="modal-body action-modal-body">
-              <p>You cannot undo it after cancel</p>
-            </div>
-            <div class="modal-footer action-modal-footer">
-              <button
-                id="dismiss"
-                class="btn danger action-footer-btn dismiss"
-              >
-                dismiss
-              </button>
-              <button
-                id="accept-${order.id}"
-                class="btn info action-footer-btn accept"
-              >
-                accept
-              </button>
+              <p>ARE YOU SURE? <br> You cannot undo it after cancelling.</p>
+              <div class="btn-group btn-group-cancel-order">
+                <button
+                  id="dismiss"
+                  class="btn danger action-footer-btn dismiss"
+                >
+                  dismiss
+                </button>
+                <button
+                  id="accept-${order.id}"
+                  class="btn info action-footer-btn accept"
+                >
+                  accept
+                </button>
+              </div>
             </div>
           </div>
         </div>

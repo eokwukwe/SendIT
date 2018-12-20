@@ -13,11 +13,11 @@ class Util {
     return /\S+@\S+\.\S+/.test(email);
   }
 
-  static showModal(element) {
+  static showElement(element) {
     element.style.display = 'block';
   }
 
-  static hideModal(element) {
+  static hideElement(element) {
     element.style.display = 'none';
   }
 
@@ -38,7 +38,7 @@ class Util {
     elements.forEach(element =>
       element.addEventListener('click', () => {
         localStorage.removeItem('user');
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
       })
     );
   }
@@ -92,14 +92,12 @@ class Util {
       center: { lat: 9.081999, lng: 8.675277 }
     };
     const map = new google.maps.Map(element, options);
-
     const pickupGeocode = { address: pickup, icon: pickupIcon, map };
     const destinationGeocode = {
       address: destination,
       icon: destinationIcon,
       map
     };
-
     Util.getGeocode(pickupGeocode);
     Util.getGeocode(destinationGeocode);
   }
@@ -111,7 +109,6 @@ class Util {
       if (!decoded) {
         window.location.href = 'login.html';
       }
-
       Util.updateElement(element, decoded.firstname);
     } catch (error) {
       window.location.href = 'login.html';
@@ -120,7 +117,6 @@ class Util {
 
   static placesAutocomplete(element) {
     const addressText = new google.maps.places.Autocomplete(element);
-
     google.maps.event.addListener(addressText, 'place_changed', function() {
       const address = addressText.getPlace();
       element.value = address.formatted_address;
@@ -130,7 +126,7 @@ class Util {
   static showActionModals(elementBtns, elementModals) {
     elementBtns.forEach((elementBtn, i) => {
       elementBtn.addEventListener('click', e => {
-        Util.showModal(elementModals[i]);
+        Util.showElement(elementModals[i]);
       });
     });
   }
@@ -138,7 +134,19 @@ class Util {
   static hideActionModals(elementBtns, elementModals) {
     elementBtns.forEach((elementBtn, i) => {
       elementBtn.addEventListener('click', e => {
-        Util.hideModal(elementModals[i]);
+        Util.hideElement(elementModals[i]);
+      });
+    });
+  }
+
+  static callDistanceMatrix(service, data) {
+    return new Promise((resolve, reject) => {
+      service.getDistanceMatrix(data, (response, status) => {
+        if (status === 'OK') {
+          resolve(response);
+        } else {
+          reject(response);
+        }
       });
     });
   }
