@@ -34,8 +34,8 @@ export default class OrderController {
 
     const values = [
       weight,
-      price.trim(),
-      distance.trim(),
+      price,
+      distance,
       description,
       pickup,
       destination,
@@ -55,9 +55,7 @@ export default class OrderController {
       });
     } catch (err) {
       return res.status(500).json({
-        error: 'can not create order',
-        err,
-        body: req.body
+        error: 'can not create order'
       });
     }
   }

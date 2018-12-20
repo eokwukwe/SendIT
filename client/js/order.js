@@ -1,112 +1,93 @@
 /* eslint-disable */
-const signUpBtn = document.querySelectorAll('.signup');
-const login = document.querySelectorAll('.login');
 const logout = document.querySelectorAll('.logout');
-const orderBtn = document.querySelectorAll('.order-btn');
-const orderSubmitBtn = document.querySelector('#order-submit');
-const viewOrderBtn = document.querySelector('#view-order');
 const previewOrderModal = document.querySelector('#preview-order');
 const reject = document.querySelector('#reject');
 const accept = document.querySelector('#accept');
 const orderForm = document.forms['order-form'];
+const snackbar = document.querySelector('#snackbar');
+const spinner = document.querySelector('.page-loader');
 
-const hideNavBtns = () => {
+(function hideNavBtns() {
+  const signUpBtn = document.querySelectorAll('.signup');
+  const login = document.querySelectorAll('.login');
+  const orderBtn = document.querySelectorAll('.order-btn');
   signUpBtn.forEach(item => (item.style.display = 'none'));
   login.forEach(item => (item.style.display = 'none'));
   orderBtn.forEach(das => (das.style.display = 'none'));
-};
+})();
 
-const showModal = () => {
-  previewOrderModal.style.display = 'block';
-};
-
-const hideModal = () => {
-  previewOrderModal.style.display = 'none';
-};
-
-const logoutUser = () => {
-  logout.forEach(item =>
-    item.addEventListener('click', () => {
-      window.location.href = 'index.html';
-    })
-  );
+const postOrder = async orderData => {
+  try {
+    Util.showElement(spinner);
+    const token = localStorage.getItem('user');
+    const url = 'https://fcode-send-it.herokuapp.com/api/v1/parcels';
+    const results = await Util.doFetchWithToken(url, token, {
+      method: 'POST',
+      body: JSON.stringify(orderData)
+    });
+    const data = await results.json();
+    if (results.status === 400) {
+      Util.hideElement(spinner);
+      for (const props in data) {
+        Util.showSnackbar(snackbar, '#ff6666', data[props]);
+      }
+      return;
+    }
+    if (results.status === 500) {
+      Util.hideElement(spinner);
+      Util.showSnackbar(snackbar, '#ff6666', data.error);
+      return;
+    }
+    orderForm.reset();
+    Util.showSnackbar(snackbar, '#4CAF50', data.message);
+    window.location.href = 'user.html';
+  } catch (error) {
+    Util.showSnackbar(snackbar, '#ff6666', error);
+  }
 };
 
 const rejectOrder = () => {
   reject.addEventListener('click', () => {
-    hideModal();
-    orderSubmitBtn.style.display = '';
-    viewOrderBtn.style.display = 'block';
+    Util.hideElement(previewOrderModal);
   });
 };
 
 const acceptOrder = orderData => {
   accept.addEventListener('click', () => {
-    hideModal();
-    orderSubmitBtn.style.display = 'none';
-    viewOrderBtn.style.display = 'block';
-    console.log('accepted order', orderData);
+    Util.hideElement(previewOrderModal);
+    postOrder(orderData);
   });
 };
 
-function loadAutocomplete() {
-  const fromPlaces = new google.maps.places.Autocomplete(document.querySelector('#pickup'));
-  const toPlaces = new google.maps.places.Autocomplete(document.querySelector('#destination'));
-
-  google.maps.event.addListener(fromPlaces, 'place_changed', function() {
-    const fromPlace = fromPlaces.getPlace();
-    document.querySelector('#pickup').value = fromPlace.formatted_address;
-  });
-
-  google.maps.event.addListener(toPlaces, 'place_changed', function() {
-    const toPlace = toPlaces.getPlace();
-    document.querySelector('#destination').value = toPlace.formatted_address;
-  });
-}
-
-const callback = (response, status) => {
-  if (status == 'OK') {
-    const origin = response.originAddresses[0];
-    const destination = response.destinationAddresses[0];
-    console.log(response);
-    const distance = response.rows[0].elements[0].distance.value;
-    document.querySelector('#distance').value = distance / 1000;
-    console.log(
-      'callback origin, destination',
-      origin,
-      destination,
-      document.querySelector('#distance').value
-    );
-  } else {
-    console.log(status);
-  }
+const loadAutocomplete = () => {
+  const pickup = document.querySelector('#pickup');
+  const destination = document.querySelector('#destination');
+  Util.placesAutocomplete(pickup);
+  Util.placesAutocomplete(destination);
 };
 
-const calculateDistance = () => {
+const calculateDistance = async () => {
   const origin = document.querySelector('#pickup').value;
   const destination = document.querySelector('#destination').value;
   const service = new google.maps.DistanceMatrixService();
-  console.log('origin and destination ', origin, destination);
-  service.getDistanceMatrix(
-    {
-      origins: [origin],
-      destinations: [destination],
-      travelMode: 'DRIVING',
-      unitSystem: google.maps.UnitSystem.IMPERIAL,
-      avoidHighways: false,
-      avoidTolls: false
-    },
-    callback
-  );
+  const result = await Util.callDistanceMatrix(service, {
+    origins: [origin],
+    destinations: [destination],
+    travelMode: 'DRIVING',
+    unitSystem: google.maps.UnitSystem.IMPERIAL,
+    avoidHighways: false,
+    avoidTolls: false
+  });
+  const distance = await result.rows[0].elements[0].distance.value;
+  return distance / 1000;
 };
 
 const createOrderPreview = orderData => {
-  let previewData = document.querySelector('.preview-table');
+  const previewData = document.querySelector('.preview-table');
   const { description, weight, pickup, destination, receiver, distance, price, phone } = orderData;
-
   const data = `
     <p class="preview-data">
-      Customer <span class="price">${receiver}</span>
+      Customer <span>${receiver}</span>
     </p>
     <p class="preview-data">
       Receiver <span class="price">${receiver}</span>
@@ -133,8 +114,8 @@ const createOrderPreview = orderData => {
       Weight <span class="price">${weight}</span>
     </p>
     <p class="preview-data">
-    Distance <span class="price">${distance}</span>
-  </p>
+      Distance <span class="price">${distance}</span>
+    </p>
     <hr class="divider" />
     <p class=" preview-data preview-price">
       Price <span>${price.toLocaleString('en-NG', {
@@ -143,28 +124,16 @@ const createOrderPreview = orderData => {
       })}</span>
     </p>
   `;
-
   previewData.innerHTML = data;
-
-  return orderData;
 };
 
-viewOrderBtn.addEventListener('click', () => {
-  calculateDistance();
-  viewOrderBtn.style.display = 'none';
-  orderSubmitBtn.style.display = 'block';
-});
-
-const submitOrder = e => {
-  e.preventDefault();
-
+const getFormValues = distance => {
   const description = document.querySelector('#description').value;
   const weight = document.querySelector('#weight').value;
   const pickup = document.querySelector('#pickup').value;
   const destination = document.querySelector('#destination').value;
   const receiver = document.querySelector('#receiver').value;
   const phone = document.querySelector('#phone').value;
-  const distance = document.querySelector('#distance').value;
   const price = weight * 200 + distance * 100;
 
   const orderData = {
@@ -177,23 +146,22 @@ const submitOrder = e => {
     price,
     phone
   };
-
-  createOrderPreview(orderData);
-  showModal();
-  acceptOrder(orderData);
-  rejectOrder();
-  orderForm.reset();
+  return orderData;
 };
 
-const orderInit = () => {
-  viewOrderBtn.style.display = 'block';
-  orderSubmitBtn.style.display = 'none';
-  hideNavBtns();
-  loadAutocomplete();
-  logoutUser();
-  orderSubmitBtn.addEventListener('click', submitOrder);
+const submitOrder = async e => {
+  e.preventDefault();
+  const distance = await calculateDistance();
+  const orderData = getFormValues(distance);
+  createOrderPreview(orderData);
+  Util.showElement(previewOrderModal);
+  acceptOrder(orderData);
+  rejectOrder();
 };
 
 window.addEventListener('load', () => {
-  orderInit();
+  Util.verifyUser(null);
+  Util.logoutUser(logout);
+  loadAutocomplete();
+  orderForm.addEventListener('submit', submitOrder);
 });

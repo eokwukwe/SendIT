@@ -39,22 +39,23 @@ const validPassword = () => {
 
 const validateFormData = (fname, lname, email, pwd) => {
   if (fname === '' || !validateString(fname)) {
-    signupMessage.style.display = 'block';
-    signupMessage.textContent = 'Firstname too short';
+    Util.showElement(signupMessage);
+    Util.updateElement(signupMessage, 'Firstname too short');
     return false;
   }
 
   if (lname === '' || !validateString(lname)) {
-    signupMessage.style.display = 'block';
-    signupMessage.textContent = 'Lastname too short';
+    Util.showElement(signupMessage);
+    Util.updateElement(signupMessage, 'Lastname too short');
     return false;
   }
 
   if (email === '' || !isValidEmail(email)) {
-    signupMessage.style.display = 'block';
-    signupMessage.textContent = 'Invalid email';
+    Util.showElement(signupMessage);
+    Util.updateElement(signupMessage, 'Invalid email');
     return false;
   }
+  Util.hideElement(signupMessage);
   return true;
 };
 
@@ -68,7 +69,7 @@ const registerUser = async userData => {
     const data = await result.json();
     if (result.status === 400) {
       Util.showSnackbar(snackbar, '#ff6666', data.message);
-      spinner.style.visibility = '';
+      Util.hideSpinner(spinner);
       return;
     }
     if (result.status === 201) {
@@ -102,8 +103,8 @@ const signUpSubmit = e => {
   registerUser(signupData);
 
   submitForm.reset();
-  pwd.style.border = '';
-  passwordMsg.style.display = '';
+  Util.hideElement(pwd);
+  Util.hideElement(passwordMsg);
 };
 
 const signupInit = () => {

@@ -8,10 +8,10 @@ const snackbar = document.querySelector('#snackbar');
 const spinner = document.querySelector('.page-loader');
 const signupMessage = document.querySelector('.signup-message');
 
-const hideNavBtn = () => {
+(function hideNavBtn() {
   logout.forEach(das => (das.style.display = 'none'));
   orderBtn.forEach(item => (item.style.display = 'none'));
-};
+})();
 
 const loginUser = async userData => {
   try {
@@ -38,7 +38,6 @@ const loginUser = async userData => {
   } catch (error) {
     Util.showSnackbar(snackbar, 'red', data.message);
     Util.hideSpinner(spinner);
-    console.log('Sign up failed. Please try again');
   }
 };
 
@@ -48,8 +47,8 @@ const login = e => {
   const userEmail = loginEmail.value;
   const password = loginPassword.value;
   if (!Util.isValidEmail(userEmail)) {
-    signupMessage.style.display = 'block';
-    signupMessage.textContent = 'Invalid email';
+    Util.showElement(signupMessage);
+    Util.updateElement(signupMessage, 'Invalid email');
     return;
   }
   const loginData = {
@@ -59,10 +58,9 @@ const login = e => {
   Util.showSpinner(spinner);
   loginUser(loginData);
   loginSubmit.reset();
-  signupMessage.style.display = '';
+  Util.hideElement(signupMessage);
 };
 
 if (document.readyState === 'loading' || document.readyState === 'complete') {
-  hideNavBtn();
   loginSubmit.addEventListener('submit', login);
 }

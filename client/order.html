@@ -52,6 +52,8 @@
 
     <!-- Order -->
     <main class="container order-main">
+      <div id="snackbar"></div>
+      <div class="page-loader"><div class="loader"></div></div>
       <div class="btn-dashboard">
         <a href="user.html"> &#8656; Back to Dashboard</a>
       </div>
@@ -99,28 +101,24 @@
               placeholder="Receiver phone number"
               required
             />
-            <input type="button" id="order-submit" value="Submit Order" />
+            <input type="submit" id="order-submit" value="Submit Order" />
           </form>
         </div>
-        <div class="card-footer data-form-card-footer order-card-footer">
-          <button type="button" id="view-order" class="btn info">Next</button>
-
-          <div id="preview-order" class="modal">
-            <div class="modal-content preview-order-content">
-              <div class="modal-header preview-order-header">
-                <h4>Order Summary</h4>
-              </div>
-              <div class="modal-body cancel-modal-body">
-                <div class="preview-table"></div>
-              </div>
-              <div class="modal-footer preview-order-footer">
-                <button id="reject" class="btn danger preview-footer-btn">
-                  Reject
-                </button>
-                <button id="accept" class="btn info preview-footer-btn">
-                  Accept
-                </button>
-              </div>
+        <div id="preview-order" class="modal">
+          <div class="modal-content preview-order-content">
+            <div class="modal-header preview-order-header">
+              <h4>Order Summary</h4>
+            </div>
+            <div class="modal-body cancel-modal-body">
+              <div class="preview-table"></div>
+            </div>
+            <div class="modal-footer preview-order-footer">
+              <button id="reject" class="btn danger preview-footer-btn">
+                Reject
+              </button>
+              <button id="accept" class="btn info preview-footer-btn">
+                Accept
+              </button>
             </div>
           </div>
         </div>
