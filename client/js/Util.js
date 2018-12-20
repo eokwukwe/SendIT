@@ -109,7 +109,9 @@ class Util {
       if (!decoded) {
         window.location.href = 'login.html';
       }
-      Util.updateElement(element, decoded.firstname);
+      if (element !== null) {
+        Util.updateElement(element, decoded.firstname);
+      }
     } catch (error) {
       window.location.href = 'login.html';
     }
