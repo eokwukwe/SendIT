@@ -68,7 +68,7 @@ export default class OrderController {
    * @memberof OrderController
    */
   static async getAllOrders(req, res) {
-    const queryText = 'SELECT * FROM orders';
+    const queryText = 'SELECT * FROM orders ORDER BY created_on DESC';
     try {
       const { rows, rowCount } = await db.query(queryText);
       if (rows.length === 0) {
@@ -123,7 +123,7 @@ export default class OrderController {
    */
   static async getOrdersbyUser(req, res) {
     const userId = parseInt(req.params.userId, 0);
-    const queryText = 'SELECT * FROM orders WHERE userid=$1';
+    const queryText = 'SELECT * FROM orders WHERE userid=$1 ORDER BY created_on DESC';
     try {
       const { rows, rowCount } = await db.query(queryText, [userId]);
       if (rows.length === 0) {
