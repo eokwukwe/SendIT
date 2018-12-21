@@ -10,7 +10,7 @@ const pendings = document.querySelector('#pending');
 const intransits = document.querySelector('#intransit');
 const delivereds = document.querySelector('#delivered');
 const cancelleds = document.querySelector('#cancelled');
-const totalOrdereds = document.querySelector('#total-orders');
+const totalOrdereds = document.querySelector('#total-users-orders');
 
 (function hideNavItems() {
   signUpBtn.forEach(item => (item.style.display = 'none'));
@@ -185,7 +185,7 @@ const loadUserOrders = async () => {
         <h5 class="order-description">${order.description}</h5>
         <span> <i class="fas fa-chevron-down open"></i> </span>
       </div>
-      <div class="accordion-content">
+      <div class="accordion-content user-accordion-content">
         <div class="order-details">
 
           <div class="info-card">
@@ -206,6 +206,10 @@ const loadUserOrders = async () => {
             <p class="order-section-detail">
               Destination
               <span class="price">${order.destination}</span>
+            </p>
+            <p class="order-section-detail">
+              Present Location 
+              <span class="price">${order.location}</span>
             </p>
           </div>
           <div class="info-card">
@@ -353,4 +357,3 @@ Util.verifyUser(userName);
 Util.showSpinner(spinner);
 loadUserOrders();
 Util.logoutUser(logout);
-// userInit();

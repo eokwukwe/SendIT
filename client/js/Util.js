@@ -106,7 +106,7 @@ class Util {
     try {
       const token = localStorage.getItem('user');
       const decoded = jwt_decode(token);
-      if (!decoded) {
+      if (!decoded || decoded.usertype !== 'user') {
         window.location.href = 'login.html';
       }
       if (element !== null) {
@@ -114,6 +114,21 @@ class Util {
       }
     } catch (error) {
       window.location.href = 'login.html';
+    }
+  }
+
+  static verifyAdmin() {
+    try {
+      const token = localStorage.getItem('user');
+      const decoded = jwt_decode(token);
+      if (!decoded) {
+        window.location.href = 'login.html';
+      }
+      if (decoded.usertype !== 'admin') {
+        window.location.href = 'user.html';
+      }
+    } catch (error) {
+      window.location.href = 'user.html';
     }
   }
 

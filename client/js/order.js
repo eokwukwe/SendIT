@@ -18,7 +18,6 @@ const spinner = document.querySelector('.page-loader');
 
 const postOrder = async orderData => {
   try {
-    Util.showElement(spinner);
     const token = localStorage.getItem('user');
     const url = 'https://fcode-send-it.herokuapp.com/api/v1/parcels';
     const results = await Util.doFetchWithToken(url, token, {
@@ -27,18 +26,19 @@ const postOrder = async orderData => {
     });
     const data = await results.json();
     if (results.status === 400) {
-      Util.hideElement(spinner);
+      Util.hideSpinner(spinner)
       for (const props in data) {
         Util.showSnackbar(snackbar, '#ff6666', data[props]);
       }
       return;
     }
     if (results.status === 500) {
-      Util.hideElement(spinner);
+      Util.hideSpinner(spinner)
       Util.showSnackbar(snackbar, '#ff6666', data.error);
       return;
     }
     orderForm.reset();
+    Util.hideSpinner(spinner)
     Util.showSnackbar(snackbar, '#4CAF50', data.message);
     window.location.href = 'user.html';
   } catch (error) {
@@ -156,6 +156,7 @@ const submitOrder = async e => {
   createOrderPreview(orderData);
   Util.showElement(previewOrderModal);
   acceptOrder(orderData);
+  Util.showSpinner(spinner);
   rejectOrder();
 };
 
