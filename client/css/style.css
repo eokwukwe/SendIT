@@ -469,6 +469,10 @@ span.price {
   border-left: 5px solid var(--lightblue);
 }
 
+.extras {
+  border-left: 5px solid var(--darkblue);
+}
+
 .modal {
   display: none;
   position: fixed;

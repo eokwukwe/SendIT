@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 
 import dotenv from 'dotenv';
 
@@ -40,5 +41,24 @@ export default class Helper {
   static generateToken(payload) {
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7h' });
     return token;
+  }
+
+  /**
+   * Adapted from https://stackoverflow.com/questions/8855687/secure-random-token-in-node-js
+   *Generate Password reset token
+   * @static
+   * @returns a promise
+   * @memberof Helper
+   */
+  static generatePasswordResetToken() {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(20, (err, buffer) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(buffer.toString('hex'));
+        }
+      });
+    });
   }
 }
