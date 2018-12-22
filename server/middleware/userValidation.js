@@ -38,6 +38,22 @@ const validateUser = {
     check('password')
       .isLength({ min: 1 })
       .withMessage('please enter your password')
+  ],
+
+  validEmail: [
+    check('userEmail')
+      .isEmail()
+      .withMessage('invalid email')
+      .trim()
+  ],
+
+  validPassword: [
+    check('password')
+      .matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.]).{6,}$/)
+      .withMessage(
+        'password must be at least 6 characters with at least 1 uppercase, 1 lowercase & 1 special character'
+      )
+      .trim()
   ]
 };
 

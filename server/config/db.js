@@ -26,7 +26,7 @@ const createUsersTable = () => {
       email VARCHAR(128) UNIQUE NOT NULL,
       password VARCHAR(128) NOT NULL,
       reset_password_token VARCHAR,
-      reset_password_expires DATE,
+      reset_password_expires TIMESTAMP,
       usertype VARCHAR(10) NOT NULL DEFAULT 'user',
       created_on TIMESTAMP NOT NULL DEFAULT now(),
       updated_on TIMESTAMP NOT NULL DEFAULT now(),
