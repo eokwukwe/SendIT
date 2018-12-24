@@ -246,7 +246,7 @@ export default class UserController {
           Copy it and click on the link below to complete the password reset process
         </p>
         <p>
-          ${req.protocol}://${req.headers.host}/reset.html
+          https://${req.headers.host}/reset.html
         </p>
         <p>
           If you did not request this, please ignore this email and your password will remain unchanged.
