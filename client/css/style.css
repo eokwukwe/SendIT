@@ -717,13 +717,6 @@ span.price {
   z-index: 1;
 }
 
-/* .fixed header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 3;
-} */
-
 .navbar {
   position: relative;
   overflow: hidden;
@@ -746,9 +739,9 @@ span.price {
 .nav-item a {
   display: block;
   color: var(--white);
-  padding: 0.3rem 1rem;
+  padding: 0.3rem 0.5rem;
   margin: 0 0.2rem;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   border-radius: 0.2rem;
 }
 
@@ -774,31 +767,14 @@ span.price {
   background: var(--green);
 }
 
-.nav-item .login {
+.nav-item .login,
+.nav-item .logout {
   background: var(--grey);
 }
 
-/* .nav-item .signup,
-.nav-item .logout,
-.nav-item .login {
-  border: 1px solid var(--white);
-  border-radius: 0.2rem;
-} */
-
-/* .nav-item .signup:hover,
-.nav-item .logout:hover,
-.nav-item .login:hover {
-  background: var(--lightgrey);
-} */
-
 .order-btn-nav {
-  border: 1px solid var(--white);
   border-radius: 0.2rem;
-  background: var(--darkblue);
-}
-
-.order-btn.order-btn-nav:hover {
-  background: var(--lightblue);
+  background: var(--green);
 }
 
 .side-nav {
@@ -852,10 +828,6 @@ span.price {
   .open-slide {
     right: 15px;
   }
-
-  /* input {
-    height: 40px;
-  } */
 }
 
 @media (min-width: 568px) {
@@ -935,6 +907,18 @@ span.price {
   }
   .main-home h1 {
     font-size: 39px;
+  }
+}
+
+@media (max-width: 1863px) {
+  .main-home.container {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 1864px) {
+  .main-home.container {
+    max-width: 90%;
   }
 }
 
