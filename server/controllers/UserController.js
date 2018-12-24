@@ -229,7 +229,7 @@ export default class UserController {
           message: 'User does not exist'
         });
       }
-      const values = [resetToken, moment(new Date(Date.now() + 3600000)), userEmail];
+      const values = [resetToken, moment(new Date(Date.now() + 1800000)), userEmail];
       const result = await db.query(updateText, values);
       const to = rows[0].email;
       const user = result.rows[0].firstname;
@@ -241,10 +241,12 @@ export default class UserController {
           the reset of the password for your account.
         </p>
         <p>
-          Please click on the following link, or paste this into your browser to complete the process:
+          This is your one-time reset token 
+          <h3>${resetToken}.</h3> 
+          Copy it and click on the link below to complete the password reset process
         </p>
         <p>
-          ${req.protocol}://${req.headers.host}/resetPassword/${resetToken}
+          ${req.protocol}://${req.headers.host}/reset.html
         </p>
         <p>
           If you did not request this, please ignore this email and your password will remain unchanged.
@@ -267,10 +269,10 @@ export default class UserController {
 
   /**
    * The returned timestamp from the database is less that the stored
-   * timestamp by 3600000 sec (1 hr), so that amount is added to the
+   * timestamp by 1800000 sec (30 min.), so that amount is added to the
    * resetTimestamp variable to make it equal to the stored timestamp
    * for accurate comparism between the current time and the time for
-   * the token to expires which is 1hr (3600000 sec) from the time of
+   * the token to expires which is 30 min. (1800000 sec) from the time of
    * password reset token creation.
    * @static
    * @desc GET /api/v1/auth/resetPassword/:resetToken
@@ -300,10 +302,10 @@ export default class UserController {
           message: 'Password reset token is invalid'
         });
       }
-      const resetTimestamp = Date.parse(rows[0].reset_password_expires) + 3600000;
+      const resetTimestamp = Date.parse(rows[0].reset_password_expires) + 1800000;
       const currentTime = Date.now();
       if (currentTime > resetTimestamp) {
-        return res.status(400).json({
+        return res.status(401).json({
           message: 'Password reset token has expired. Please send a new reset request'
         });
       }
@@ -326,7 +328,8 @@ export default class UserController {
       `;
       sendNotification(to, subject, message);
       return res.status(200).json({
-        message: 'You have successfully change your password'
+        message:
+          'You have successfully changed your password. You can now log in with your new password'
       });
     } catch (err) {
       return res.status(500).json({

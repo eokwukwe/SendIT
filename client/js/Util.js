@@ -13,6 +13,19 @@ class Util {
     return /\S+@\S+\.\S+/.test(email);
   }
 
+  static validatePwd(pwd) {
+    const validPwd = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.]).{6,}$/;
+    return pwd.match(validPwd);
+  }
+
+  static validPassword(pword, passwordMsg) {
+    pword.addEventListener('keyup', e =>
+      !Util.validatePwd(e.target.value)
+        ? (pword.style.border = '2px solid red')
+        : ((pword.style.border = '2px solid green'), (passwordMsg.style.display = 'none'))
+    );
+  }
+
   static showElement(element) {
     element.style.display = 'block';
   }
@@ -23,6 +36,12 @@ class Util {
 
   static updateElement(element, content) {
     element.textContent = content;
+  }
+
+  static createAlert(element, color, textContent) {
+    element.classList.add('alert');
+    element.style.backgroundColor = color;
+    element.textContent = textContent;
   }
 
   static showSnackbar(element, color, textContent) {

@@ -6,14 +6,12 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 import config from './config/config';
-
 // Routes
 import indexRoute from './routes/index';
 import orderRoutes from './routes/orderRoute';
 import userRoutes from './routes/userRoute';
 
 dotenv.config();
-
 const app = express();
 
 app.use(morgan('dev'));
@@ -21,6 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../client')));
+
 app.use('/api/v1', indexRoute);
 app.use('/api/v1', orderRoutes);
 app.use('/api/v1', userRoutes);
