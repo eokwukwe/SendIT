@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" type="image/jpg" href="./img/pageicon.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>SendIT | Forgot</title>
+  </head>
+
+  <body class="login-body light-blue">
+    <header class="header default">
+      <nav class="container navbar" style="justify-content: center;">
+        <div class="nav-logo"><a href="index.html">SendIT</a></div>
+      </nav>
+    </header>
+
+    <!-- Login -->
+    <main class="container login-main">
+      <div id="alert"></div>
+      <div id="snackbar"></div>
+      <div class="page-loader"><div class="loader"></div></div>
+      <div class="card forgot data-form-card">
+        <h4 class="card-header data-form-card-header">
+          Enter your account email
+        </h4>
+        <div class="card-body data-form-card-body">
+          <form id="forgot-form" class="card-form">
+            <input
+              type="email"
+              id="useremail"
+              placeholder="Email"
+              required=""
+              autofocus
+            />
+            <span class="signup-message"></span>
+            <input type="submit" value="Send" />
+          </form>
+        </div>
+        <div class="card-footer data-form-card-footer login-footer">
+          <span class="psw"><a href="login.html">Login</a></span>
+          <span class="psw">No account? <a href="signup.html">Sign Up</a></span>
+        </div>
+      </div>
+    </main>
+
+    <footer class="main-footer">Copyright &copy; 2018</footer>
+
+    <script src="js/Util.js"></script>
+    <script src="js/forgot.js"></script>
+  </body>
+</html>

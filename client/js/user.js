@@ -59,7 +59,6 @@ const openAccordion = accordion => {
 const changeAddressModals = (elementBtns, elementModals) => {
   elementBtns.forEach((elementBtn, i) => {
     elementBtn.addEventListener('click', e => {
-      console.log('clicked', e.target.id);
       Util.showElement(elementModals[i]);
       const inputField = elementModals[i].querySelector("input[type='text']");
       Util.placesAutocomplete(inputField);

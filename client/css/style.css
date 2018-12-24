@@ -92,6 +92,31 @@ button:disabled {
   cursor: pointer;
 }
 
+.alert {
+  display: none;
+  text-align: center;
+  min-width: 500px;
+  padding: 0.8rem;
+  margin: 0 auto;
+  font-weight: bold;
+  color: white;
+  z-index: 6;
+  position: absolute;
+  top: 18%;
+  border-radius: 0.2rem;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
 .success {
   background-color: #4caf50;
 }
@@ -639,6 +664,9 @@ span.price {
 }
 
 @media (max-width: 578px) {
+  .alert {
+    min-width: 450px;
+  }
   .summary {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -721,13 +749,13 @@ span.price {
   padding: 0.3rem 1rem;
   margin: 0 0.2rem;
   font-size: 1.1rem;
+  border-radius: 0.2rem;
 }
 
 .nav-item a:hover {
-  border: 1px solid var(--white);
   border-radius: 3px;
   text-decoration: none;
-  background: var(--grey);
+  background: var(--darkblue);
 }
 
 .nav-logo a {
@@ -743,20 +771,25 @@ span.price {
 
 .nav-item .signup {
   padding: 0.3rem 0.6rem;
+  background: var(--green);
 }
 
-.nav-item .signup,
+.nav-item .login {
+  background: var(--grey);
+}
+
+/* .nav-item .signup,
 .nav-item .logout,
 .nav-item .login {
   border: 1px solid var(--white);
   border-radius: 0.2rem;
-}
+} */
 
-.nav-item .signup:hover,
+/* .nav-item .signup:hover,
 .nav-item .logout:hover,
 .nav-item .login:hover {
   background: var(--lightgrey);
-}
+} */
 
 .order-btn-nav {
   border: 1px solid var(--white);
@@ -910,6 +943,7 @@ span.price {
 .signup-main,
 .login-main {
   display: flex;
+  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
 }
