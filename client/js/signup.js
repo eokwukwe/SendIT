@@ -112,5 +112,5 @@ const signupInit = () => {
   validPassword();
   submitForm.addEventListener('submit', signUpSubmit);
 };
-
 signupInit();
+Util.redirectLoggedInUser();

@@ -63,4 +63,5 @@ const login = e => {
 
 if (document.readyState === 'loading' || document.readyState === 'complete') {
   loginSubmit.addEventListener('submit', login);
+  Util.redirectLoggedInUser();
 }

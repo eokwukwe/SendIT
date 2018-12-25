@@ -153,7 +153,7 @@ export default class OrderController {
     const userId = parseInt(req.user.userId, 0);
     const parcelId = parseInt(req.params.parcelId, 0);
     const findText = 'SELECT * FROM orders WHERE id=$1 AND userid=$2';
-    const updateText = 'UPDATE orders SET cancelled=$1, updated_on=$2 WHERE id=$3 AND userid=$4 returning *';
+    const updateText = 'UPDATE orders SET cancelled=$1, status=$2, updated_on=$3 WHERE id=$4 AND userid=$5 returning *';
 
     try {
       const { rows } = await db.query(findText, [parcelId, userId]);
@@ -162,7 +162,7 @@ export default class OrderController {
           message: 'order not found'
         });
       }
-      const values = ['true', moment(new Date()), parcelId, userId];
+      const values = ['true', 'cancelled', moment(new Date()), parcelId, userId];
       const result = await db.query(updateText, values);
       return res.status(200).json({
         message: `order cancelled ${result.rows[0].cancelled}`

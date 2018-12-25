@@ -100,7 +100,7 @@ const updateLocation = async (parcelId, address) => {
     Util.showSnackbar(snackbar, '#ff6666', data.error);
     return;
   }
-  Util.showSnackbar(snackbar, '#ff6666', data.message);
+  Util.showSnackbar(snackbar, '#4CAF50', data.message);
   location.reload();
 };
 
@@ -124,7 +124,7 @@ const updateStatus = async (parcelId, status) => {
   }
   Util.hideSpinner(spinner);
   location.reload();
-  Util.showSnackbar(snackbar, '#ff6666', data.message);
+  Util.showSnackbar(snackbar, '#4CAF50', data.message);
 };
 
 const submitLocationUpdate = (updateLocationForms, updateLocationModals) => {
@@ -145,8 +145,8 @@ const submitStatusUpdate = (updateStatusForms, updateStatusModals) => {
   updateStatusForms.forEach((updateStatusForm, i) => {
     updateStatusForm.addEventListener('submit', e => {
       e.preventDefault();
-      const statusMessage = document.querySelector('.status-message');
-      const selectedStatus = document.querySelector('input[name="status"]:checked');
+      const statusMessage = e.target.querySelector('.status-message');
+      const selectedStatus = e.target.querySelector('input[type="radio"]:checked');
       if (!selectedStatus) {
         Util.showElement(statusMessage);
         return;
@@ -163,7 +163,6 @@ const submitStatusUpdate = (updateStatusForms, updateStatusModals) => {
 };
 
 const loadAllUsers = async token => {
-  // const token = localStorage.getItem('user');
   const allUsersUrl = 'https://fcode-send-it.herokuapp.com/api/v1/users';
   const allUsersResult = await Util.doFetchWithToken(allUsersUrl, token);
   const allUsers = await allUsersResult.json();
@@ -190,10 +189,10 @@ const loadAllOrders = async () => {
   }
   Util.hideSpinner(spinner);
   const { orders, totalOrders } = allOrders;
-  const totalPending = orders.filter(order => order.status === 'pending' && !order.cancelled);
-  const totalIntransit = orders.filter(order => order.status === 'intransit' && !order.cancelled);
-  const totalDelivered = orders.filter(order => order.status === 'delivered' && !order.cancelled);
-  const totalCancelled = orders.filter(order => order.cancelled);
+  const totalPending = orders.filter(order => order.status === 'pending');
+  const totalIntransit = orders.filter(order => order.status === 'intransit');
+  const totalDelivered = orders.filter(order => order.status === 'delivered');
+  const totalCancelled = orders.filter(order => order.status === 'cancelled');
   let deliveredRevenue = totalDelivered.reduce((total, order) => {
     return (total += order.price);
   }, 0);
@@ -223,18 +222,16 @@ const loadAllOrders = async () => {
       currency: 'NGN'
     });
     const orderNode = document.createElement('li');
-    const classname = order.cancelled ? 'cancelled' : order.status;
-    const disabled = order.cancelled ? 'disabled' : '';
-    const status = order.cancelled ? 'cancelled' : order.status;
+    const disabled = order.status === 'cancelled' || order.status === 'delivered' ? 'disabled' : '';
     orderNode.innerHTML = `
-			<div class="accordion accordion-header ${classname}">
+			<div class="accordion accordion-header ${order.status}">
 				<h5 class="order-description">${order.description}</h5>
 				<span> <i class="fas fa-chevron-down open"></i> </span>
 			</div>
 
 			<div class="accordion-content admin-accordion-content">
 				<div class="info-card admin-info-card">
-					<h4 class="heading ${classname}-heading">Sender</h4>
+					<h4 class="heading ${order.status}-heading">Sender</h4>
 					<p class="order-section-detail admin-section-detail">
 						Sender ID <span class="price">#${order.userid}</span>
 					</p>
@@ -242,7 +239,7 @@ const loadAllOrders = async () => {
 						Pickup Location <span class="price">${order.location}</span>
 					</p>
 					<br />
-					<h4 class="heading ${classname}-heading">Receiver</h4>
+					<h4 class="heading ${order.status}-heading">Receiver</h4>
 					<p class="order-section-detail admin-section-detail">
 						Name <span class="price">${order.receiver_name}</span>
 					</p>
@@ -259,7 +256,7 @@ const loadAllOrders = async () => {
             </span>
           </p>
 					<br />
-					<h4 class="heading ${classname}-heading">Order Info</h4>
+					<h4 class="heading ${order.status}-heading">Order Info</h4>
 					<p class="order-section-detail admin-section-detail">
 						Order ID
 						<span class="price">
@@ -292,8 +289,8 @@ const loadAllOrders = async () => {
 					</p>
 					<p class="order-section-detail admin-section-detail">
 						Status
-						<span class="status status-${classname}">
-							${status}
+						<span class="status status-${order.status}">
+							${order.status}
 						</span>
 					</p>
 					<p class="order-section-detail action-btn">

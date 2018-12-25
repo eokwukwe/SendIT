@@ -154,14 +154,10 @@ const loadUserOrders = async () => {
 
     Util.hideSpinner(spinner);
     const { userOrders, total } = ordersByUser;
-    const totalPending = userOrders.filter(order => order.status === 'pending' && !order.cancelled);
-    const totalIntransit = userOrders.filter(
-      order => order.status === 'intransit' && !order.cancelled
-    );
-    const totalDelivered = userOrders.filter(
-      order => order.status === 'delivered' && !order.cancelled
-    );
-    const totalCancelled = userOrders.filter(order => order.cancelled);
+    const totalPending = userOrders.filter(order => order.status === 'pending');
+    const totalIntransit = userOrders.filter(order => order.status === 'intransit');
+    const totalDelivered = userOrders.filter(order => order.status === 'delivered');
+    const totalCancelled = userOrders.filter(order => order.status === 'cancelled');
 
     Util.updateElement(totalOrdereds, total);
     Util.updateElement(pendings, totalPending.length);
@@ -174,13 +170,11 @@ const loadUserOrders = async () => {
         style: 'currency',
         currency: 'NGN'
       });
-
       const orderNode = document.createElement('li');
-      const classname = order.cancelled ? 'cancelled' : order.status;
-      const disabled = order.cancelled ? 'disabled' : '';
-      const status = order.cancelled ? 'cancelled' : order.status;
+      const disabled =
+        order.status === 'cancelled' || order.status === 'delivered' ? 'disabled' : '';
       orderNode.innerHTML = `
-      <div class="accordion accordion-header ${classname}">
+      <div class="accordion accordion-header ${order.status}">
         <h5 class="order-description">${order.description}</h5>
         <span> <i class="fas fa-chevron-down open"></i> </span>
       </div>
@@ -188,7 +182,7 @@ const loadUserOrders = async () => {
         <div class="order-details">
 
           <div class="info-card">
-            <h4 class="heading ${classname}-heading">Sender</h4>
+            <h4 class="heading ${order.status}-heading">Sender</h4>
             <p class="order-section-detail">
               Name <span class="price">${decoded.firstname}</span>
             </p>
@@ -198,7 +192,7 @@ const loadUserOrders = async () => {
             </p>
           </div>
           <div class="info-card">
-            <h4 class="heading ${classname}-heading">Receiver</h4>
+            <h4 class="heading ${order.status}-heading">Receiver</h4>
             <p class="order-section-detail">
               Name <span class="price">${order.receiver_name}</span>
             </p>
@@ -212,7 +206,13 @@ const loadUserOrders = async () => {
             </p>
           </div>
           <div class="info-card">
-            <h4 class="heading ${classname}-heading">Order Info</h4>
+            <h4 class="heading ${order.status}-heading">Order Info</h4>
+            <p class="order-section-detail admin-section-detail">
+              Order ID
+              <span class="price">
+                #${order.id}
+              </span>
+				  	</p>
             <p class="order-section-detail">
               Order Date
               <span class="price date">
@@ -222,6 +222,12 @@ const loadUserOrders = async () => {
             <p class="order-section-detail">
               Parcel Weight <span class="price">${order.weight}kg</span>
             </p>
+            <p class="order-section-detail admin-section-detail">
+              Delivery Distance 
+              <span class="price">
+                ${order.distance}km
+              </span>
+            </p>
             <p class="order-section-detail">
               Delivery Price 
               <span class="price">
@@ -230,7 +236,7 @@ const loadUserOrders = async () => {
             </p>
             <p class="order-section-detail">
               Status
-              <span class="status status-${classname}">${status}</span>
+              <span class="status status-${order.status}">${order.status}</span>
             </p>
             <p class="order-section-detail action-btn">
               <button
