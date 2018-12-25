@@ -151,6 +151,21 @@ class Util {
     }
   }
 
+  static redirectLoggedInUser() {
+    const token = localStorage.getItem('user');
+    if (!token) {
+      return;
+    }
+    const decoded = jwt_decode(token);
+    if (decoded.usertype === 'admin') {
+      window.location.href = 'admin.html';
+      return;
+    } else {
+      window.location.href = 'user.html';
+      return;
+    }
+  }
+
   static placesAutocomplete(element) {
     const addressText = new google.maps.places.Autocomplete(element);
     google.maps.event.addListener(addressText, 'place_changed', function() {
