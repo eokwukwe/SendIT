@@ -4,8 +4,10 @@ import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import path from 'path';
+import swaggerUi from 'swagger-ui-express';
 
 import config from './config/config';
+import swaggerDoc from './config/swagger.json';
 // Routes
 import indexRoute from './routes/index';
 import orderRoutes from './routes/orderRoute';
@@ -18,6 +20,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 app.use(express.static(path.join(__dirname, '../client')));
 
 app.use('/api/v1', indexRoute);
