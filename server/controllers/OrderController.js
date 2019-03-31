@@ -207,7 +207,8 @@ export default class OrderController {
       const newDestination = `${result.rows[0].destination}`;
 
       return res.status(200).json({
-        message: `parcel destination changed successfully to ${newDestination}`
+        message: `parcel destination changed successfully to ${newDestination}`,
+        order: result.rows[0]
       });
     } catch (err) {
       return res.status(500).json({
@@ -248,7 +249,8 @@ export default class OrderController {
 
       sendNotification(to, subject, message);
       return res.status(200).json({
-        message: `order status updated successfully to ${result.rows[0].status.trim()}`
+        message: `order status updated successfully to ${result.rows[0].status.trim()}`,
+        order: result.rows[0]
       });
     } catch (err) {
       return res.status(500).json({
@@ -302,7 +304,8 @@ export default class OrderController {
       sendNotification(to, subject, message);
 
       return res.status(200).json({
-        message: `present location successfully changed to ${result.rows[0].location}`
+        message: `present location successfully changed to ${result.rows[0].location}`,
+        order: result.rows[0]
       });
     } catch (err) {
       return res.status(500).json({
