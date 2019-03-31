@@ -13,7 +13,8 @@
     "test-watch": "nodemon --exec 'npm test'",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "migration": "node --require babel-register -- ./server/config/db.js createUsersTable createOrdersTable",
-    "heroku": "node --require babel-register -- ./server/config/db.js createAllTables"
+    "heroku": "node --require babel-register -- ./server/config/db.js createAllTables",
+    "heroku-postbuild": "npm run start"
   },
   "engines": {
     "node": "10.8.0"
